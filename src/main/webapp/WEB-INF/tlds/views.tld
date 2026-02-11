@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE taglib
+	PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN"
+	"http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+    
+<taglib>
+<tlibversion>1.0</tlibversion>
+<jspversion>1.1</jspversion>
+<shortname>Genesys</shortname>
+<uri>/</uri>
+<info>Genesys Tag Extension Library.</info>
+
+<tag>
+<name>ViewLinks</name>
+<tagclass>com.genesys.views.tagext.ViewLinks</tagclass>
+<teiclass>com.genesys.views.tagext.ViewLinksExtraInfo</teiclass>
+<bodycontent>JSP</bodycontent>
+<info>View Links Custom Tag</info>
+<!--attribute>
+	<name>document</name>
+	<required>true</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute-->
+<attribute>
+	<name>viewName</name>
+	<required>false</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute>
+</tag>
+
+<tag>
+<name>ViewToolbar</name>
+<tagclass>com.genesys.views.tagext.ViewToolbar</tagclass>
+<teiclass>com.genesys.views.tagext.ViewToolbarExtraInfo</teiclass>
+<bodycontent>JSP</bodycontent>
+<info>View Toolbar Custom Tag</info>
+<!--attribute>
+	<name>document</name>
+	<required>true</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute-->
+<attribute>
+	<name>viewName</name>
+	<required>false</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute>
+<attribute>
+	<name>buttonType</name>
+	<required>false</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute>
+</tag>
+
+<tag>
+<name>ViewField</name>
+<tagclass>com.genesys.views.tagext.ViewField</tagclass>
+<teiclass>com.genesys.views.tagext.ViewFieldExtraInfo</teiclass>
+<bodycontent>JSP</bodycontent>
+<info>View Field Custom Tag</info>
+<!--attribute>
+	<name>document</name>
+	<required>true</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute-->
+<attribute>
+	<name>viewName</name>
+	<required>false</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute>
+</tag>
+
+<tag>
+<name>ViewList</name>
+<tagclass>com.genesys.views.tagext.ViewList</tagclass>
+<teiclass>com.genesys.views.tagext.ViewListExtraInfo</teiclass>
+<bodycontent>JSP</bodycontent>
+<info>View List Custom Tag</info>
+<!--attribute>
+	<name>document</name>
+	<required>true</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute-->
+<attribute>
+	<name>viewName</name>
+	<required>false</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute>
+</tag>
+
+<tag>
+<name>ViewForm</name>
+<tagclass>com.genesys.views.tagext.ViewForm</tagclass>
+<teiclass>com.genesys.views.tagext.ViewFormExtraInfo</teiclass>
+<bodycontent>JSP</bodycontent>
+<info>View Form Custom Tag</info>
+<!--attribute>
+	<name>document</name>
+	<required>true</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute-->
+<attribute>
+	<name>viewName</name>
+	<required>false</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute>
+</tag>
+
+<tag>
+<name>EnumValues</name>
+<tagclass>com.genesys.views.tagext.EnumValues</tagclass>
+<teiclass>com.genesys.views.tagext.EnumValuesExtraInfo</teiclass>
+<bodycontent>JSP</bodycontent>
+<info>Enum Values Custom Tag</info>
+<!--attribute>
+	<name>document</name>
+	<required>true</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute-->
+<attribute>
+	<name>enumName</name>
+	<required>false</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute>
+</tag>
+
+<tag>
+<name>EnumImages</name>
+<tagclass>com.genesys.views.tagext.EnumImages</tagclass>
+<teiclass>com.genesys.views.tagext.EnumImagesExtraInfo</teiclass>
+<bodycontent>JSP</bodycontent>
+<info>Enum Images Custom Tag</info>
+<attribute>
+	<name>relPath</name>
+	<required>true</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute>
+</tag>
+
+<tag>
+<name>EnumViews</name>
+<tagclass>com.genesys.views.tagext.EnumViews</tagclass>
+<teiclass>com.genesys.views.tagext.EnumViewsExtraInfo</teiclass>
+<bodycontent>JSP</bodycontent>
+<info>Enum Views Custom Tag</info>
+<!--attribute>
+	<name>document</name>
+	<required>true</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute-->
+<attribute>
+	<name>viewName</name>
+	<required>false</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute>
+</tag>
+
+<tag>
+<name>EnumPortals</name>
+<tagclass>com.genesys.views.tagext.EnumPortals</tagclass>
+<teiclass>com.genesys.views.tagext.EnumPortalsExtraInfo</teiclass>
+<bodycontent>JSP</bodycontent>
+<info>Portal List Custom Tag</info>
+<!--attribute>
+	<name>document</name>
+	<required>true</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute-->
+</tag>
+
+<tag>
+<name>NavbarTabs</name>
+<tagclass>com.genesys.views.tagext.NavbarTabs</tagclass>
+<teiclass>com.genesys.views.tagext.NavbarTabsExtraInfo</teiclass>
+<bodycontent>JSP</bodycontent>
+<info>Navbar Tabs Custom Tag</info>
+<!--attribute>
+	<name>document</name>
+	<required>true</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute-->
+<attribute>
+	<name>access</name>
+	<required>false</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute>
+<attribute>
+	<name>portal</name>
+	<required>false</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute>
+</tag>
+
+<tag>
+<name>NavbarButtons</name>
+<tagclass>com.genesys.views.tagext.NavbarButtons</tagclass>
+<teiclass>com.genesys.views.tagext.NavbarButtonsExtraInfo</teiclass>
+<bodycontent>JSP</bodycontent>
+<info>Navbar Buttons Custom Tag</info>
+<!--attribute>
+	<name>document</name>
+	<required>true</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute-->
+<attribute>
+	<name>tab</name>
+	<required>false</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute>
+<attribute>
+	<name>portal</name>
+	<required>false</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute>
+</tag>
+
+</taglib>

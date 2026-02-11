@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE web-app PUBLIC
+        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app id="WebApp_ID" version="6.0"
+         xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+    <display-name>
+        Genesys
+    </display-name>
+
+    <context-param>
+        <param-name>
+            Webmaster
+        </param-name>
+        <param-value>
+            kevin@lifeoneuropa.net
+        </param-value>
+    </context-param>
+
+    <!-- Global parameters -->
+    <!--  GENESYS_HOME is used as a default if the environment variable of the same name is missing -->
+    <context-param>
+        <param-name>
+            GENESYS_HOME
+        </param-name>
+        <param-value>
+        	<!--[CDATA[C:\home\Datasphere\webapp\]]-->
+        	<!--[CDATA[..\webapps\genesys\]]-->
+            <![CDATA[/home/kevin/projects/webmenus/src/main/webapp/]]>
+            <!--[CDATA[/var/lib/tomcat7/webapps/webmenus/]]-->
+        </param-value>
+    </context-param>
+    
+    <!--context-param>
+        <param-name>
+            GENESYS_IMAGE_ROOT
+        </param-name>
+        <param-value>
+            <![CDATA[/home/ubuntu/image_library/]]>
+        </param-value>
+    </context-param-->
+    
+    <context-param>
+        <param-name>
+            GENESYS_S3_BUCKET
+        </param-name>
+        <param-value>
+            webmenus-production-us-standard
+        </param-value>
+    </context-param>
+
+	<!--
+		high, low, off
+	-->
+   <context-param>
+        <param-name>
+            DEBUG_TRACE_LOG
+        </param-name>
+        <param-value>
+            off
+        </param-value>
+    </context-param>
+    
+    <!-- Application class name -->
+    <context-param>
+        <param-name>org.restlet.application</param-name>
+        <param-value>
+            com.genesys.application.SystemApplication
+        </param-value>
+    </context-param>
+    
+    <!-- Restlet adapter -->
+    <servlet>
+        <servlet-name>ServerServlet</servlet-name>
+        <servlet-class>
+            org.restlet.ext.servlet.ServerServlet
+        </servlet-class>
+    </servlet>
+
+    <!-- Catch all requests -->
+    <servlet-mapping>
+        <servlet-name>ServerServlet</servlet-name>
+        <url-pattern>/api/*</url-pattern>
+    </servlet-mapping>
+	
+	<servlet>
+		<servlet-name>action</servlet-name>
+		<servlet-class>
+			org.apache.struts.action.ActionServlet
+		</servlet-class>
+		<init-param>
+			<param-name>config</param-name>
+			<param-value>/WEB-INF/struts-config.xml</param-value>
+		</init-param>
+	    <init-param> 
+	      <param-name>debug</param-name> 
+	      <param-value>3</param-value> 
+	    </init-param> 
+	    <init-param> 
+	      <param-name>detail</param-name> 
+	      <param-value>3</param-value> 
+	    </init-param> 
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+
+    <!-- Standard Action Servlet Mapping -->
+    <servlet-mapping>
+        <servlet-name>action</servlet-name>
+        <url-pattern>*.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>
+            ImageViewer
+        </servlet-name>
+        <servlet-class>
+            com.genesys.repository.ImageViewer
+        </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>
+            ImageViewer
+        </servlet-name>
+        <url-pattern>
+            /ImageViewer/*
+        </url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>
+            ImageManager
+        </servlet-name>
+        <servlet-class>
+            com.genesys.repository.ImageManager
+        </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>
+            ImageManager
+        </servlet-name>
+        <url-pattern>
+            /ImageManager
+        </url-pattern>
+    </servlet-mapping>
+	
+    <servlet>
+        <servlet-name>
+            ImportPages
+        </servlet-name>
+        <servlet-class>
+            com.genesys.w3.ImportPages
+        </servlet-class>
+     </servlet>
+    <servlet-mapping>
+        <servlet-name>
+            ImportPages
+        </servlet-name>
+        <url-pattern>
+            /ImportPages
+        </url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>
+            MenuDesigner
+        </servlet-name>
+        <servlet-class>
+            com.genesys.webmenus.designer.MenuDesigner
+        </servlet-class>
+     </servlet>
+    <servlet-mapping>
+        <servlet-name>
+            MenuDesigner
+        </servlet-name>
+        <url-pattern>
+            /MenuDesigner/*
+        </url-pattern>
+    </servlet-mapping>
+    
+    <!--servlet>
+        <servlet-name>
+            ScheduleDesigner
+        </servlet-name>
+        <servlet-class>
+            com.genesys.webmenus.scheduler.ScheduleDesigner
+        </servlet-class>
+     </servlet>
+    <servlet-mapping>
+        <servlet-name>
+            ScheduleDesigner
+        </servlet-name>
+        <url-pattern>
+            /ScheduleDesigner/*
+        </url-pattern>
+    </servlet-mapping-->
+
+    <servlet>
+        <servlet-name>
+            QueryMenuItems
+        </servlet-name>
+        <servlet-class>
+            com.genesys.webmenus.QueryMenuItems
+        </servlet-class>
+     </servlet>
+    <servlet-mapping>
+        <servlet-name>
+            QueryMenuItems
+        </servlet-name>
+        <url-pattern>
+            /QueryMenuItems
+        </url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>
+            MenuView
+        </servlet-name>
+        <servlet-class>
+            com.genesys.webmenus.MenuView
+        </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>
+            MenuView
+        </servlet-name>
+        <url-pattern>
+            /app/MenuView/*
+        </url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>
+            Menus
+        </servlet-name>
+        <servlet-class>
+            com.genesys.webmenus.Menus
+        </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>
+            Menus
+        </servlet-name>
+        <url-pattern>
+            /Menus/*
+        </url-pattern>
+    </servlet-mapping>
+<!--
+    <servlet>
+        <servlet-name>
+            PageServer
+        </servlet-name>
+        <servlet-class>
+            com.genesys.w3.PageServer
+        </servlet-class>
+     </servlet>
+    <servlet-mapping>
+        <servlet-name>
+            PageServer
+        </servlet-name>
+        <url-pattern>
+            /page/*
+        </url-pattern>
+    </servlet-mapping>
+-->
+    <servlet>
+        <servlet-name>
+            OrderView
+        </servlet-name>
+        <servlet-class>
+            com.genesys.webmenus.OrderView
+        </servlet-class>
+     </servlet>
+    <servlet-mapping>
+        <servlet-name>
+            OrderView
+        </servlet-name>
+        <url-pattern>
+            /app/OrderView
+        </url-pattern>
+    </servlet-mapping>
+	
+    <servlet>
+        <servlet-name>
+            LoginPatron
+        </servlet-name>
+        <servlet-class>
+            com.genesys.webmenus.LoginPatron
+        </servlet-class>
+     </servlet>
+    <servlet-mapping>
+        <servlet-name>
+            LoginPatron
+        </servlet-name>
+        <url-pattern>
+            /LoginPatron
+        </url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>
+            ViewCmd
+        </servlet-name>
+        <servlet-class>
+            com.genesys.views.ViewCmd
+        </servlet-class>
+     </servlet>
+     <servlet-mapping>
+        <servlet-name>
+            ViewCmd
+        </servlet-name>
+        <url-pattern>
+            /ViewCmd
+        </url-pattern>
+    </servlet-mapping>
+    <!--servlet-mapping>
+        <servlet-name>
+            ViewCmd
+        </servlet-name>
+        <url-pattern>
+            *.tfe
+        </url-pattern>
+    </servlet-mapping-->
+    
+    <servlet>
+        <servlet-name>
+            View
+        </servlet-name>
+        <servlet-class>
+            com.genesys.views.ViewController
+        </servlet-class>
+     </servlet>
+     <servlet-mapping>
+        <servlet-name>
+            View
+        </servlet-name>
+        <url-pattern>
+            /View
+        </url-pattern>
+    </servlet-mapping>
+    
+    <!--taglib>
+        <taglib-uri>http://struts.apache.org/tags-html</taglib-uri>
+        <taglib-location>/WEB-INF/tlds/struts-html.tld</taglib-location>
+    </taglib>
+    
+    <taglib>
+        <taglib-uri>http://struts.apache.org/tags-bean</taglib-uri>
+        <taglib-location>/WEB-INF/tlds/struts-bean.tld</taglib-location>
+    </taglib-->
+
+    <!--taglib>
+        <taglib-uri>/views</taglib-uri>
+        <taglib-location>/WEB-INF/tlds/views.tld</taglib-location>
+    </taglib-->
+
+    <!--session-config>
+        <session-timeout>1</session-timeout>
+    </session-config-->
+    
+    <!-- Define the context-relative URL(s) to be protected -->
+    <!-- If you list http methods, only those methods are protected -->
+    <!-- Anyone with one of the listed roles may access this area -->
+    <!--
+    <security-constraint>
+      <web-resource-collection>
+         <web-resource-name>Protected Area</web-resource-name>
+         <url-pattern>/jsp/security/protected/*</url-pattern>
+	 <http-method>DELETE</http-method>
+         <http-method>GET</http-method>
+         <http-method>POST</http-method>
+	 <http-method>PUT</http-method>
+      </web-resource-collection>
+      <auth-constraint>
+         <role-name>tomcat</role-name>
+	 <role-name>role1</role-name>
+      </auth-constraint>
+    </security-constraint>
+    -->
+
+    <!-- Default login configuration uses BASIC authentication -->
+    <!--    
+    <login-config>
+      <auth-method>BASIC</auth-method>
+      <realm-name>Example Basic Authentication Area</realm-name>
+    </login-config>
+    -->
+
+    <!-- If you want to experiment with form-based logins, comment
+         out the <login-config> element above and replace it with
+         this one.  Note that we are currently using a nonstandard
+         authentication method, because the code to support form
+         based login is incomplete and only lightly tested.  -->
+    <!--
+    <login-config>
+      <auth-method>EXPERIMENTAL_FORM</auth-method>
+      <realm-name>Example Form-Based Authentication Area</realm-name>
+      <form-login-config>
+        <form-login-page>/jsp/security/login/login.jsp</form-login-page>
+        <form-error-page>/jsp/security/login/error.jsp</form-error-page>
+      </form-login-config>
+    </login-config>
+    -->
+	<listener>
+		<description>systemListener</description>
+		<listener-class>com.genesys.SystemServlet</listener-class>
+	</listener>
+	<listener>
+    	<description>sessionListener</description>
+    	<listener-class>com.genesys.SessionHandler</listener-class>
+	</listener>
+	
+</web-app>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!DOCTYPE struts-config PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+        "http://struts.apache.org/dtds/struts-config_1_3.dtd">
+       
+<struts-config>
+	<form-beans>
+		
+		<!-- Core Functionality -->
+		<form-bean name="forgot_password" type="com.genesys.security.ForgotPassword_Form"/>
+		<form-bean name="feedback" type="com.genesys.feedback.Feedback_Form"/>
+		<!-- Core Functionality -->
+		
+		<form-bean name="create_account" type="com.genesys.webmenus.account.Create_Form"/>
+
+		<form-bean name="personal_info" type="com.genesys.webmenus.account.PersonalInfo_Form"/>
+		<form-bean name="restaurant_info" type="com.genesys.webmenus.account.RestaurantInfo_Form"/>
+		<form-bean name="create_account_summary" type="com.genesys.webmenus.account.CreateSummary_Form"/>
+		<form-bean name="schedule_designer" type="com.genesys.webmenus.scheduler.ScheduleDesignerForm"/>
+	</form-beans>
+	
+    <action-mappings>
+		
+		<!-- Core Functionality -->
+		<action path="/forgot_password" name="forgot_password" type="com.genesys.security.ForgotPassword_Action"
+				scope="request" validate="true" input="/ui/security/forgot_password.jsp">
+			<forward name="success" path="/ui/login.jsp"/>
+		</action>
+		<action path="/feedback" name="feedback" type="com.genesys.feedback.Feedback_Action"
+				scope="request" validate="true" input="/ui/feedback/feedback.jsp">
+			<forward name="success" path="/ui/feedback/thank_you.jsp"/>
+		</action>
+		<!-- Core Functionality -->
+		
+		<action path="/create_account" name="create_account" type="com.genesys.webmenus.account.Create_Action"
+				scope="request" validate="true" input="/app/account/create_account.jsp">
+			<forward name="success" redirect="true" path="/ui/summary.jsp"/>
+			<forward name="failure" path="/app/account/create_account_failure.jsp"/>
+		</action>
+
+        
+		<!--action path="/personal_info" name="personal_info" type="com.genesys.webmenus.account.PersonalInfo_Action"
+				scope="request" validate="true" input="/app/account/personal_info.jsp">
+			<forward name="next" redirect="true" path="/app/account/restaurant_info.jsp"/>
+		</action>
+		<action path="/restaurant_info" name="restaurant_info" type="com.genesys.webmenus.account.RestaurantInfo_Action"
+				scope="request" validate="true" input="/app/account/restaurant_info.jsp">
+			<forward name="success" path="/app/account/restaurant_info.jsp" />
+			<forward name="next" redirect="true" path="/app/account/create_account_summary.jsp"/>
+		</action>
+		<action path="/create_account_summary" name="create_account_summary" type="com.genesys.webmenus.account.CreateSummary_Action"
+				scope="request" validate="true" input="/app/account/create_account_summary.jsp">
+			<forward name="success" redirect="true" path="/app/account/create_account_success.jsp"/>
+			<forward name="failure" path="/app/account/create_account_failure.jsp"/>
+		</action-->
+		<action path="/schedule_designer" name="schedule_designer" type="com.genesys.webmenus.scheduler.ScheduleDesignerAction"
+				scope="request" validate="true" input="/app/scheduler/schedule_designer.jsp">
+			<forward name="success" path="/app/scheduler/success.jsp"/>
+		</action>
+
+    </action-mappings>
+
+	<message-resources parameter="Application"/>
+</struts-config>

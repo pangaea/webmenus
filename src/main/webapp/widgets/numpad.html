@@ -1,0 +1,137 @@
+<html>
+<HEAD>
+<style>
+body.calcBody
+{
+	border: 0px outset black;
+	margin: 0px;
+}
+td.calcDisplay
+{
+	border: 1px solid black;
+	background-color: #e8f0f4;
+	color: black;
+	height: 20px;
+	text-align: right;
+}
+button.calcButton
+{
+	text-align: center;
+	border: 1px solid #e8f0f4;
+	background-color: #c8d0d4;
+	font: normal normal 8pt Tahoma;
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+button.calcButtonOver
+{
+	text-align: center;
+	border: 1px outset #e8f0f4;
+	background-color: #c8d0d4;
+	font: normal normal 8pt Tahoma;
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+
+</style>
+<script language="JavaScript">
+var iTotal = 0;
+var	vMode = "";
+var	newNum = true;
+var outputElem;
+function setCurrentValue( newVal )
+{
+	iTotal = newVal;
+	if( iTotal.length == 0 ) iTotal = "0";
+	if( outputElem != null ) outputElem.value = newVal;
+	newNum = true;
+	//makeItFit();
+}
+
+function clearButton()
+{
+	setCurrentValue( 0 );
+	vMode = "";
+}
+/*
+function makeItFit()
+{
+	// Make it fit
+	var disp = document.getElementById( "summary" );
+	if( disp.innerHTML.length > 10 )
+	{
+		if( disp.innerHTML.indexOf( "." ) >= 0 )
+			disp.innerHTML = disp.innerHTML.substr(0,10);
+		else
+			disp.innerHTML = "E";
+	}
+}
+*/
+function keyPress(btnVal)
+{
+	var disp = document.getElementById( "summary" );
+	switch( btnVal )
+	{
+	case "C":
+		clearButton();
+		break;
+	case "-x":
+		outputElem.value = parseFloat(outputElem.value) * (-1);
+		break;
+		break;
+	case ".":
+		if( outputElem.value.indexOf( "." ) < 0 )
+			outputElem.value = outputElem.value + ".";
+		newNum = false;
+		break;
+	case "X":
+		window.frameElement.style.visibility = "hidden";
+		break;
+	case "Cancel":
+		window.frameElement.style.visibility = "hidden";
+		break;
+	default:
+		//if( outputElem.value == "0" || newNum == true ) disp.innerHTML = btnVal;
+		if( outputElem.value == "0" || newNum == true ) outputElem.value = btnVal;
+		else outputElem.value = outputElem.value + btnVal;
+		newNum = false;
+		break;
+	}
+
+	// Make it fit
+	//makeItFit();
+}
+</script>
+</head>
+<body class="calcBody">
+	<table cellspacing="0" cellpadding="0" width="100%" height="100%" onblur="window.frameElement.style.visibility = 'hidden';">
+	<tr>
+		<td width="33%" height="20%"><button class="calcButton" onmouseover="this.className='calcButtonOver';" onmouseout="this.className='calcButton';" onclick="keyPress('7')">7</button></td>
+		<td width="33%"><button class="calcButton" onmouseover="this.className='calcButtonOver';" onmouseout="this.className='calcButton';" onclick="keyPress('8')">8</button></td>
+		<td width="33%"><button class="calcButton" onmouseover="this.className='calcButtonOver';" onmouseout="this.className='calcButton';" onclick="keyPress('9')">9</button></td>
+	</tr>
+	<tr>
+		<td height="20%"><button class="calcButton" onmouseover="this.className='calcButtonOver';" onmouseout="this.className='calcButton';" onclick="keyPress('4')">4</button></td>
+		<td><button class="calcButton" onmouseover="this.className='calcButtonOver';" onmouseout="this.className='calcButton';" onclick="keyPress('5')">5</button></td>
+		<td><button class="calcButton" onmouseover="this.className='calcButtonOver';" onmouseout="this.className='calcButton';" onclick="keyPress('6')">6</button></td>
+	</tr>
+	<tr>
+		<td height="20%"><button class="calcButton" onmouseover="this.className='calcButtonOver';" onmouseout="this.className='calcButton';" onclick="keyPress('1')">1</button></td>
+		<td><button class="calcButton" onmouseover="this.className='calcButtonOver';" onmouseout="this.className='calcButton';" onclick="keyPress('2')">2</button></td>
+		<td><button class="calcButton" onmouseover="this.className='calcButtonOver';" onmouseout="this.className='calcButton';" onclick="keyPress('3')">3</button></td>
+	</tr>
+	<tr>
+		<td height="20%"><button class="calcButton" onmouseover="this.className='calcButtonOver';" onmouseout="this.className='calcButton';" onclick="keyPress('0')">0</button></td>
+		<td><button class="calcButton" id="decimal" onmouseover="this.className='calcButtonOver';" onmouseout="this.className='calcButton';" onclick="keyPress('.')">.</button></td>
+		<td><button class="calcButton" onmouseover="this.className='calcButtonOver';" onmouseout="this.className='calcButton';" onclick="keyPress('C')">C</button></td>
+	</tr>
+	<!--tr>
+		<td height="20%" colspan="3"><button class="calcButton" onmouseover="this.className='calcButtonOver';" onmouseout="this.className='calcButton';" onclick="keyPress('X')">Close</button></td>
+	</tr-->
+	</table>
+</body>
+</html>

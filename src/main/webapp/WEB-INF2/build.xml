@@ -1,0 +1,137 @@
+<!--
+Command Line Help:
+	release:	ant -Djavac.debug=off
+	debug:		ant -or- ant -Djavac.debug=true
+-->
+
+<project name="genesys" basedir="." default="compile_debug">
+
+	<description>
+		Genesys ANT script
+    	</description>
+
+	<!-- set global properties for this build -->
+	<property name="src" location="src"/>
+	<property name="classes" location="classes"/>
+	<property name="lib" location="lib"/>
+	<property name="dist" location="../../dist"/>
+	<property name="webapp" location="../../webmenus"/>
+	<property environment="env"/>
+	<!--property name="javac.debug" value="true"/-->
+	<!--condition property="javac.debug" value="true">
+   		<not>
+      		<isset property="javac.debug"/>
+   		</not>
+	</condition-->
+
+	<target name="clean">
+		<echo>Cleaning...</echo>
+		<delete dir="${classes}/com"/>
+		<!-- Copy any configuration files -->
+		<copy todir="classes">
+			<fileset dir="src/conf"/>
+		</copy>
+	</target>
+
+	<target name="init" depends="clean">
+		<echo>Initializing build...</echo>
+		<!-- Create the time stamp -->
+		<tstamp/>
+		<!-- Create the classes directory structure used by compile -->
+		<mkdir dir="${classes}"/>
+	</target>
+
+	<!--target name="restart" description="restart Tomcat">
+
+		<exec executable="C:/Program Files/Apache Software Foundation/Tomcat 5.5/bin/catalina.bat">
+			<arg value="stop"/>
+		</exec>
+
+		<exec executable="C:/Program Files/Apache Software Foundation/Tomcat 5.5/bin/catalina.bat" spawn="true">
+			<arg value="jpda"/>
+			<arg value="start"/>
+		</exec>
+		
+	</target-->
+
+	<target name="debug">
+		<echo>Setting Debug properties...</echo>
+		<property name="javac.debug" value="true"/>
+	</target>
+
+	<target name="compile_debug" depends="debug, compile">
+	</target>
+
+	<target name="release">
+		<echo>Setting Release properties...</echo>
+		<property name="javac.debug" value="false"/>
+	</target>
+
+	
+	<target name="compile" depends="init" description="compile the source">
+		<!--exec dir="/usr/local/apache-tomcat-5.5.26/bin" executable="./catalina.sh">
+			<arg value="stop"/>
+		</exec-->
+		<!--exec executable="C:/Program Files/Apache Software Foundation/Tomcat 5.5/bin/catalina.bat">
+			<arg value="stop"/>
+		</exec-->
+		
+		<echo>Compiling classes...</echo>
+		<echo message="debug = ${javac.debug}"/>
+		<echo message="${env.CATALINA_HOME}"/>
+		<!-- Compile the java code from ${src} into ${classes} -->
+		<javac srcdir="${src}" destdir="${classes}" debug="${javac.debug}" includeantruntime="false">
+			<classpath>
+				<pathelement path="${classpath}"/>
+				<!--pathelement path="C:/Program Files/Apache Software Foundation/Tomcat 5.5/common/lib/servlet-api.jar"/-->
+				<!-- CATALINA_HOME = /usr/share/tomcat9 -->
+				<!-- <pathelement path="${env.CATALINA_HOME}/lib/servlet-api.jar"/>
+				<pathelement path="${env.CATALINA_HOME}/lib/jsp-api.jar"/> -->
+				<pathelement path="/opt/tomcat/lib/servlet-api.jar"/>
+				<pathelement path="/opt/tomcat/lib/jsp-api.jar"/>
+				<pathelement path="${lib}/xalan.jar"/>
+				<pathelement path="${lib}/xml-apis.jar"/>
+				<pathelement path="${lib}/xercesImpl.jar"/>
+				<pathelement path="${lib}/mailapi.jar"/>
+				<pathelement path="${lib}/mysql-connector-java-5.1.7-bin.jar"/>
+				<pathelement path="${lib}/log4j-1.2.15.jar"/>
+				<pathelement path="${lib}/commons-fileupload-1.2.1.jar"/>
+				<pathelement path="${lib}/struts-core-1.3.10.jar"/>
+				<pathelement path="${lib}/aws-java-sdk-1.11.41.jar"/>
+				<pathelement path="${lib}/itextpdf-5.5.2.jar"/>
+				<pathelement path="${lib}/org.restlet.jar"/>
+				<pathelement path="${lib}/org.restlet.ext.servlet.jar"/>
+				<pathelement path="${lib}/org.restlet.ext.json.jar"/>
+				<pathelement path="${lib}/org.json.jar"/>
+			</classpath>
+		</javac>
+		
+		<!--exec executable="C:/Program Files/Apache Software Foundation/Tomcat 5.5/bin/catalina.bat" spawn="true">
+			<arg value="jpda"/>
+			<arg value="start"/>
+		</exec-->
+		
+	</target>
+
+	<target name="package" depends="release, compile">
+		<echo>Creating *.war distribution file...</echo>
+		<!-- Create the distribution directory -->
+		<mkdir dir="${dist}/genesys-${DSTAMP}"/>
+		<!--delete file="${dist}/genesys-${DSTAMP}/genesys.war"/-->
+		<war warfile="${dist}/genesys-${DSTAMP}/webmenus.war" webxml="web.xml">
+			<!--webinf dir="webmenus/WEB-INF/"/-->
+			<classes dir="${classes}"/>
+			<fileset dir="${webapp}"/>
+		</war>
+
+		<!--exec dir="/usr/local/apache-tomcat-5.5.26/bin" executable="./catalina.sh">
+			<arg value="jpda"/>
+			<arg value="start"/>
+		</exec-->
+		<!--exec executable="C:/Program Files/Apache Software Foundation/Tomcat 5.5/bin/catalina.bat" spawn="true">
+			<arg value="jpda"/>
+			<arg value="start"/>
+		</exec-->
+	</target>
+
+</project>

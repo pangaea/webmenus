@@ -1,0 +1,30 @@
+#public_library
+{
+	padding: 6px;
+}
+#personal_library
+{
+	padding: 6px;
+}
+selected
+{
+	border: 4px solid #FF0000;
+}
+img.normal
+{
+	cursor: hand;
+	border: 4px solid #FFFFFF;
+}
+#toolbar td
+{
+	height: 20px;
+}
+.image img
+{
+	max-width: 700px;
+	max-height: 700px;
+}
+#facebox .footer_text input {
+	width: 100%;
+	margin-bottom: 4px;
+}

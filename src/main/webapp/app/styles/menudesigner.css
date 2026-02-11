@@ -1,0 +1,136 @@
+/**
+ *	ALL CSS below is only for cosmetic and demo purposes
+ *	Nothing here affects the appearance of the layout
+ */
+body {
+	font-family:	Arial, sans-serif;
+	font-size:		100%;
+	*font-size:		0.8em; /* IE 6/7 only */
+}
+p {
+	font-size:		1em;
+	margin:			1em 0;
+}
+button {
+	line-height:	normal;
+}
+h2 {
+	color: blue;
+	font-family: Verdana;
+	font-weight: bold;
+	font-size: 14pt;
+}
+h3 {
+	color: blue;
+	font-family: Verdana;
+	/*font-weight: bold;*/
+	font-size: 12pt;
+}
+button {
+	color: white;
+	/*font-family: Verdana;
+	font-size: 8pt;*/
+	cursor: pointer;
+	/*background-color: blue;*/
+	background-color: #A7ABFB;
+	border-style: solid;
+	border-width: 1px;
+	border-top-color: #000000;
+	border-left-color: #000000;
+	border-bottom-color: #000000;
+	border-right-color: #000000;
+	padding: 1px;
+	white-space: nowrap;
+}
+
+
+/**
+ *	Basic Layout Theme
+ * 
+ *	This theme uses the default layout class-names for all classes
+ *	Add any 'custom class-names', from options: paneClass, resizerClass, togglerClass
+ *
+ *	Download a more comprehensive stylesheet here:
+ *		http://layout.jquery-dev.net/demos/css/layout-default.css
+ */
+
+.ui-layout-pane { /* all 'panes' */ 
+	background: #FFF; 
+	border: 1px solid #BBB; 
+	padding: 10px; 
+	overflow: auto;
+} 
+
+.ui-layout-resizer { /* all 'resizer-bars' */ 
+	background: #DDD; 
+} 
+
+.ui-layout-toggler { /* all 'toggler-buttons' */ 
+	background: #AAA; 
+} 
+
+
+
+/* menu styles */
+#jsddm
+{
+	margin: 0;
+	padding: 0
+}
+
+#jsddm li
+{
+	float: left;
+	list-style: none;
+	font: 10px Tahoma, Arial
+}
+
+#jsddm li a
+{
+	display: block;
+	background: #324143;
+	padding: 5px 8px;
+	text-decoration: none;
+	border-right: 1px solid white;
+	/*width: 70px;*/
+	color: #EAFFED;
+	white-space: nowrap
+}
+
+#jsddm li a:hover
+{
+	background: #24313C
+}
+
+#jsddm li ul
+{
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	visibility: hidden;
+	border-top: 1px solid white
+}
+
+#jsddm li ul li
+{
+	float: none;
+	display: inline
+}
+
+#jsddm li ul li a
+{
+	width: auto;
+	background: #A9C251;
+	color: #24313C
+}
+
+#jsddm li ul li a:hover
+{
+	background: #8EA344
+}
+
+.sort_list { list-style-type: none; margin: 0; padding: 0; }
+.sort_list li { margin: 0 3px 3px 3px; padding: 1px; padding-left: 1px; font-size: 12pt; height: 25px; cursor: hand; }
+.sort_list li span { position: absolute; margin-left: -1.3em; }
+.ui-state-default2 { /*background-color: #DEDFFA;*/}
+.ui-state-default2 input{ width: 120px;}

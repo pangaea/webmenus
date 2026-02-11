@@ -1,0 +1,42 @@
+<div class='menuContent'>
+  <div class='menuTitle'>{{name}} Menu - Welcome
+    <span class='alert'>
+    {{#ifequal menuStatus value="open"}}
+      ({{menuStatus}})
+    {{/ifequal}}
+    </span>
+  </div>
+{{#categories}}
+  <div class='categoryTitle'>{{name}}</div>
+  {{#items}}
+  <div class='menuItemContainter'>
+    <table cellspacing='4'>
+      <tr><td valign='top'>
+        {{{image}}}
+      </td><td valign='top' width='100%'>
+        <div class='menuItemTitle'>{{name}}</div>
+        <div class='menuItemDesc'>{{{description}}}</div>
+        <div class='menuItemPrices'>
+        {{#sizes}}
+          {{#if size}}({{size}}){{/if}} {{price}}
+          {{#ifequal ../../../menuStatus value="open"}}
+          <a href='#' class="liveOrderItem" data-id="{{id}}" data-name="{{name}}">Order</a>
+          {{/ifequal}}
+        {{/sizes}}
+        {{#if options}}
+          <div class='menuItemOptions'>
+            <div colspan='2' valign='top' class='menuItemOptionsTitle'>Options</div>
+            {{#options}}
+            {{#choices}}
+            <div>&bull; {{display}}</div>
+            {{/choices}}
+            {{/options}}
+          </div>
+        {{/if}}
+        </td>
+      </tr>
+    </table>
+  </div>
+  {{/items}}
+{{/categories}}
+</div>

@@ -1,0 +1,56 @@
+div.vm_tab
+{
+	color: blue;
+	font-family: Arial;
+	font-size: 9pt;
+	cursor: pointer;
+	background-color: #C6C6C6;/*#A7ABFB;*/
+	border-style: solid;
+	border-width: 0px;
+	border-top-color: #FFFFFF;
+	border-left-color: #C6C6C6;
+	border-bottom-color: #C6C6C6;
+	border-right-color: #000000;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 24px;
+	padding: 0px 15px 0px 15px;
+	height: 24px;
+}
+
+div.vm_tab_front
+{
+	color: white;
+	font-family: Arial;
+	font-size: 9pt;
+	/*background-color: #8eb9f3;*/
+	background-color: #73BDD6;
+	border-style: solid;
+	border-width: 0px;
+	border-top-color: #FFFFFF;
+	border-left-color: #73BDD6;
+	border-bottom-color: #73BDD6;
+	border-right-color: #73BDD6;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 28px;
+	padding: 0px 15px 0px 15px;
+	height: 28px;
+}
+
+img.vm_tab_left
+{
+	height: 24px;
+	border-width: 0px;
+	/*border-bottom: 1px solid #73BDD6;*/
+}
+
+img.vm_tab_front_left
+{
+	/*background-attachment: fixed;
+	background-image: url(images/tab_front_leftmost.png);
+	background-repeat: no-repeat;
+	background-position: left top;*/
+	height: 28px;
+	border-width: 0px;
+}

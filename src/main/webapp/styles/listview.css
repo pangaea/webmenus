@@ -1,0 +1,51 @@
+table.vmlistview th.column_header
+{
+	font-family:verdana;
+	font-size:9pt;
+	background-color:#ECE9D8;
+	border: 1px solid;
+	border-color : white Gray Gray white;
+	text-align: left;
+	margin:0px;
+	padding:5px 5px 5px 5px ;
+	font-weight:normal;
+    -moz-user-select:none;
+    overflow:hidden;
+}
+table.vmlistviewhdr th.column_title
+{
+	font-family:verdana;
+	font-size:9pt;
+	background-Color:#ECE9D8;
+	text-align: left;
+	margin:0px;
+	padding:0px 5px 0px 5px ;
+	font-weight:normal;
+    -moz-user-select:none;
+    overflow:hidden;
+}
+table.vmlistview td
+{
+	font-family:verdana;
+	font-size:9pt;
+	border: 1px solid;
+	border-color : white Gray Gray white;
+	text-align: left;
+	margin:0px;
+	padding:5px 5px 5px 5px ;
+	font-weight:normal;
+    -moz-user-select:none;
+    overflow:hidden;
+}
+table.vmlistview tr.row_normal
+{
+	background-color: #EEEEFF;
+}
+table.vmlistview tr.row_over
+{
+	background-color: #A7ABFB;
+}
+table.vmlistview tr.row_down
+{
+	background-color: steelblue;
+}

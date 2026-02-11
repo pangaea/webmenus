@@ -1,0 +1,48 @@
+<div class='menuContent'>
+  <div class='menuTitle'>{name} Menu <span class='alert'>{?menuStatus}({menuStatus}){/menuStatus}</span></div>
+  {#categories}
+  <div class='categoryTitle'>{name}</div>
+  {#items}
+  <div class='xsnazzy'>
+    <b class='xb1'></b><b class='xb2'></b><b class='xb3'></b><b class='xb4'></b><b class='xb5'></b><b class='xb6'></b><b class='xb7'></b>
+    <div class='xboxcontent'>
+      <div class='menuItemContainter'>
+        <table cellspacing='4'><tr><td valign='top'>
+          {image|s}
+          </td><td valign='top' width='100%'>
+          <div class='menuItemTitle'>{name}</div>
+          <div class='menuItemDesc'>{description}</div>
+          <div class='menuItemPrices'>
+            {#sizes}
+            {?size}({size}){/size} {price}
+            {@eq key=menuStatus value="open"}
+            <a href='#' onclick='viewMenuItem("{id}","{name}");'>Order</a>
+            {/eq}
+            {/sizes}
+          </td></tr><tr><td colspan='3'>
+            {?options}
+            <div class='menuItemOptions'>
+              <table id='itemOptionsTable' cellpadding='2' align='center'>
+                <tr>
+                  <th colspan='2' valign='top' class='OptionsTitle'>Available Options</th>
+                </tr>
+                {#options}
+                <tr><th valign='top'>
+                  {display}
+                  </th><td>
+                  {#choices}
+                  &bull; {text}
+                  {/choices}
+                  </td></tr>
+              </td></tr>
+                {/options}
+              </table>
+            </div>
+            {/options}
+            </td></tr></table>
+          </div></div>
+          <b class='xb7'></b><b class='xb6'></b><b class='xb5'></b><b class='xb4'></b><b class='xb3'></b><b class='xb2'></b><b class='xb1'></b>
+          </div>
+          {/items}
+          {/categories}
+          </div>

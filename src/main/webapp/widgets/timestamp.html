@@ -1,0 +1,187 @@
+<!--
+Copyright © 2004-2005 Kevin Jacovelli
+All Rights Reserved
+-->
+
+<html>
+	<head>
+		<title>Calendar View</title>
+		<script type="text/javascript" src="../includes/common.js"></script>
+		<script type="text/javascript" src="../includes/calendar.js"></script>
+		<link rel="stylesheet" type="text/css" href="../styles/calendar.css"></link>
+<style>
+body
+{
+	border: 0px outset black;
+	margin: 0px;
+}
+</style>
+
+		<script language="JavaScript">
+		var outputElem;
+
+		var g_calendar;
+
+		function GetParam( sName )
+		{
+			var sSearch = window.location.search;
+			sSearch = sSearch.substr( 1, sSearch.length-1 );
+			var aParams = sSearch.split( "&" );
+			for( var i = 0; i < aParams.length; i++ )
+			{
+				var aParam = aParams[i].split( "=" );
+				if( sName == aParam[0] )
+				return unescape( aParam[1] );
+			}
+			return null;
+		}
+
+		function initData()
+		{
+			// Render main calender
+			g_calendar = new RenderMonth(document.getElementById("calendarBlock"));
+			g_calendar.setEventSelectDay( updateSelection );
+			//g_calendar.setEventNavigateMonth( updateCalendar );
+			g_calendar.drawMonth(10, 160);
+		}
+/*
+		function updateCalendar( parmMonth, parmYear )
+		{
+		}
+*/
+		function setCurrentValue( newVal )
+		{
+			var timestampval = newVal;
+			if( timestampval.length == 0 )
+			{
+				// Determine current timestamp
+				timestampval = getCurrentDate() + " " + getCurrentTime();
+			}
+	
+			var timestamp = timestampval.split(' ');
+			var newDate = timestamp[0];
+			var newTime = timestamp[1] + " " + timestamp[2];
+
+			var objRegExp = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
+			var strValue = newDate;
+
+			//check to see if in correct format
+			if(objRegExp.test(strValue))
+			{
+				//var strSeparator = strValue.substring(2,3) 
+				var arrayDate = strValue.split('/'); 
+				//alert("setCurrentValue:"+arrayDate[0]+"/"+arrayDate[1]+"/"+arrayDate[2]);
+				g_calendar.showingMonth = arrayDate[0];
+				g_calendar.showingDay = arrayDate[1];
+				g_calendar.showingYear = arrayDate[2];
+				g_calendar.drawMonth(10, 160, parseInt(arrayDate[0]), parseInt(arrayDate[2]));
+			}
+			
+			var timeval = newTime;
+			var exp = /^([0][1-9]|[1][0-2]|[1-9]):([0-5][0-9])?(\s+[aApP]\.?[mM]\.?)?$/;
+			if( timeval.match(exp) )
+			{
+				var oHour = document.getElementById("hour");
+				oHour.value = RegExp.$1;
+				var oMin = document.getElementById("minute");
+				oMin.value = RegExp.$2;
+				var oAmPm = document.getElementById("ampm");
+				oAmPm.value = (RegExp.$3).trim();
+			}
+		}
+
+		function updateSelection()
+		{
+			// Correct for single digit month / day
+			var mon = (String)(g_calendar.showingMonth);
+			var day = (String)(g_calendar.showingDay);
+			if( mon.length == 1 ) mon = "0" + mon;
+			if( day.length == 1 ) day = "0" + day;
+			var dateVal = (String)(mon) + "/" + (String)(day) + "/" + g_calendar.showingYear;
+			
+			var oHour = document.getElementById("hour");
+			var oMin = document.getElementById("minute");
+			var oAmPm = document.getElementById("ampm");
+			var timeVal = oHour.value + ":" + oMin.value + " " + oAmPm.value;
+
+			outputElem.value = dateVal + " " + timeVal;
+		}
+
+		</script>
+
+		</head>
+
+	<body id="view_obj_body" onload="initData();">
+		<table width="100%">
+			<tr>
+				<td align="left">
+					<span id="viewTitle" style="font:14pt Verdana;"></span>
+				</td>
+			</tr>
+			<tr>
+				<td width="100%" align="center" valign="top" height="100%">
+					<table align="center" width="100%">
+					<tr>
+						<td width="50%" align="center" valign="top">
+							<div id="calendarBlock" align="center" height="160px" width="100%"></div>
+						</td>
+					</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<table><tr>
+				<td>
+					<select id="hour" onchange="updateSelection()">
+						<option value="01">01</option>
+						<option value="02">02</option>
+						<option value="03">03</option>
+						<option value="04">04</option>
+						<option value="05">05</option>
+						<option value="06">06</option>
+						<option value="07">07</option>
+						<option value="08">08</option>
+						<option value="09">09</option>
+						<option value="10">10</option>
+						<option value="11">11</option>
+						<option value="12">12</option>
+					</select>
+				</td>
+				<td>
+					<select id="minute" onchange="updateSelection()">
+						<script type="text/javascript">
+						for(var i = 0; i < 60; i++ )
+						{
+							min = (String)(i);
+							if( min.length == 1 ) min = "0" + min;
+							document.write("<option value=\""+min+"\">"+min+"</option>");
+						}
+						</script>
+						<!--option value="00">00</option>
+						<option value="00">01</option>
+						<option value="05">05</option>
+						<option value="10">10</option>
+						<option value="15">15</option>
+						<option value="20">20</option>
+						<option value="25">25</option>
+						<option value="30">30</option>
+						<option value="35">35</option>
+						<option value="40">40</option>
+						<option value="45">45</option>
+						<option value="50">50</option>
+						<option value="55">55</option-->
+					</select>
+				</td>
+				<td>
+					<select id="ampm" onchange="updateSelection()">
+						<option value="AM">AM</option>
+						<option value="PM">PM</option>
+					</select>
+				</td>
+				</tr></table>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

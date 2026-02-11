@@ -1,0 +1,201 @@
+/*
+a::link
+{
+	color: darkblue;
+	text-decoration: none;
+}
+a::visited
+{
+	color: darkblue;
+	text-decoration: none;
+}
+a::hover
+{
+	color: darkblue;
+}
+*/
+
+#menuBody
+{
+	text-align: center;
+	background-image: url(../images/bg2.jpg);
+}
+#frame
+{
+	width:704px;
+	height:100%;
+	padding:0px 0px 0px 0px;
+	background-color: #FFFFF8;
+	position: relative;
+	background-image: url(../images/mrg_inside_08_full.jpg);
+	margin: 0 auto;
+	text-align: left;
+}
+#menuHeader
+{
+	background-image: url(../images/header.png);
+	background-repeat: no-repeat;
+	height: 95px;
+	margin-left: -7px;
+	margin-top: 4px;
+	margin-bottom: 4px;
+	border-bottom: 2px solid black;
+}
+#menuFooter
+{
+	/*padding: 5px;*/
+}
+#menuTree
+{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 200px;
+	background-color: #FFFFF8;
+}
+#menuMenu
+{
+	/*padding: 5px;*/
+}
+#menuContent
+{
+	/*border: 1px solid silver;*/
+	color: black;
+	padding: 0px;
+	/*position: absolute;*/
+	background-color: #FFFFF8;
+	filter:shadow(color:gray, strength:10, direction:135);
+	/*top: 0px;
+	right: 0px;*/
+	width: 100%;
+	/*height: 100%;
+	overflow-y: scroll;*/
+}
+
+.patronLoginTitle
+{
+	font: normal bolder 16pt Arial;
+	color: navy;
+	/*text-align: left;*/
+}
+
+.patronLoginLabel
+{
+	font: normal bolder 9pt Arial;
+	color: brown;
+}
+
+.pageSeperator hr
+{
+	background-color:red;
+	height:4px;
+}
+
+.pageSeperator span
+{
+	color: red;
+	font: 12pt arial;
+	font-weight: bold;
+}
+
+.menuItemContainter
+{
+	text-align: left;
+}
+
+.menuTitle
+{
+	font: normal bolder 24pt Candara;
+	color: black;
+	text-align: left;
+	width: 100%;
+}
+.menuItem
+{
+	text-align: left;
+}
+.categoryTitle
+{
+	font: normal bolder 16pt Arial;
+	color: white;
+	text-align: center;
+	width: 100%;
+	background-color: black;
+}
+.menuItemTitle
+{
+	font: normal bolder 14pt Arial;
+	color: brown;
+	/*font-weight: bold;*/
+	text-align: left;
+	width: 100%;
+}
+.menuButton
+{
+	font: normal bolder 9pt Arial;
+	color: blue;
+}
+.menuItemDesc
+{
+	font: normal bolder 10pt Arial;
+	color: black;
+	font-weight: bold;
+	text-align: left;
+	width: 100%;
+}
+.menuItemPrices
+{
+	font: normal bolder 9pt Arial;
+	color: brown;
+}
+.menuOptions
+{
+	border-top: 1px solid chocolate;
+	font: normal 8pt Arial;
+	color: chocolate;
+	text-align: left;
+	width: 100%;
+}
+
+/*
+	STYLES for menuitemview.jsp
+*/
+.ItemTitle
+{
+	font: normal bolder 16pt Arial;
+}
+.ItemDesc
+{
+	font: normal 12pt Arial;
+}
+#itemOptionsTable th
+{
+	font: normal bolder 12pt Arial;
+	text-align: left;
+}
+#itemOptionsTable td
+{
+	font: normal 12pt Arial;
+	border: 1px solid black;
+}
+.OptionsTitle
+{
+	font: normal bolder 12pt Arial;
+	background-color: navy;
+	color: white;
+}
+#itemTable
+{
+	color: black;
+	width: 100%;
+}
+#itemTable th
+{
+	font: normal bolder 12pt Arial;
+}
+#itemTable td
+{
+	font: normal 12pt Arial;
+	border: 1px solid black;
+	text-align: right;
+}

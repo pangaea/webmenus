@@ -1,0 +1,39 @@
+<div>
+<b>Account Name:</b>
+<%=name%>
+</div>
+<div>
+<b>Created:</b>
+<%=created%>
+</div>
+<br/>
+<div>
+<b>Locations</b>
+<ul>
+
+<% _.each(locations, function(loc) { %>
+	<li><%= loc.name %> (<a target="_blank" href="/webmenus/Menus/<%= loc.id %>">View Menu</a>)</li>
+<% }); %>
+</ul>
+</div>
+
+<br/>
+Counts
+<table border="1" cellpadding="2">
+<tr>
+<td>Total number of locations</td><td><%=counts.locations%></td>
+</tr>
+<tr>
+<td>Total number of menus</td><td><%=counts.menus%></td>
+</tr>
+<tr>
+<td>Total number of menus items</td><td><%=counts.menuitems%></td>
+</tr>
+<tr>
+<td>Total number of orders</td><td><%=counts.orders%></td>
+</tr>
+</table>
+<hr/>
+<div>
+	<a href="#" class="delete" style="cursor:pointer; color:red; font-family:sans-serif;">[back]</a>
+</div>

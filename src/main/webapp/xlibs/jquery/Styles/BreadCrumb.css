@@ -1,0 +1,119 @@
+/* Float Clearing
+ ---------------------------------------------------------------------*/
+
+.module:after
+{
+	clear: both;
+	content: ".";
+	display: block;
+	height: 0;
+	visibility: hidden;
+}
+/* float clearing for IE6 */
+* html .module
+{
+	height: 1%;
+	overflow: visible;
+}
+/* float clearing for IE7 */
+* + html .module
+{
+	min-height: 1%;
+}
+
+/* Breadcrumb Styles
+ ---------------------------------------------------------------------*/
+
+.breadCrumb
+{
+	margin: 0 0 10px 0;
+	padding: 0;
+	float: left;
+	display: block;
+	/*height: 26px;*/
+	overflow: hidden;
+	/*width: 990px;*/
+	/*width: 100%;*/
+	padding:2px;
+	border:solid 1px #dedede;
+	/*background:#fff;*/
+	background: #f8f7f6;
+}
+.breadCrumb ul
+{
+	margin: 0;
+	padding: 0px 0px 4px 0px;
+	/*padding: 4px 0px 4px 0px;
+	height: 22px;*/
+	display: block;
+}
+.breadCrumb ul li
+{
+	display: block;
+	float: left;
+	position: relative;
+	/*height: 16px;*/
+	overflow: hidden;
+	line-height: 18px;
+	vertical-align: middle;
+	margin: 0px 8px 0px 0;
+	padding: 0px 8px 0px 0;
+	/*font-size: .9167em;*/
+	font-size: 12px;
+	background: url(../Images/Chevron.gif) no-repeat 100% 0;
+}
+.breadCrumb ul li div.chevronOverlay
+{
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 2;
+}
+.breadCrumb ul li span
+{
+	display: block;
+	overflow: hidden;
+}
+.breadCrumb ul li a
+{
+	display: block;
+	position: relative;
+	/*height: 12px;
+	line-height: 12px;*/
+	vertical-align: middle;
+	overflow: hidden;
+	float: left;
+	padding: 0px 6px 0px 6px;
+	font-size: 10pt;
+	color: blue;
+}
+.breadCrumb ul li.first a
+{
+	height: 12px !important;
+	text-indent:-1000em;
+	width:12px;
+	padding: 0;
+	margin-top: 2px;
+	overflow: hidden;
+	background:url(../Images/IconHome.gif) no-repeat 0 0;
+}
+.breadCrumb ul li.first a:hover
+{
+	background-position: 0 -16px;
+}
+.breadCrumb ul li.last
+{
+	background: none;
+	margin-right: 0;
+	padding-right: 0;
+	font-size: 10pt;
+	font-weight: boldest;
+	color: #654b24;
+}
+.chevronOverlay
+{
+	display: none;
+	background: url(../Images/ChevronOverlay.png) no-repeat 100% 0;
+	width: 2px;
+	height: 22px;
+}

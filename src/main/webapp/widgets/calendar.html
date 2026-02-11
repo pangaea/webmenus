@@ -1,0 +1,110 @@
+<!--
+Copyright © 2004-2005 Kevin Jacovelli
+All Rights Reserved
+-->
+
+<html>
+	<head>
+		<title>Calendar View</title>
+		<script type="text/javascript" src="../includes/calendar.js"></script>
+		<link rel="stylesheet" type="text/css" href="../styles/calendar.css"></link>
+<style>
+body
+{
+	border: 0px outset black;
+	margin: 0px;
+}
+</style>
+
+		<script language="JavaScript">
+		var outputElem;
+
+		var g_calendar;
+
+		function GetParam( sName )
+		{
+			var sSearch = window.location.search;
+			sSearch = sSearch.substr( 1, sSearch.length-1 );
+			var aParams = sSearch.split( "&" );
+			for( var i = 0; i < aParams.length; i++ )
+			{
+				var aParam = aParams[i].split( "=" );
+				if( sName == aParam[0] )
+				return unescape( aParam[1] );
+			}
+			return null;
+		}
+
+		function initData()
+		{
+			// Render main calender
+			g_calendar = new RenderMonth(document.getElementById("calendarBlock"));
+			g_calendar.setEventSelectDay( updateSelection );
+			//g_calendar.setEventNavigateMonth( updateCalendar );
+			g_calendar.drawMonth(10, 160);
+		}
+/*
+		function updateCalendar( parmMonth, parmYear )
+		{
+		}
+*/
+		function setCurrentValue( newVal )
+		{
+			var dateval = newVal;
+			if( dateval.length == 0 )
+			{
+				// Determine current date
+				dateval = getCurrentDate();
+			}
+
+			var objRegExp = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
+
+			//check to see if in correct format
+			if(objRegExp.test(dateval))
+			{
+				var arrayDate = dateval.split('/'); 
+				//alert("setCurrentValue:"+arrayDate[0]+"/"+arrayDate[1]+"/"+arrayDate[2]);
+				g_calendar.showingMonth = arrayDate[0];
+				g_calendar.showingDay = arrayDate[1];
+				g_calendar.showingYear = arrayDate[2];
+				g_calendar.drawMonth(10, 160, parseInt(arrayDate[0]), parseInt(arrayDate[2]));
+			}
+		}
+
+		function updateSelection()
+		{
+			// Correct for single digit month / day
+			var mon = (String)(g_calendar.showingMonth);
+			var day = (String)(g_calendar.showingDay);
+			if( mon.length == 1 ) mon = "0" + mon;
+			if( day.length == 1 ) day = "0" + day;
+			
+			var calVal = (String)(mon) + "/" + (String)(day) + "/" + g_calendar.showingYear;
+			outputElem.value = calVal;
+		}
+
+		</script>
+
+		</head>
+
+	<body id="view_obj_body" onload="initData();">
+		<table width="100%" border="0">
+			<tr>
+				<td align="left">
+					<span id="viewTitle" style="font:10pt Verdana;"></span>
+				</td>
+			</tr>
+			<tr>
+				<td width="100%" align="center" valign="top" height="100%">
+					<table align="center" width="100%">
+					<tr>
+						<td width="50%" align="center" valign="top">
+							<div id="calendarBlock" align="center" height="160px" width="100%"></div>
+						</td>
+					</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

@@ -1,0 +1,79 @@
+/*This is rule 0 */
+div.menu
+{
+	color: menutext;
+	background-color: #CCCDFE;
+	border-style: solid;
+	border-width: 1px;
+	border-top-color: white;
+	border-left-color: white;
+	border-bottom-color: black;
+	border-right-color: black;
+	width: 100%;
+	font-family: verdana;
+}
+
+/*This is rule 1 */
+td.menu_sel
+{
+	color: white;
+	cursor: default;
+	padding-left:10px;
+	padding-right:10px;
+	font-size:8pt;
+	background-color: #659ECF;
+	border:1px outset #CCCDFE;
+}
+
+/*This is rule 2 */
+div.dropdownmenu
+{
+	color: menutext;
+	position: absolute;
+	background-color: #CCCDFE;
+	border-style: solid;
+	border-width: 1px;
+	border-top-color: white;
+	border-left-color: white;
+	border-bottom-color: black;
+	border-right-color: black;
+	visibility: hidden;
+	width: auto;
+	text-align: left;
+	font-size: 8pt;
+}
+
+/*This is rule 3 */
+td.dropdownmenuitem_over
+{
+	color: white;
+	cursor: default;
+	background-color: #659ECF;
+	font-size: 8pt;
+}
+
+/*This is rule 4 */
+td.dropdownmenuitem_down
+{
+	color: menutext;
+	background-color: #CCCDFE;
+}
+
+/*This is rule 5 */
+td.menuitem
+{
+	color: menutext;
+	background-color: #CCCDFE;
+	padding-left:10px;
+	padding-right:10px;
+	font-size:8pt;
+	border:1px solid #CCCDFE;
+}
+
+/*This is rule 6 */
+td.menuitem_sel
+{
+	color: white;
+	cursor: default;
+	background-color: #659ECF;
+}

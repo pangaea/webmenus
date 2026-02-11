@@ -1,0 +1,114 @@
+/***********************/
+/***** RESET RULES *****/
+/***********************/
+body, div, h1, h2, h3, h4, h5, h6, img, ul, li, p, small, blockquote{ margin:0; padding:0; }
+h1,h2,h3,h4,h5,h6{ font-family:Georgia, "Times New Roman", Times, serif; }
+img{ border:none; }
+input, textarea{ font-family:Arial, Helvetica, sans-serif; }
+
+/*************************/
+/***** GENERAL RULES *****/
+/*************************/
+html{ height:100%; margin-bottom:1px; }
+body{ text-align:center; color:#fff; font-family:Arial, Helvetica, sans-serif; background: #062134; height:100%; }
+.clear_float{ clear:both; font-size:1px; height:1px; }
+
+/************************/
+/***** Header rules *****/
+/************************/
+#header_left{ position:absolute; top:0; right:70%; width:100%; height:70px; z-index:0; }
+#header{ position:relative; margin:0 auto; padding:0; width:955px; height:70px; }
+
+/* Logo */
+#header h1{ margin:59px 0 0 25px; float:left; display:inline; }
+#header h1 a{ outline:none;
+    text-decoration: none;
+    color: #ffffff;
+    font: normal normal normal 30px/1.2em Tahoma,tahoma-w01-regular,tahoma-w02-regular,tahoma-w10-regular,tahoma-w15--regular,tahoma-w99-regular,sans-serif;
+}
+
+/* Languge switcher */
+#header #language{ padding:10px 35px 0 0; display:block; text-align:right; }
+#header #language a{ color:#398db7; font-size:12px; text-decoration:none; }
+#header #language a:hover{ color:#34435e; }
+
+/***** MENU *****/
+#header ul{ height:22px; font-size:14px; font-weight:bold; line-height:22px;
+            float:right; display:inline; position:relative;
+            margin: 40px 20px 0 0;
+            font: normal normal normal 16px/1.2em Arial,'ｍｓ ｐゴシック','ms pgothic','돋움',dotum,helvetica,sans-serif;  }
+#header ul li{ margin:0; padding:5px 5px 0 2px; height:22px; float:left; display:inline; position:relative;     }
+#header ul li a{ color:#fff; text-decoration:none; display:block; padding:2px 8px; margin-top:-4px;}
+/* JAVASCRIPT HANDLES THIS
+#header ul li a:hover, #header ul li a:active{ background-color:#619bbd; }
+*/
+#header ul .hover_active a:hover{ color:#fff; }
+#header ul li a.active{ background-color:#266382; }
+
+/***********************/
+/***** LAYOUT RULES *****/
+/***********************/
+div#wrapper {
+    /*width: 90%;*/
+    width: 952px;
+    overflow-x: hidden;
+    /*background-color:#FFFFFF;*/
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0px;
+    /*border: thin solid #000000;*/
+}
+/*
+div#header {
+    padding: 15px;
+    margin: 0px;
+    text-align: center;
+}
+*/
+div#nav {
+    width: 25%;
+    padding: 10px;
+    margin-top: 1px;
+    float: left;
+}
+div.nav_button {
+    /*border: 1px solid brown;*/
+    background: navy;
+    color: white;
+    width: 200px;
+    /*margin: 2px;*/
+    font: 12pt Verdana;
+}
+div.nav_button:hover {
+    color: green;
+}
+div#main {
+    margin-top: 1px;
+    padding: 10px;
+    text-align: left;
+    background: #ffffff;
+    color : rgba(20, 104, 168, 1);
+}
+div#footer {
+    float: left;
+    /*padding: 4px 4px 4px 4px;*/
+    /*border-top: thin solid #000000;*/
+    text-align: center;
+    /*margin-left: 40px;*/
+    width: 100%;
+    line-height: 50px;
+    vertical-align: middle;
+    background-color: rgba(218, 237, 255, 1.0);
+    position: relative;
+    top: -1px;
+    color : rgba(20, 104, 168, 1);
+}
+
+div#footer a{
+    color : rgba(20, 104, 168, 1);
+    background-color : transparent;
+    text-decoration : none;
+    font: normal normal normal 14px/1.2em Arial,'ｍｓ ｐゴシック','ms pgothic','돋움',dotum,helvetica,sans-serif;  }
+}

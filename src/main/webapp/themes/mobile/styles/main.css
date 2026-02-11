@@ -1,0 +1,48 @@
+.menuItemTitle
+{
+	font: normal bolder 14pt Arial;
+	font-weight: bold;
+	text-align: left;
+	width: 100%;
+	padding-bottom: 4px;
+}
+.menuButton
+{
+	font: normal bolder 9pt Arial;
+	color: blue;
+}
+.menuItemDesc
+{
+	font: normal bolder 10pt Arial;
+	color: black;
+	font-weight: bold;
+	text-align: left;
+	width: 100%;
+}
+.menuItemPrices
+{
+	font: normal bolder 9pt Arial;
+	color: #2F3E46
+}
+.menuOptions
+{
+	padding-top: 4px;
+	border-top: 1px solid #C0C0C0;
+	font: normal 8pt Arial;
+	color: #2F3E46
+	text-align: left;
+	width: 100%;
+}
+.optionTitle
+{
+	font-size:12pt;
+	font-weight: bold;
+}
+
+.itemPrice
+{
+	text-align:right;
+	font-weight: bold;
+	font-size:14pt;
+	
+}

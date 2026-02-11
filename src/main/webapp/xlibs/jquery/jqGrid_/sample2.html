@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html >
+<!--http://www.trirand.com/blog/-->
+<head>
+<link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui-1.7.1.custom.css" /> 
+<link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" /> 
+
+
+<script src="js/jquery.js" type="text/javascript"></script> 
+<script src="js/jquery-ui-1.7.1.custom.min.js" type="text/javascript"></script> 
+<script src="js/jquery.layout.js" type="text/javascript"></script> 
+<script src="js/i18n/grid.locale-en.js" type="text/javascript"></script> 
+<script src="js/jquery.jqGrid.min.js" type="text/javascript"></script> 
+<script src="js/jquery.tablednd.js" type="text/javascript"></script> 
+<script src="js/jquery.contextmenu.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+var lastsel;
+
+jQuery().ready(function (){
+    jQuery("#list1").jqGrid({
+   	    //url:'data.xml',
+	    datatype: "xml",
+   	    //colNames:['Inv No','Date', 'Client', 'Amount','Tax','Total','Notes'],
+   	    colModel:[
+   		    {name:'id', index:'id', label: 'Inv No', hidden:true, key:true},
+   		    {name:'invdate', index:'invdate', label: 'Date', width:90},
+   		    {name:'name', index:'name', label: 'Client', width:100},
+   		    {name:'amount', index:'amount', label: 'Amount', width:80, align:"right"},
+   		    {name:'tax', index:'tax', label: 'Tax', width:80, align:"right"},		
+   		    {name:'total', index:'total', label: 'Total', width:80,align:"right"},		
+   		    {name:'note', index:'note', label: 'Notes', width:150, sortable:false}		
+   	    ],
+   	    rowNum:10,
+   	    autowidth: true,
+   	    rowList:[10,20,30],
+   	    pager: jQuery('#pager1'),
+   	    sortname: 'id',
+        viewrecords: true,
+        sortorder: "desc",
+        caption:"XML Example",
+        onSelectRow: function(id){
+		    if(id && id!==lastsel){
+			    jQuery('#list1').restoreRow(lastsel);
+			    jQuery('#list1').editRow(id,true);
+			    lastsel=id;
+			    alert(id);
+		    }
+	    },
+	    onSortCol: function(index, colindex, sortorder){
+		    alert(index +"-"+ colindex +"-"+ sortorder);
+	    }
+    }).navGrid('#pager1',{edit:false,add:false,del:false});
+    
+//    jQuery("#a2").click( function(){
+//	    var id = jQuery("#list1").getGridParam('selrow');
+//	    if (id)	{
+//		    var ret = jQuery("#list1").getRowData(id);
+//		    alert("id="+ret.id+" invdate="+ret.invdate+"...");
+//	    } else { alert("Please select row");}
+//    });
+    jQuery("#list1").addRowData(200, {  invdate:    "12/12/09",
+                                        name:       "test",
+                                        amount:     "12.00",
+                                        tax:        "8.00",
+                                        total:      "20.00",
+                                        note:       "test note"
+                                        });
+                                        
+    jQuery("#list1").addRowData(201, {  invdate:    "12/12/09",
+                                        name:       "test2",
+                                        amount:     "12.00",
+                                        tax:        "8.00",
+                                        total:      "20.00",
+                                        note:       "test note"
+                                        });
+                                        
+    jQuery("#list1").addRowData(202, {  invdate:    "12/12/09",
+                                        name:       "test3",
+                                        amount:     "12.00",
+                                        tax:        "8.00",
+                                        total:      "20.00",
+                                        note:       "test note"
+                                        });
+});
+
+</script> 
+
+</head>
+<body>
+<table id="list1"></table>
+<div id="pager1" class="scroll"></div>
+</body>
+</html>

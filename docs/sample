@@ -1,0 +1,17 @@
+  <Host name="localhost"  appBase="webapps"
+        unpackWARs="true" autoDeploy="true"
+        xmlValidation="false" xmlNamespaceAware="false">
+
+<Context path="/webmenus" docBase="/home/kevin/Genesys/webmenus" reloadable="true" crossContext="true" />
+    <!--
+    <Valve className="org.apache.catalina.authenticator.SingleSignOn" />
+    -->
+
+    <!-- Access log processes all example.
+         Documentation at: /docs/config/valve.html -->
+    <!--
+    <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"  
+           prefix="localhost_access_log." suffix=".txt" pattern="common" resolveHosts="false"/>
+    -->
+
+  </Host>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE taglib
+	PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN"
+	"http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+    
+<taglib>
+<tlibversion>1.0</tlibversion>
+<jspversion>1.1</jspversion>
+<shortname>Genesys</shortname>
+<uri>/</uri>
+<info>Genesys Tag Extension Library.</info>
+
+<tag>
+<name>GuestUser</name>
+<tagclass>com.genesys.webmenus.tagext.GuestUser</tagclass>
+<bodycontent>JSP</bodycontent>
+<info>GuestUser Custom Tag</info>
+</tag>
+
+<tag>
+<name>EnumMenus</name>
+<tagclass>com.genesys.webmenus.tagext.EnumMenus</tagclass>
+<teiclass>com.genesys.webmenus.tagext.EnumMenusExtraInfo</teiclass>
+<bodycontent>JSP</bodycontent>
+<info>EnumMenus Custom Tag</info>
+<attribute>
+	<name>locId</name>
+	<required>true</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute>
+</tag>
+
+<tag>
+<name>EnumCategories</name>
+<tagclass>com.genesys.webmenus.tagext.EnumCategories</tagclass>
+<teiclass>com.genesys.webmenus.tagext.EnumCategoriesExtraInfo</teiclass>
+<bodycontent>JSP</bodycontent>
+<info>EnumCategories Custom Tag</info>
+<attribute>
+	<name>menuId</name>
+	<required>true</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute>
+</tag>
+
+<tag>
+<name>EnumItems</name>
+<tagclass>com.genesys.webmenus.tagext.EnumItems</tagclass>
+<teiclass>com.genesys.webmenus.tagext.EnumItemsExtraInfo</teiclass>
+<bodycontent>JSP</bodycontent>
+<info>EnumItems Custom Tag</info>
+<attribute>
+	<name>categoryId</name>
+	<required>false</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute>
+<attribute>
+	<name>itemId</name>
+	<required>false</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute>
+</tag>
+
+<tag>
+<name>MenuItemSize</name>
+<tagclass>com.genesys.webmenus.tagext.MenuItemSize</tagclass>
+<teiclass>com.genesys.webmenus.tagext.MenuItemSizeExtraInfo</teiclass>
+<bodycontent>JSP</bodycontent>
+<info>MenuItemSize Custom Tag</info>
+<attribute>
+	<name>itemSizeId</name>
+	<required>true</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute>
+</tag>
+
+<tag>
+<name>EnumItemSizes</name>
+<tagclass>com.genesys.webmenus.tagext.EnumItemSizes</tagclass>
+<teiclass>com.genesys.webmenus.tagext.EnumItemSizesExtraInfo</teiclass>
+<bodycontent>JSP</bodycontent>
+<info>EnumItemSizes Custom Tag</info>
+<attribute>
+	<name>itemId</name>
+	<required>false</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute>
+</tag>
+
+<tag>
+<name>EnumItemOptions</name>
+<tagclass>com.genesys.webmenus.tagext.EnumItemOptions</tagclass>
+<teiclass>com.genesys.webmenus.tagext.EnumItemOptionsExtraInfo</teiclass>
+<bodycontent>JSP</bodycontent>
+<info>EnumItemOptions Custom Tag</info>
+<attribute>
+	<name>itemId</name>
+	<required>false</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute>
+</tag>
+
+
+<tag>
+<name>EnumSchedules</name>
+<tagclass>com.genesys.webmenus.tagext.EnumSchedules</tagclass>
+<teiclass>com.genesys.webmenus.tagext.EnumSchedulesExtraInfo</teiclass>
+<bodycontent>JSP</bodycontent>
+<info>EnumSchedules Custom Tag</info>
+<attribute>
+	<name>credentials</name>
+	<required>true</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute>
+</tag>
+
+<tag>
+<name>EnumThemes</name>
+<tagclass>com.genesys.webmenus.tagext.EnumThemes</tagclass>
+<teiclass>com.genesys.webmenus.tagext.EnumThemesExtraInfo</teiclass>
+<bodycontent>JSP</bodycontent>
+<info>EnumThemes Custom Tag</info>
+<attribute>
+	<name>credentials</name>
+	<required>true</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute>
+</tag>
+
+</taglib>

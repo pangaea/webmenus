@@ -1,0 +1,208 @@
+a::link
+{
+	color: darkblue;
+}
+a::visited
+{
+	color: darkblue;
+}
+a::hover
+{
+	color: darkblue;
+}
+
+#menuBody
+{
+	text-align: center;
+}
+
+#frame
+{
+	/*padding:0px 4px 0px 4px;*/
+	background-color: #FFFFF8;
+	position: relative;
+	text-align: left;
+}
+#menuHeader
+{
+	/*margin: 10px;*/
+}
+#menuFooter
+{
+}
+#menuTree
+{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 200px;
+	background-color: #FFFFF8;
+}
+#menuMenu
+{
+}
+#menuContent
+{
+	color: black;
+	background-color: #FFFFF8;
+	filter:shadow(color:gray, strength:10, direction:135);
+}
+
+.patronLoginTitle
+{
+	font: normal bolder 16pt Arial;
+	color: navy;
+}
+
+.patronLoginLabel
+{
+	font: normal bolder 9pt Arial;
+	color: brown;
+}
+
+.pageSeperator hr
+{
+	background-color:red;
+	height:4px;
+}
+
+.pageSeperator span
+{
+	color: red;
+	font: 12pt arial;
+	font-weight: bold;
+}
+
+.menuItemContainter
+{
+}
+.menuTitle
+{
+	font: normal bolder 20pt Arial;
+	color: blue;
+	text-align: left;
+	width: 100%;
+}
+.menuItem
+{
+	text-align: left;
+}
+.menuContent
+{
+	color: black;
+	padding: 10px;
+	background-color: #FFFFF8;
+	filter:shadow(color:gray, strength:10, direction:135);
+}
+.categoryTitle
+{
+	font: normal bolder 16pt Arial;
+	color: white;
+	text-align: center;
+	width: 100%;
+	background-color: navy;
+}
+.menuItemTitle
+{
+	font: normal bolder 14pt Arial;
+	color: brown;
+	text-align: left;
+	width: 100%;
+}
+.menuButton
+{
+	font: normal bolder 9pt Arial;
+	color: blue;
+}
+.menuItemDesc
+{
+	font: normal bolder 10pt Arial;
+	color: black;
+	font-weight: bold;
+	text-align: left;
+	width: 100%;
+}
+.menuItemPrices
+{
+	font: normal bolder 9pt Arial;
+	color: brown;
+}
+.menuOptions
+{
+	border-top: 1px solid chocolate;
+	font: normal 8pt Arial;
+	color: chocolate;
+	text-align: left;
+	width: 100%;
+}
+
+/*
+	STYLES for menuitemview.jsp
+*/
+.ItemTitle
+{
+	font: normal bolder 16pt Arial;
+}
+.ItemDesc
+{
+	font: normal 12pt Arial;
+}
+#itemOptionsTable
+{
+	width: 100%;
+}
+#itemOptionsTable th
+{
+	font: normal bold 10pt Verdana;
+	text-align: left;
+	color: brown;
+	white-space:nowrap;
+	
+}
+#itemOptionsTable td
+{
+	font: normal 10pt Verdana;
+	border: 0px solid black;
+	text-align: left;
+	width: 100%;
+}
+.OptionsTitle
+{
+	font: normal bolder 10pt Arial !important;
+	background-color: #AFB1F3;
+	color: black !important;
+	text-align: left !important;
+}
+#itemTable
+{
+	color: black;
+	width: 100%;
+}
+#itemTable th
+{
+	font: normal bolder 12pt Arial;
+}
+#itemTable td
+{
+	font: normal 12pt Arial;
+	border: 1px solid black;
+	text-align: right;
+}
+
+.enabled_yes
+{
+	background-color: #FFFFF8;
+	border: 1px groove;
+}
+
+.enabled_no
+{
+	background-color: lightgrey;
+	border: 1px groove;
+}
+
+span.alert
+{
+	font-size: 12pt;
+	color: red;
+}

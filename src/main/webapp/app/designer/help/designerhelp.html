@@ -1,0 +1,274 @@
+<div>
+<style type="text/css">
+img{width:100%;height:auto;}
+</style>
+<center>
+<span>chowMagic</span>
+<h2>Menu Designer - User Manual</h2>
+</center>
+<hr>
+<a name="top"></a>
+<ol type="I">
+<li><a href="#about">About Menu Designer</a></li>
+<li><a href="#concepts">Basic Concepts</a></li>
+	<ol>
+		<li><a href="#location">Location</a></li>
+		<li><a href="#menu">Menus</a></li>
+		<li><a href="#category">Categories</a></li>
+		<li><a href="#item">Items</a></li>
+		<li><a href="#option">Options</a></li>
+		<li><a href="#portion">Portions</a></li>
+	</ol>
+<li><a href="#instructions">Step-by-Step Instructions</a></li>
+	<ol>
+		<li><a href="#create_menu">Create Menu</a></li>
+		<li><a href="#create_category">Creating a Category</a></li>
+		<li><a href="#create_item">Creating a Item</a></li>
+		<li><a href="#create_option">Creating a Option</a></li>
+		<li><a href="#create_portion">Creating an Additional Portion</a></li>
+		<li><a href="#delete_object">Deleting Objects</a></li>
+		<li><a href="#preview_menus">Preview Menus</a></li>
+		<li><a href="#save_changes">Saving Changes</a></li>
+	</ol>
+</ol>
+
+<hr/>
+
+<a name="about"></a><h2 class="h2"><u>I. About Menu Designer</u></h2>
+<p>
+The Menu Designer is a tool for designing, maintaining and deploying restaurant menus. It's really simple to use and provides an intuitive interface.  You'll be on your way in minutes.
+</p>
+<p>
+With the Menu Designer you'll have the ability to preview changes before they are applied to the server, like a true development platform.
+</p>
+
+<hr/>
+
+<a name="concepts"></a><h2 class="h2"><u>II. Basic Concepts</u></h2>
+<ol>
+
+
+<a name="location"></a><li><h3>Location</h3></li>
+<p>
+The "Menu Designer" tool manages menus based on location.  A "Location" describes a physical restaurant location or (in it's
+simplest form) a collection of "Menus".
+</p>
+<p>
+	
+<table border="1" cellpadding="10" cellspacing="0"> 
+  <thead> 
+    <tr> 
+      <th><b>Location / Menu Hierarchy</b></th> 
+    </tr> 
+  </thead> 
+  <tbody> 
+    <tr> 
+      <td>
+<pre>
+Location
+   |
+   +-- Menu(s)
+        |
+        +-- Category(s)
+               |
+               +-- Item(s)
+                    |
+                    +-- Option(s)
+                    |
+                    +-- Portion(s) - additional
+</pre>
+</td> 
+    </tr> 
+  </tbody> 
+</table>
+</p>
+
+<br/><a href="#top">Back to table of content</a><br/>
+
+<a name="menu"></a><li><h3>Menus</h3></li>
+<p>
+A "Menu" represents a basic restaurant menu which contains food or beverage choices (i.e. Lunch, Dinner, Dessert, etc...).  A "Menu" can be turned on or off on
+a schedule (available via the main console).
+</p>
+
+<img src="help/images/fields_menu.png"/>
+<table>
+<tr>
+<th align="left">Name:</th><td><em>The name of the menu used for display</em></td>
+</tr><tr>
+<th align="left">Hidden:</th><td><em>Check this option to hide the menu from public view</em></td>
+</tr>
+</table>
+
+<br/><a href="#top">Back to table of content</a><br/>
+
+<a name="category"></a><li><h3>Categories</h3></li>
+<p>
+A "Category" is used to describe a sub-section of a "Menu" (i.e. Appetizers, Salads, etc...).
+</p>
+
+<img src="help/images/fields_category.png"/>
+<table>
+<tr>
+<th align="left">Name:</th><td><em>The name of the category used for display</em></td>
+</tr><tr>
+<th align="left">Hidden:</th><td><em>Check this option to hide the category from public view</em></td>
+</tr>
+</table>
+
+<br/><a href="#top">Back to table of content</a><br/>
+	
+	
+<a name="item"></a><li><h3>Items</h3></li>
+<p>
+A menu "Item" is used to describe a food or beverage item (i.e. Grilled Cheese, Chicken Soup, etc...).
+</p>
+
+<img src="help/images/fields_item.png"/>
+<table>
+<tr>
+<th align="left">Name:</th><td><em>The name of the menu used for display</em></td>
+</tr><tr>
+<th align="left">Description:</th><td><em>Detailed description of item</em></td>
+</tr><tr>
+<th align="left">Hidden:</th><td><em>Check this option to hide the menu from public view</em></td>
+</tr><tr>
+<th align="left">Image:</th><td><em>Image, from "Image Library"<sup>2</sup>, associated with the item</em></td>
+</tr><tr>
+<th align="left">Portions:</th><td><em>Portions associated with the item</em></td>
+</tr>
+</table>
+
+<br/><a href="#top">Back to table of content</a><br/>
+	
+	
+<a name="option"></a><li><h3>Options</h3></li>
+<p>
+An "Option" describes a choice given to the patrol when ordering an item (i.e. Hot Sauce, Extra Cheese, etc...).  There are different
+types of options which can be used and each can be associated with specific price.
+</p>
+
+<img src="help/images/fields_option.png"/>
+<table>
+<tr>
+<th align="left">Name:</th><td><em>The name of the menu used for display</em></td>
+</tr><tr>
+<th align="left">Type:</th><td><em>Select: Choose any option, Select-One: Choose single option</em></td>
+</tr><tr>
+<th align="left">Price:</th><td><em>Price associated with each selected option</em></td>
+</tr><tr>
+<th align="left">Hidden:</th><td><em>Check this option to hide the menu from public view</em></td>
+</tr><tr>
+<th align="left">Data:</th><td><em>Selections associated with this option. To create multiple selections enter them one per line</em></td>
+</tr>
+</table>
+
+<br/><a href="#top">Back to table of content</a><br/>
+
+<a name="portion"></a><li><h3>Portions</h3></li>
+<p>
+A "Portion" is a term used to describe the different sizes available for a selected item (Small, Large, etc...).  There is
+a single portion automatically associated with every item but additional portions can be associated with a single item, essentially creating
+many versions of that item.
+</p>
+
+
+</ol>
+
+<hr/>
+
+<a name="instructions"></a><h2 class="h2"><u>II. Step-by-Step Instructions</u></h2>
+<ol>
+
+<a name="create_menu"></a><li><h3>Creating a Menu</h3></li>
+<p>
+Create a new menu by clicking the "Create Menu" button on the toolbar<sup>1</sup>.  This will put a menu under the
+"Menus" node called "New Menu".  By clicking on the new menu item you can change the name and other properties.
+<br/>
+<img src="help/images/image01.png"/>
+</p>
+
+<br/><a href="#top">Back to table of content</a><br/>
+
+<a name="create_category"></a><li><h3>Creating a Category</h3></li>
+<p>
+Create a new category by first clicking on a "Menu".  Then click the "Create New Category" button
+on the "Menu" properties page<sup>1</sup>.  This will put a category under the selected "Menu" called "New Category".
+By clicking on the new category you can change the name and other properties.
+<br/>
+<img src="help/images/image02.png"/>
+</p>
+
+<br/><a href="#top">Back to table of content</a><br/>
+
+<a name="create_item"></a><li><h3>Creating a Item</h3></li>
+<p>
+Create a new item by first clicking on a "Category".  Then click the "Create New Item" button
+on the "Category" properties page<sup>1</sup>.  This will put a item under the selected "Category" called "New Item".
+By clicking on the new item you can change the name and other properties.
+<br/>
+<img src="help/images/image03.png"/>
+</p>
+
+<br/><a href="#top">Back to table of content</a><br/>
+
+<a name="create_option"></a><li><h3>Creating a Option</h3></li>
+<p>
+Create a new option by first clicking on an "Item".  Then click the "Create New Option" button
+on the "Item" properties page<sup>1</sup>.  This will put a option under the selected "Item" called "New Option".
+By clicking on the new option you can change the name and other properties.
+<br/>
+<img src="help/images/image04.png"/>
+</p>
+
+<br/><a href="#top">Back to table of content</a><br/>
+
+<a name="create_portion"></a><li><h3>Creating an Additional Portion</h3></li>
+<p>
+Create a new option by first clicking on an "Item".  Then click the "Add Portion" button
+on the bottom of the "Item" properties page.  This will add a new portion to the list.  The order of
+the list can be changed by dragging and dropping.  They can be deleted by clicking on the red "X".
+<br/>
+<img src="help/images/image05.png"/>
+</p>
+
+<br/><a href="#top">Back to table of content</a><br/>
+
+<a name="delete_object"></a><li><h3>Deleting Objects</h3></li>
+<p>
+To delete any of the above objects simply click on the object (i.e. Menu, Category, Item, or Option) and click the
+"Delete Selected" button in the toolbar<sup>1</sup>.
+<br/>
+<img src="help/images/image06.png"/>
+</p>
+
+<br/><a href="#top">Back to table of content</a><br/>
+
+<a name="preview_menus"></a><li><h3>Preview Menus</h3></li>
+<p>
+To preview the menus with the designer you can click the "Preview All Menus" button in the toolbar.  This will
+allow for viewing of the latest changes before saving them to the server.
+<br/>
+<img src="help/images/image07.png"/>
+</p>
+
+<br/><a href="#top">Back to table of content</a><br/>
+
+<a name="save_changes"></a><li><h3>Saving Changes</h3></li>
+<p>
+To save your changes to the server you can click the "Save Changes" button in the toolbar.  This will
+commit all the changes made in the Menu Designer back to the server.  IMPORTANT: If changes are made by
+one user while another user is working in the designer the changes may be overwritten.
+<br/>
+<img src="help/images/image08.png"/>
+</p>
+
+<br/><a href="#top">Back to Table of content</a><br/>
+<hr/>
+<sup>1</sup> <em>This operation is also available through context menus</em><br/>
+<sup>2</sup> <em>Image Library is available in the main console</em>
+</ol>
+
+
+
+</div>

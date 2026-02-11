@@ -1,0 +1,78 @@
+*Install Git*
+
+~~~
+sudo apt-get install git
+~~~
+
+*Clone webMenus Repo*
+
+
+~~~
+git clone https://kjacovelli@bitbucket.org/kjacovelli/webmenus.git
+~~~
+
+*Mysql Setup*
+
+Create database 'webmenus'
+
+Run the following scripts to setup the database...
+
+
+~~~
+webmenus/WEB-INF/sql/mysql/schema.sql
+webmenus/WEB-INF/sql/mysql/main_seed.sql
+webmenus/WEB-INF/sql/mysql/webmenus_seed.sql
+~~~
+
+*Install JDK*
+
+
+~~~
+sudo apt-get install openjdk-8-jdk
+~~~
+
+*Install ANT*
+
+
+~~~
+sudo apt-get install ant
+~~~
+
+*Install Tomcat 7*
+
+
+~~~
+sudo apt-get install tomcat7
+~~~
+
+*Setup environment variables for DEV*
+
+Create file _*setenv.sh*_ in the Tomcat bin directory.
+Set variables in this file (eg):
+
+
+~~~ 
+export GENESYS_ENV=development
+export GENESYS_HOME=/home/kevin/projects/webmenus/
+~~~
+
+*Setup AWS*
+
+Install and set aws:
+~~~
+sudo apt install awscli
+aws configure
+~~~
+
+Might have to copy user ~/.aws credentials directory to /usr/share/tomcat7 for Tomcat.
+
+*Enable API for Tomcat*
+
+Edit server.xml to uncomment
+
+~~~
+<Host name="chowmagic.dev" appBase="/home/kevin/projects" unpackWARs="false">
+   <Context path="/webmenus" reloadable="true" docBase="webmenus" debug="1"/>
+</Host>
+<Connector port="8009" protocol="AJP/1.3" redirectPort="8443" />
+~~~

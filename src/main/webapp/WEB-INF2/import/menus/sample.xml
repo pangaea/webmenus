@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<location >
+
+<menu name="Lunch" index="0" show_options="N" hidden="N" >
+
+<category name="Appetizers" index="0" hidden="N" >
+<item index="0" hidden="N" >
+<name ><![CDATA[Garlic knots]]></name>
+<description ><![CDATA[Delicious knots of herb-seasoned bread.
+They melt in your mouth...]]></description>
+<image ><![CDATA[/public/garlic_knots.jpg]]></image>
+<options ></options>
+<portions >
+<size price="1.5" index="0" ><![CDATA[1/2 Dozen]]></size>
+<size price="3" index="1" ><![CDATA[1 Dozen]]></size>
+</portions>
+</item>
+<item index="3" hidden="N" >
+<name ><![CDATA[Wings]]></name>
+<description ><![CDATA[Cajun or Buffalo style served with blue cheese & celery sticks]]></description>
+<image ><![CDATA[/public/Wings.jpg]]></image>
+<options >
+<option name="Sauce" price="0.5" type="select" index="0" hidden="N" ><![CDATA[Hot sauce]]></option>
+</options>
+<portions >
+<size price="6.95" index="0" ><![CDATA[7 wings]]></size>
+<size price="11.95" index="1" ><![CDATA[14 wings]]></size>
+<size price="14.95" index="2" ><![CDATA[21 wings]]></size>
+</portions>
+</item>
+</category>
+
+<category name="Salads" index="1" hidden="N" >
+<item index="0" hidden="N" >
+<name ><![CDATA[Italian Salad]]></name>
+<description ><![CDATA[Mixed chopped lettuce, chopped tomatoes, garbanzos, zucchini, carrots, pepperoncini, olives, and cheese chopped fine, with our house italian dressing.]]></description>
+<image ><![CDATA[/public/italian_salad.jpg]]></image>
+<options ></options>
+<portions >
+<size price="4" index="0" ><![CDATA[Small]]></size>
+<size price="5.95" index="1" ><![CDATA[Large]]></size>
+</portions>
+</item>
+<item index="1" hidden="N" >
+<name ><![CDATA[Greek Salad]]></name>
+<description ><![CDATA[Lettuce, feta cheese, kalamata olives, pepperoncinis, roasted red peppers, green onion, cucumber and tomatoes served with our tangy greek dressing.]]></description>
+<image ><![CDATA[/public/greek_salad.jpg]]></image>
+<options ></options>
+<portions >
+<size price="4.95" index="0" ><![CDATA[Small]]></size>
+<size price="6.95" index="1" ><![CDATA[Large]]></size>
+</portions>
+</item>
+</category>
+
+<category name="Pizza" index="3" hidden="N" >
+<item index="0" hidden="N" >
+<name ><![CDATA[Large Neapolitan Pizza]]></name>
+<description ><![CDATA[]]></description>
+<image ><![CDATA[/public/neapolitan_pizza.jpg]]></image>
+<options >
+<option name="Toppings-Half (Right)" price="1.50" type="select" index="0" hidden="N" ><![CDATA[Sausage
+Meatball
+Mushroom
+Onion
+Pepperoni]]></option>
+<option name="Toppings-Half (Left)" price="1.50" type="select" index="1" hidden="N" ><![CDATA[Sausage
+Meatball
+Mushroom
+Onion
+Pepperoni]]></option>
+<option name="Toppings-Whole" price="3.00" type="select" index="2" hidden="N" ><![CDATA[Sausage
+Meatball
+Mushroom
+Onion
+Pepperoni
+Extra Cheese]]></option>
+</options>
+<portions >
+<size price="11.5" index="0" ><![CDATA[]]></size>
+</portions>
+</item>
+<item index="1" hidden="N" >
+<name ><![CDATA[Large Sicilian Pizza]]></name>
+<description ><![CDATA[]]></description>
+<image ><![CDATA[/public/sicilian_pizza.jpg]]></image>
+<options >
+<option name="Toppings-Half (Left)" price="1.50" type="select" index="0" hidden="N" ><![CDATA[Sausage
+Meatball
+Mushroom
+Onion
+Pepperoni]]></option><option name="Toppings-Half (Right)" price="1.50" type="select" index="1" hidden="N" ><![CDATA[Sausage
+Meatball
+Mushroom
+Onion
+Pepperoni]]></option><option name="Toppings-Whole" price="3.00" type="select" index="2" hidden="N" ><![CDATA[Sausage
+Meatball
+Mushroom
+Onion
+Pepperoni
+Extra Cheese]]></option>
+</options>
+<portions >
+<size price="12.5" index="0" ><![CDATA[]]></size>
+</portions>
+</item>
+</category>
+
+</menu>
+
+<menu name="Children" index="1" show_options="N" hidden="N" >
+
+<category name="Children" index="0" hidden="N" >
+<item index="0" hidden="N" >
+<name ><![CDATA[Chicken Fingers]]></name>
+<description ><![CDATA[]]></description>
+<image ><![CDATA[/public/Chicken_Tenders.jpg]]></image>
+<options ></options>
+<portions >
+<size price="6.5" index="0" ><![CDATA[]]></size>
+</portions>
+</item>
+<item index="1" hidden="N" >
+<name ><![CDATA[Spagetti with Meatballs]]></name>
+<description ><![CDATA[]]></description>
+<image ><![CDATA[/public/spagetti_meatballs.jpg]]></image>
+<options ></options>
+<portions >
+<size price="5" index="0" ><![CDATA[]]></size>
+</portions>
+</item>
+</category>
+
+</menu>
+
+</location>

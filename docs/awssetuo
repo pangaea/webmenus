@@ -1,0 +1,21 @@
+Copy WAR file to EC2
+
+scp -i webmenus.pem /home/kevin/projects/dist/genesys-today/webmenus.war ubuntu@52.202.160.35:~
+Connect to EC2 using SSH
+
+ssh -i webmenus.pem ubuntu@52.202.160.35
+Copy WAR file to Tomcat7 webapps Directory
+
+[remote] sudo cp ~/webmenus.war /var/lib/tomcat7/webapps
+Setup S3 Credentials (only first deploy)
+
+scp -i webmenus.pem /usr/share/tomcat7/.aws/credentials ubuntu@54.85.29.18:~
+[remote] sudo mkdir /usr/share/tomcat7/.aws
+[remote] sudo cp ~/credentials /usr/share/tomcat7/.aws
+Setup Redirect to port 8080 (only first deploy)
+
+sudo iptables -t nat -I PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8080
+sudo iptables -t nat -I OUTPUT -p tcp --dport 80 -j REDIRECT --to-ports 8080
+Restart Tomcat7
+
+[remote] sudo service tomcat7 restart

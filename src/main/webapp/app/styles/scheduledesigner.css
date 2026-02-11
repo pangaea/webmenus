@@ -1,0 +1,41 @@
+/* css for timepicker */
+#ui-datepicker-div, .ui-datepicker{ font-size: 80%; }
+.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+.ui-timepicker-div dl { text-align: left; }
+.ui-timepicker-div dl dt { height: 25px; margin-bottom: -25px; }
+.ui-timepicker-div dl dd { margin: 0 10px 10px 65px; }
+.ui-timepicker-div td { font-size: 90%; }
+.ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+.ui-datepicker-next{ left: 10.4em; }
+.ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next{ height: 1.5em; }
+
+.cal_display td{
+	height: 290px;
+	vertical-align: top;
+	width: 120px;
+	background: url(../images/hours2.jpg) #EEEEEE no-repeat left 2px;
+	border-width: 0px;
+}
+.cal_display td div{
+	position: absolute;
+	width: 124px;
+	opacity: 0.5 !important;
+	filter: alpha(opacity = 50) !important;
+}
+.cal_starttime_row td{
+	padding-top: 4px;
+}
+.cal_to_row td{
+	text-align: center;
+	font-family: verdana;
+	font-size: 8pt;
+}
+input.schedule_desc {
+	width: 480px;
+}
+input.datatype_time {
+	width: 125px;
+}
+input.hint {
+ 	color:#808080;
+}

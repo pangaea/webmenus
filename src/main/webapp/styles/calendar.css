@@ -1,0 +1,97 @@
+.candendar_heading
+{
+	font:	8pt Verdana;
+	color: black;
+}
+.week_heading
+{
+	font:	10pt Verdana;
+	color: black;
+	/*align: center;*/
+}
+.daycell
+{
+	/* Size is calculated at runtime - size settings will be overritten
+	height: 75px;
+	width: 100px;*/
+	background-color:	#CCCDFE;
+	cursor: default;
+	overflow: auto;
+}
+.daycell_today
+{
+	/* Size is calculated at runtime - size settings will be overritten
+	height: 75px;
+	width: 100px;*/
+	background-color:	red;
+}
+.daycell_sel
+{
+	/* Size is calculated at runtime - size settings will be overritten
+	height: 75px;
+	width: 100px;*/
+	background-color:	lightblue;
+}
+.daycell_disabled
+{
+	/* Size is calculated at runtime - size settings will be overritten
+	height: 75px;
+	width: 100px;*/
+	background-color:	#CCCDFE;
+}
+
+.data_entry
+{
+	/*border: 0px groove;
+	background-color: #CCCDFE;*/
+	color: darkblue;
+	font-family: Verdana;
+	font-size: 8pt;
+	font-weight: bolder;
+	/*overflow: hidden;
+	width: 90px;*/
+	/*height: 30px;*/
+}
+
+.data_entry_sel
+{
+	/*border: 0px groove;
+	background-color: #CCCDFE;*/
+	color: blue;
+	font-family: Verdana;
+	font-size: 8pt;
+	font-weight: bolder;
+	text-decoration: underline;
+	/*overflow: hidden;
+	width: 90px;*/
+	/*height: 30px;*/
+	cursor: hand;
+}
+
+.data_entry_msg
+{
+	/*border: 0px groove;
+	background-color: #CCCDFE;*/
+	color: lightred;
+	font-family: Verdana;
+	font-size: 10pt;
+	/*font-weight: bolder;*/
+	/*overflow: hidden;
+	width: 90px;
+	height: 12px;value*/
+}
+
+.cal_events
+{
+	/*border: 0px groove;
+	background-color: #CCCDFE;*/
+	/*width: 100%;*/
+	color: brown;
+	font-family: Verdana;
+	font-size: 10pt;
+	overflow: auto;
+	/*height: 50px;
+	width: 100px;*/
+	word-wrap: break-word;
+	/*font: 7pt Verdana blue;*/
+}

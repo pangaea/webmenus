@@ -1,0 +1,121 @@
+
+table.home_table
+{
+	/*background-color: #CCCDFE;/*#659ECF;*/
+	border:1px outset grey;
+	/*border-top: 8px;*/
+	border-style: solid;
+	border-top-color: #CCCDFE;
+	border-left-color: #CCCDFE;
+	border-bottom-color: #CCCDFE;
+	border-right-color: #CCCDFE;
+	width: 100%;
+	height: 200px;
+}
+tr.today_list_row
+{
+	color: black;
+	font-family: Verdana;
+	font-size: 10pt;
+	/*background-color: #CCCDFE;*/
+}
+td.today_list_title
+{
+	color: blue;
+	font-family: Verdana;
+	font-size: 9pt;
+	cursor: default;
+	background-color: lightgrey;/*#A7ABFB;*/
+	border:1px outset lightgrey;/*#CCCDFE;*/
+	padding: 0px;
+}
+td.list_heading
+{
+	/*color: #659ECF;*/
+	/*color: navy;
+	font-family: Verdana;
+	font-size: 12pt;*/
+	/*background-color: #CCCDFE;*/
+	background-image: url(../images/top.gif);
+	color: white;
+	font-family: Verdana;
+	/*font-weight: bold;*/
+	font-size: 12pt;
+}
+
+td.home_heading
+{
+	color: white;
+	font-family: Verdana;
+	font-size: 12pt;
+	background-color: blue;
+}
+tr.candendar_title
+{
+	font:	12pt Verdana;
+	background-image: url(../images/top.gif);
+	color: white;
+}
+td.daycell
+{
+	height:				20%;
+	width:				3%;
+	background-color:	#CCCDFE;
+	cursor:				hand;
+}
+td.daycell_sel
+{
+	height:				20%;
+	width:				3%;
+	background-color:	lightblue;
+}
+td.daycell_disabled
+{
+	height:				20%;
+	width:				3%;
+	background-color:	#CCCDFE;
+}
+div.cal_events
+{
+	/*border: 0px groove;
+	background-color: #CCCDFE;
+	width: 100%;*/
+	color: navy;
+	font-family: Verdana;
+	font-size: 8pt;
+	overflow: auto;
+	/*height:				45px;*/
+	font: 7pt Verdana blue;
+}
+
+span.data_entry
+{
+	/*border: 0px groove;
+	background-color: #CCCDFE;*/
+	color: navy;
+	font-family: Verdana;
+	font-size: 8pt;
+	/*overflow: hidden;
+	width: 90px;
+	height:				12px;value*/
+}
+
+span.data_entry_msg
+{
+	/*border: 0px groove;
+	background-color: #CCCDFE;*/
+	color: red;
+	font-family: Verdana;
+	font-size: 10pt;
+	font-weight: bolder;
+	/*overflow: hidden;
+	width: 90px;
+	height:				12px;value*/
+}
+
+tr.cal_list_row
+{
+	color: navy;
+	font-family: Verdana;
+	font-size: 8pt;
+}

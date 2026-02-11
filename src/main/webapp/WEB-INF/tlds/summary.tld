@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE taglib
+	PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN"
+	"http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+    
+<taglib>
+<tlibversion>1.0</tlibversion>
+<jspversion>1.1</jspversion>
+<shortname>Genesys</shortname>
+<uri>/</uri>
+<info>Summary Tag Extension Library.</info>
+
+<tag>
+<name>EnumLocations</name>
+<tagclass>com.genesys.webmenus.summary.tagext.EnumLocations</tagclass>
+<teiclass>com.genesys.webmenus.summary.tagext.EnumLocationsExtraInfo</teiclass>
+<bodycontent>JSP</bodycontent>
+<info>EnumLocations Custom Tag</info>
+<attribute>
+	<name>credentials</name>
+	<required>true</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute>
+</tag>
+
+<tag>
+<name>EnumThemes</name>
+<tagclass>com.genesys.webmenus.summary.tagext.EnumThemes</tagclass>
+<teiclass>com.genesys.webmenus.summary.tagext.EnumThemesExtraInfo</teiclass>
+<bodycontent>JSP</bodycontent>
+<info>EnumThemes Custom Tag</info>
+<attribute>
+	<name>credentials</name>
+	<required>true</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute>
+</tag>
+
+<tag>
+<name>EnumSchedules</name>
+<tagclass>com.genesys.webmenus.summary.tagext.EnumSchedules</tagclass>
+<teiclass>com.genesys.webmenus.summary.tagext.EnumSchedulesExtraInfo</teiclass>
+<bodycontent>JSP</bodycontent>
+<info>EnumSchedules Custom Tag</info>
+<attribute>
+	<name>credentials</name>
+	<required>true</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute>
+</tag>
+
+</taglib>

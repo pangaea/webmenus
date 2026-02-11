@@ -1,0 +1,51 @@
+===================================
+KNOWLEDGEBASE
+===================================
+
+
+SETUP INSTRUCTIONS
+==================
+1) Place WAR file in 'webapps' - wait for Tomcat to expand it
+2) Shutdown Tomcat
+3) Create 'logs' directory under 'WEB-INF'
+4) Alter 'WEB-INF/classes/log4j.xml' to point to 'logs' directory
+5) Alter DATASPHERE_HOME parameter in 'WEB-INF/web.xml' to point to 'webapp' directory (containing 'WEB-INF')
+6) Alter MySQL settings in 'WEB-INF/cfg/server.cfg'
+7) Re-start Tomcat
+
+
+COMMAND UNIX COMMANDS
+=====================
+Extract tar ball:		tar -xzvf <file name>.tar.gz --directory=<dest path>
+Delete entire dir.		rm -rf <dir>
+Extracting WAR arch.	jar -xf <file name>.war
+File searching.			find / -name 'kb*' -print
+Searching RPMs			rpm -qa | grep xyz
+
+
+SETUP ISSUES
+============
+Problem:
+	Access denied to webapp directory/files
+
+Solution:
+	Change owner permissions "chown <user> <webapp> -R"
+	
+------------
+
+Problem:
+	SQLException: Communications link failure
+
+Solution:
+	Remove MySQL option "skip networking" from either "/etc/mysql/my.cnf"
+	or "/etc/my.cnf", depending on the distro.
+	
+------------
+
+Problem:
+	MySQL Permission denied
+	
+Solution:
+	GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP ON <dbname>.* TO <userid>@<connectstring> IDENTIFIED BY '<password>';
+	
+------------

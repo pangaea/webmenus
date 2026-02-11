@@ -1,0 +1,10 @@
+* {margin:0; padding:0}
+body {font:14px Helvetica, sans-serif; font-weight:bold; background:#FFF}
+.menu {position:relative; height:35px;}
+/*.menu {position:relative; background:url(images/bg.gif) no-repeat; height:35px;}*/
+.menu ul {list-style:none; z-index:10; position:absolute; z-index:100; padding:0px 5px}
+.menu li {float:left}
+/*.menu a, .menu a:active, .menu a:visited {text-decoration:none; color:#654B24; padding:10px}*/
+.menu a, .menu a:active, .menu a:visited {text-decoration:none; color:#ffffff; padding:10px}
+.menu a:hover {color:blue}
+#slide {position:absolute; bottom:0; height:4px; background:blue; z-index:10}

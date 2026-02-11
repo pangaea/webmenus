@@ -1,0 +1,51 @@
+#SETUP DEV ENVIRONMENT#
+
+Clone Repository
+
+git clone https://kjacovelli@bitbucket.org/kjacovelli/chowmagic.git
+Set directory permissions in apache2.conf
+
+        <Directory /home/kevin/projects/chowmagic>
+            Options FollowSymLinks
+            AllowOverride All
+            Require all granted
+        </Directory>
+Setup Apache Mods
+
+sudo ln -s /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/
+sudo ln -s /etc/apache2/mods-available/include.load /etc/apache2/mods-enabled/
+Setup apache tomcat connector - Manually
+sudo apt-get install apache2-dev
+Download mod_jk source (http://tomcat.apache.org/download-connectors.cgi)
+
+./configure --with-apxs=/usr/bin/apxs
+make
+Navigate to new mod_jk.so
+
+sudo cp mod_jk.so /usr/lib/apache2/modules
+Create jk.load file in /etc/apache2/mods-available - edit as needed
+
+sudo ln -s /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/
+Setup apache tomcat connector - Automated
+READ: https://www.unixmen.com/integrate-apache2-tomcat-7-using-mod_jk-connector/
+
+sudo apt-get install libapache2-mod-jk
+Create file workers.properties in /etc/apache2
+
+# Define 1 real worker named ajp13
+worker.list=ajp13
+
+# Set properties for worker named ajp13 to use ajp13 protocol,
+# and run on port 8009
+worker.ajp13.type=ajp13
+worker.ajp13.host=localhost
+worker.ajp13.port=8009
+Edit mod_jk.config
+
+JkWorkersFile /etc/apache2/workers.properties
+Edit /etc/apache2/sites-enabled/000-default
+
+DocumentRoot /home/kevin/projects/chowmagic
+ServerName chowmagic.dev
+ServerAlias www.chowmagic.dev
+JkMount /webmenus* ajp13
