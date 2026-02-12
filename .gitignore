@@ -3,4 +3,4 @@ WEB-INF/logs/*
 .settings
 target/*
 .vscode/*
-WEB-INF/*
+WEB-INF
