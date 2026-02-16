@@ -1,0 +1,48 @@
+body{
+	width: 100% !important;
+}
+#page_links li
+{
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+
+p {
+  padding: 6px;
+}
+
+img.fig {
+  padding: 10px;
+}
+
+.help_block {
+  /*background-color:#A12D54;*/
+  font-size:14pt;
+  padding:4px;
+  margin:4px;
+  color: #000000;
+  /*-moz-border-radius: 15px;
+  border-radius: 15px;*/
+}
+
+h1.help_title {
+	font-size: 18px;
+	color: #ffffff;
+	margin-left: 30px;
+	font-family: Verdana,Geneva,sans-serif;
+}
+
+.help_block div:first-child {
+	float: left;
+	width: 240px;
+	text-align: center;
+	display: none;
+}
+
+.help_block div:first-child img {
+	width: 200px;
+}
+ h2{
+ 	font-family: Verdana,Geneva,sans-serif;
+ 	font-size: 22px;
+ }

@@ -87,7 +87,7 @@ public class ImageManager extends HttpServlet
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-	{/*
+	{
 		try
 		{
 			ClientSessionBean clientBean = loadClientBean(request);
@@ -179,6 +179,6 @@ public class ImageManager extends HttpServlet
 		catch (Exception e)
 		{
 			e.printStackTrace();
-		}*/
+		}
 	}
 }
