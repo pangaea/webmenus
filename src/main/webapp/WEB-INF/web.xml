@@ -49,7 +49,7 @@
             GENESYS_S3_BUCKET
         </param-name>
         <param-value>
-            webmenus-production-us-standard
+            webmenus-development-us-standard
         </param-value>
     </context-param>
 
