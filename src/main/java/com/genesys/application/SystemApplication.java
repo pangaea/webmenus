@@ -1,19 +1,11 @@
 package com.genesys.application;
 
-//import com.dg.demo.restlet.resource.CityXMLResource;
-//import com.dg.demo.restlet.resource.MapResource;
-//import com.dg.demo.restlet.resource.SystemResource;
 import org.restlet.Application;
 import org.restlet.Context;
 import org.restlet.Restlet;
 import org.restlet.routing.Router;
-import org.restlet.data.MediaType;
-import org.restlet.Request;
-import org.restlet.Response;
-import org.restlet.representation.StringRepresentation;
 import org.restlet.security.*;
 import org.restlet.data.ChallengeScheme;
-//import org.restlet.ext.crypto.DigestAuthenticator;
 
 import com.genesys.api.AccountResource;
 import com.genesys.api.AccountDetailsResource;

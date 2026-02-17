@@ -18,7 +18,6 @@ public class UserVerifier extends LocalVerifier {
 			hash = md5.asHex().toCharArray();
 		}
 		catch(Exception e){}
-		char[] pass = getLocalSecret(identifier);
         return compare(hash, getLocalSecret(identifier)) ? RESULT_VALID
                 : RESULT_INVALID;
     }
