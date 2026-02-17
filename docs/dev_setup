@@ -1,0 +1,103 @@
+*Install Git*
+~~~
+sudo apt-get install git
+~~~
+
+*Clone webMenus Repo*
+~~~
+git clone https://github.com/pangaea/webmenus.git
+~~~
+
+*Mysql Setup*
+~~~
+sudo apt install mysql-server
+sudo apt install mysql-workbench-community
+sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root'"
+~~~
+
+Create database 'webmenus'.
+Run the following scripts to setup the database...
+
+~~~
+webmenus/WEB-INF/sql/mysql/schema.sql
+webmenus/WEB-INF/sql/mysql/main_seed.sql
+webmenus/WEB-INF/sql/mysql/webmenus_seed.sql
+~~~
+
+*Install JDK*
+~~~
+sudo apt install openjdk-21-jdk
+~~~
+
+*Install Maven*
+~~~
+sudo apt install maven
+~~~
+
+*Install Tomcat 9*
+~~~
+# Need to add repo to get old tomcat version
+sudo apt-add-repository https://cli.github.com/packages
+sudo apt install tomcat9
+~~~
+
+*Setup environment variables for DEV*
+
+Create file _*setenv.sh*_ in the Tomcat bin directory.
+Set variables in this file (eg):
+~~~
+export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
+export GENESYS_ENV=development
+export GENESYS_HOME=/home/kevin/projects/webmenus/
+~~~
+
+*Setup AWS*
+
+Install and set aws:
+~~~
+sudo apt install awscli
+aws configure
+~~~
+
+Copy user ~/.aws credentials directory to /usr/share/tomcat9 for Tomcat 9.
+If that doesn't work, use the env variable AWS_CREDENTIAL_PROFILES_FILE. (below)
+~~~
+cd /lib/systemd/system
+vi tomcat9.service
+# In the section: [Service]
+Environment="AWS_CREDENTIAL_PROFILES_FILE=/home/kevin/.aws/credentials"
+~~~
+
+*Configure S3 Policy*
+~~~
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Effect": "Allow",
+			"Principal": {
+				"AWS": "arn:aws:iam::772580506252:user/ses-smtp-user.20140706-123403"
+			},
+			"Action": [
+				"s3:ListBucket",
+				"s3:GetBucketLocation"
+			],
+			"Resource": "arn:aws:s3:::webmenus-development-us-standard"
+		},
+		{
+			"Effect": "Allow",
+			"Principal": {
+				"AWS": "arn:aws:iam::772580506252:user/ses-smtp-user.20140706-123403"
+			},
+			"Action": [
+				"s3:PutObject",
+				"s3:PutObjectAcl",
+				"s3:GetObject",
+				"s3:GetObjectAcl",
+				"s3:DeleteObject"
+			],
+			"Resource": "arn:aws:s3:::webmenus-development-us-standard/*"
+		}
+	]
+}
+~~~
