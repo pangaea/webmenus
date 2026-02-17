@@ -69,7 +69,7 @@ Environment="AWS_CREDENTIAL_PROFILES_FILE=/home/kevin/.aws/credentials"
 ~~~
 
 *Configure S3 Policy*
-~~~
+```json
 {
 	"Version": "2012-10-17",
 	"Statement": [
@@ -100,4 +100,12 @@ Environment="AWS_CREDENTIAL_PROFILES_FILE=/home/kevin/.aws/credentials"
 		}
 	]
 }
+```
+
+*Rebuild and Deploy*
+~~~
+mvn clean install -U
+sudo systemctl stop tomcat9
+sudo cp target/webmenus-1.0-SNAPSHOT.war /var/lib/tomcat9/webapps/webmenus.war
+sudo systemctl start tomcat9
 ~~~
