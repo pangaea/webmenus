@@ -465,7 +465,7 @@ function buttonCallback( item, param )
 				document.all.<%=objInitField%>.value = "<%=objInitValue%>";
 			<%	} %>
 			disableDisplay( false );
-			setupToolbar( 1 );
+			setupToolbarCustom( 1, "Create" );
 <% } %>
 			break;
 
@@ -480,7 +480,7 @@ function buttonCallback( item, param )
 				document.all.<%=objInitField%>.value = "<%=objInitValue%>";
 			<%	} %>
 			disableDisplay( false );
-			setupToolbar( 1 );
+			setupToolbarCustom( 1, "Save As Copy" );
 			break;
 
 		case B_ADD:
@@ -1166,6 +1166,11 @@ function saveObject()
 
 function setupToolbar( type )
 {
+	return setupToolbarCustom(type, '<%=viewConfigBean.getButtonText("Save")%>')
+}
+
+function setupToolbarCustom( type, submitBtn )
+{
 	var toolbarHTML = "";
 	if( type == 0 )
 	{
@@ -1177,7 +1182,7 @@ function setupToolbar( type )
 	}
 	else if( type == 1 )
 	{
-		toolbarHTML += buttonDraw( B_SUBMIT, '', '<%=viewConfigBean.getButtonText("Save")%>', 'buttonCallback', 'Button_Save' );
+		toolbarHTML += buttonDraw( B_SUBMIT, '', submitBtn, 'buttonCallback', 'Button_Save' );
 		toolbarHTML += buttonDraw( B_CANCEL, '', 'Cancel', 'buttonCallback', 'Button_Cancel' );
 	}
 	
