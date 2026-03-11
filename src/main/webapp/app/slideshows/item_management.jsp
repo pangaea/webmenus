@@ -1,7 +1,7 @@
 <ol id="help_slideshow" style="display:none;">
     <li data-text="Next" data-options="width:400px;">
       <h2>Item Management</h2>
-      <p>Items (Locations, Themes, etc) can be managed in the same way. Click 'next' to see a brief overview.</p>
+      <p>Items (Locations, Themes, etc) can be managed in the same way. Click 'Next' to see a brief overview.</p>
     </li>
 	<li data-class="ui-jqgrid-bdiv" data-text="Next">
       <h2>Item List</h2>
@@ -9,7 +9,7 @@
 	</li>
 	<li data-id="Button_New" data-text="Next">
       <h2>Create New</h2>
-      <p>Click here to create a new item. Fill in the properties and click 'save'.</p>
+      <p>Click here to create a new item. Fill in the properties and click 'Create'.</p>
 	</li>
 	<li data-class="ui-tabs-nav" data-text="Next">
       <h2>Tabs</h2>
