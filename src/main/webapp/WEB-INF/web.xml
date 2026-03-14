@@ -180,6 +180,23 @@
             /MenuDesigner/*
         </url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>
+            PayPalPortal
+        </servlet-name>
+        <servlet-class>
+            com.genesys.webmenus.pos.PayPalPortal
+        </servlet-class>
+     </servlet>
+    <servlet-mapping>
+        <servlet-name>
+            PayPalPortal
+        </servlet-name>
+        <url-pattern>
+            /PayPalPortal/*
+        </url-pattern>
+    </servlet-mapping>
     
     <!--servlet>
         <servlet-name>

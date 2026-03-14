@@ -68,6 +68,9 @@ function submitOrder()
 	document.location.href = "../ordersubmit.jsp";
 }
 </script>
+<script 
+src="https://www.paypal.com/sdk/js?client-id=AU2TRC2m41gTinrJfNVas_8sFyqjC5EaUYjjgTc3sZvJk5Hs1U1mWbSNPz3lgl3rOzkeCPS0kfeSBaWX&components=buttons">
+</script>
 </head>
 
 	<body class="tundra">
@@ -167,6 +170,68 @@ function submitOrder()
 			</tr>
 		</table>
 		</form>
+
+		<div id="paypal-container-5WK5HP852M52J"></div>
+		<script>
+		paypal.Buttons({
+			style: {
+				layout: 'vertical',
+				color:  'blue',
+				shape:  'rect',
+				label:  'paypal'
+			},
+
+			// Call your server to create an order
+			createOrder: function(data, actions) {
+				return fetch('/webmenus/PayPalPortal/createOrder', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						cart: [{
+							sku: 'YOUR_PRODUCT_SKU',
+							quantity: 'YOUR_PRODUCT_QUANTITY',
+						}]
+					})
+				}).then(function(response) {
+					return response.json();
+				}).then(function(orderData) {
+					// Returns the order ID a.k.a. the approval URL
+					return orderData.id;
+				});
+			},
+
+			// Call your server to capture the payment
+			onApprove: function(data, actions) {
+				return fetch('/webmenus/PayPalPortal/order/' + data.orderID + '/capture', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				}).then(function(response) {
+					return response.json();
+				}).then(function(orderData) {
+					// Show a success message to the buyer
+					alert('Transaction completed by ' + orderData.payer_name);
+					// Redirect to a success page or update UI
+					// window.location.href = '/success.html';
+				});
+			},
+
+			// Handle errors or cancellations
+			onCancel: function(data) {
+				console.log('Payment cancelled', JSON.stringify(data, 0, 2));
+			},
+
+			onError: function(err) {
+				console.error('PayPal error', err);
+				alert('An error occurred during the transaction. Please try again.');
+			}
+
+		}).render('#paypal-container-5WK5HP852M52J');
+		</script>
+
 <% if( menuOrderBean.itemCount() > 0 ){ %>
 		<button dojoType="dijit.form.Button">
 			Submit Order
