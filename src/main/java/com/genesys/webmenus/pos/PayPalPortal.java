@@ -4,15 +4,24 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.HashMap;
 import java.net.URL;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-import com.genesys.views.ViewResponseWriter;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.genesys.api.RepositoryResource;
+import com.genesys.webmenus.MenuOrderBean;
+import com.genesys.webmenus.OrderItem;
 
 public class PayPalPortal extends HttpServlet
 {
+    MenuOrderBean menuOrderBean;
+
 	public void init() throws ServletException
 	{
 	}
@@ -27,6 +36,20 @@ public class PayPalPortal extends HttpServlet
 	public void service( HttpServletRequest request, HttpServletResponse response ) throws IOException, ServletException
 	{
 		try {
+            HttpSession beanSessionContext = request.getSession(); // Session Level Scope
+			synchronized (beanSessionContext){
+				menuOrderBean = (MenuOrderBean) beanSessionContext.getAttribute("menuOrderBean");
+				if( menuOrderBean == null ){
+					try{
+						menuOrderBean = (MenuOrderBean) java.beans.Beans.instantiate(this.getClass().getClassLoader(), "com.genesys.webmenus.MenuOrderBean");
+					}
+					catch (Exception exc){
+						throw new ServletException("Cannot create bean of class com.genesys.session.ClientSessionBean", exc);
+					}
+					beanSessionContext.setAttribute("menuOrderBean", menuOrderBean);
+				}
+			}
+
 			// Extremely simple "REST" interface
 			String resPath = request.getPathInfo();
 			if( resPath != null )
@@ -58,7 +81,7 @@ public class PayPalPortal extends HttpServlet
     private static final String CLIENT_SECRET = "EBaANfiMaanSblIinBj1p0lldHxVuCb0sWje5NSVElYfjVoUF06rQrXEjzVBlLAgNhiaS0hJV0IUq_EC";
     private static final String PAYPAL_API_BASE = "https://api-m.sandbox.paypal.com"; // Use "https://api-m.paypal.com" for live
 
-    public static String generateAccessToken() throws Exception {
+    public String generateAccessToken() throws Exception {
         String auth = CLIENT_ID + ":" + CLIENT_SECRET;
         String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes(StandardCharsets.UTF_8));
         
@@ -89,28 +112,62 @@ public class PayPalPortal extends HttpServlet
         }
     }
 
-	public static String createOrder(String accessToken, HttpServletResponse httpResponse) throws Exception {
+	public String createOrder(String accessToken, HttpServletResponse httpResponse) throws Exception {
         URL url = new URL(PAYPAL_API_BASE + "/v2/checkout/orders");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json");
         conn.setRequestProperty("Authorization", "Bearer " + accessToken);
         conn.setDoOutput(true);
+        /*
+        {
+        "intent":"CAPTURE",
+        "purchase_units":[{
+                "amount":{
+                    "currency_code":"USD",
+                    "value":"100.00"
+                },
+                "description":"Green XL T-Shirt"
+            }],
+            "application_context":{
+                "return_url":"https://example.com/returnUrl",
+                "cancel_url":"https://example.com/cancelUrl"
+            }
+        }
+         */
 
-        String jsonInputString = "{"
-            + "\"intent\": \"CAPTURE\","
-            + "\"purchase_units\": [{"
-            + "\"amount\": {"
-            + "\"currency_code\": \"USD\","
-            + "\"value\": \"100.00\""
-            + "},"
-            + "\"description\": \"Green XL T-Shirt\""
-            + "}],"
-            + "\"application_context\": {"
-            + "\"return_url\": \"https://example.com/returnUrl\","
-            + "\"cancel_url\": \"https://example.com/cancelUrl\""
-            + "}"
-            + "}";
+        String jsonInputString = "{}";
+        try{
+            JSONObject jsonOrder = new JSONObject();
+            jsonOrder.put("intent", "CAPTURE");
+            JSONArray jsonPurchaseUnits = new JSONArray();
+
+            for( int i = 0; i < menuOrderBean.itemCount(); i++ ) {
+                OrderItem item = menuOrderBean.getItemByIndex(i);
+                if (item != null) {
+                    // Calculate amount
+                    JSONObject jsonAmount = new JSONObject();
+                    jsonAmount.put("currency_code", "USD");
+                    jsonAmount.put("value", item.getPrice());
+
+                    // Add each item
+                    JSONObject jsonPurchaseUnit = new JSONObject();
+                    jsonPurchaseUnit.put("amount", jsonAmount);
+                    jsonPurchaseUnit.put("description", item.getName());
+                    jsonPurchaseUnits.put(jsonPurchaseUnit);
+                }
+            }
+
+            // Add items array
+            jsonOrder.put("purchase_units", jsonPurchaseUnits);
+            JSONObject jsonApplicationContext = new JSONObject();
+            jsonApplicationContext.put("return_url", "https://example.com/returnUrl");
+            jsonApplicationContext.put("cancel_url", "https://example.com/cancelUrl");
+            jsonOrder.put("application_context", jsonApplicationContext);
+            jsonInputString = jsonOrder.toString();
+        } catch (JSONException e) {
+            // Log this
+        }
 
         try (OutputStream os = conn.getOutputStream()) {
             byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
