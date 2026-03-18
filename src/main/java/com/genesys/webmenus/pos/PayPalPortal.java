@@ -5,6 +5,9 @@ import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.net.URL;
 
 import javax.servlet.*;
@@ -20,10 +23,21 @@ import com.genesys.webmenus.OrderItem;
 
 public class PayPalPortal extends HttpServlet
 {
+    // Use PayPal Developer Dashboard to get your credentials for Sandbox/Live
+    private static final String CLIENT_ID = "AU2TRC2m41gTinrJfNVas_8sFyqjC5EaUYjjgTc3sZvJk5Hs1U1mWbSNPz3lgl3rOzkeCPS0kfeSBaWX";
+    private static final String CLIENT_SECRET = "EBaANfiMaanSblIinBj1p0lldHxVuCb0sWje5NSVElYfjVoUF06rQrXEjzVBlLAgNhiaS0hJV0IUq_EC";
+    private static final String PAYPAL_API_BASE = "https://api-m.sandbox.paypal.com"; // Use "https://api-m.paypal.com" for live
+
     MenuOrderBean menuOrderBean;
+    String accessToken;
 
 	public void init() throws ServletException
 	{
+        try {
+            accessToken = generateAccessToken();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -56,19 +70,21 @@ public class PayPalPortal extends HttpServlet
 			{
 				if( resPath.equalsIgnoreCase("/createOrder") )
 				{
-					String accessToken = generateAccessToken();
-					System.out.println("Access Token: " + accessToken);
 					String orderId = createOrder(accessToken, response);
-					System.out.println("Created Order ID: " + orderId);
-					// After this, you should redirect the user to the approval URL 
-					// provided in the response links to approve the payment
 				}
-				else if( resPath.equalsIgnoreCase("/order") )
+				else if( resPath.startsWith("/order/") )
 				{
-					// extract orderId, accessToken, reponse
-					String orderId = null;
-					String accessToken = null;
-					captureOrder(orderId, accessToken, response);
+                    String patternString = "/order/(.+)/capture";
+                    Pattern pattern = Pattern.compile(patternString);
+                    Matcher matcher = pattern.matcher(resPath);
+                    // Check if the pattern is found in the string
+                    if (matcher.find()) {
+                        // group(1) refers to the first capturing group (the actual ID number)
+                        String orderId = matcher.group(1); 
+                        captureOrder(orderId, accessToken, response);
+                    } else {
+                        System.out.println("No ID found.");
+                    }
 				}
 			}
 		} catch (Exception e) {
@@ -76,25 +92,22 @@ public class PayPalPortal extends HttpServlet
 		}
     }
 
-	// Use PayPal Developer Dashboard to get your credentials for Sandbox/Live
-    private static final String CLIENT_ID = "AU2TRC2m41gTinrJfNVas_8sFyqjC5EaUYjjgTc3sZvJk5Hs1U1mWbSNPz3lgl3rOzkeCPS0kfeSBaWX";
-    private static final String CLIENT_SECRET = "EBaANfiMaanSblIinBj1p0lldHxVuCb0sWje5NSVElYfjVoUF06rQrXEjzVBlLAgNhiaS0hJV0IUq_EC";
-    private static final String PAYPAL_API_BASE = "https://api-m.sandbox.paypal.com"; // Use "https://api-m.paypal.com" for live
-
-    public String generateAccessToken() throws Exception {
-        String auth = CLIENT_ID + ":" + CLIENT_SECRET;
-        String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes(StandardCharsets.UTF_8));
-        
-        URL url = new URL(PAYPAL_API_BASE + "/v1/oauth2/token");
+    private String makeRequest(String accessToken, String contentType, String path, String reqString) throws Exception {
+        URL url = new URL(PAYPAL_API_BASE + path);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
-        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-        conn.setRequestProperty("Authorization", "Basic " + encodedAuth);
+        conn.setRequestProperty("Content-Type", contentType);
+        if (accessToken == null) {
+            String auth = CLIENT_ID + ":" + CLIENT_SECRET;
+            String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes(StandardCharsets.UTF_8));
+            conn.setRequestProperty("Authorization", "Basic " + encodedAuth);
+        } else {
+            conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+        }
         conn.setDoOutput(true);
 
-        String postData = "grant_type=client_credentials";
         try (OutputStream os = conn.getOutputStream()) {
-            byte[] input = postData.getBytes(StandardCharsets.UTF_8);
+            byte[] input = reqString.getBytes(StandardCharsets.UTF_8);
             os.write(input, 0, input.length);
         }
 
@@ -104,59 +117,52 @@ public class PayPalPortal extends HttpServlet
             while ((responseLine = br.readLine()) != null) {
                 response.append(responseLine.trim());
             }
-            // Parse the JSON response to extract the "access_token"
-            // (A simple JSON parser like Gson or Jackson would be better here)
-            String jsonResponse = response.toString();
-            String accessToken = jsonResponse.split("\"access_token\":\"")[1].split("\"")[0];
-            return accessToken;
+            return response.toString();
         }
     }
 
-	public String createOrder(String accessToken, HttpServletResponse httpResponse) throws Exception {
-        URL url = new URL(PAYPAL_API_BASE + "/v2/checkout/orders");
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("POST");
-        conn.setRequestProperty("Content-Type", "application/json");
-        conn.setRequestProperty("Authorization", "Bearer " + accessToken);
-        conn.setDoOutput(true);
-        /*
-        {
-        "intent":"CAPTURE",
-        "purchase_units":[{
-                "amount":{
-                    "currency_code":"USD",
-                    "value":"100.00"
-                },
-                "description":"Green XL T-Shirt"
-            }],
-            "application_context":{
-                "return_url":"https://example.com/returnUrl",
-                "cancel_url":"https://example.com/cancelUrl"
-            }
-        }
-         */
+    public String generateAccessToken() throws Exception {
+        String postData = "grant_type=client_credentials";
+        String jsonResponse = makeRequest(null, "application/x-www-form-urlencoded", "/v1/oauth2/token", postData);
+        return jsonResponse.split("\"access_token\":\"")[1].split("\"")[0];
+    }
 
+    // private JSONObject createJsonObject(Map<String, Object> props) {
+    //     JSONObject jsonObj = new JSONObject();
+    //     for (String key : props.keySet()) {
+    //         jsonObj.put(key, props.get(key));
+    //     }
+    //     return jsonObj;
+    // }
+
+	public String createOrder(String accessToken, HttpServletResponse httpResponse) throws Exception {
         String jsonInputString = "{}";
         try{
             JSONObject jsonOrder = new JSONObject();
             jsonOrder.put("intent", "CAPTURE");
             JSONArray jsonPurchaseUnits = new JSONArray();
+            JSONObject jsonPurchaseUnit = new JSONObject();
+            JSONObject jsonAmount = new JSONObject();
+            jsonAmount.put("currency_code", "USD");
+            jsonAmount.put("value", menuOrderBean.getTotal());
+            jsonPurchaseUnit.put("amount", jsonAmount);
+            jsonPurchaseUnits.put(jsonPurchaseUnit);
 
-            for( int i = 0; i < menuOrderBean.itemCount(); i++ ) {
-                OrderItem item = menuOrderBean.getItemByIndex(i);
-                if (item != null) {
-                    // Calculate amount
-                    JSONObject jsonAmount = new JSONObject();
-                    jsonAmount.put("currency_code", "USD");
-                    jsonAmount.put("value", item.getPrice());
+            // for( int i = 0; i < menuOrderBean.itemCount(); i++ ) {
+            //     OrderItem item = menuOrderBean.getItemByIndex(i);
+            //     if (item != null) {
+            //         // Calculate amount
+            //         JSONObject jsonAmount = new JSONObject();
+            //         jsonAmount.put("currency_code", "USD");
+            //         jsonAmount.put("value", item.getPrice());
 
-                    // Add each item
-                    JSONObject jsonPurchaseUnit = new JSONObject();
-                    jsonPurchaseUnit.put("amount", jsonAmount);
-                    jsonPurchaseUnit.put("description", item.getName());
-                    jsonPurchaseUnits.put(jsonPurchaseUnit);
-                }
-            }
+            //         // Add each item
+            //         JSONObject jsonPurchaseUnit = new JSONObject();
+            //         jsonPurchaseUnit.put("amount", jsonAmount);
+            //         jsonPurchaseUnit.put("description", item.getName());
+            //         jsonPurchaseUnits.put(jsonPurchaseUnit);
+            //     }
+            // }
 
             // Add items array
             jsonOrder.put("purchase_units", jsonPurchaseUnits);
@@ -169,44 +175,75 @@ public class PayPalPortal extends HttpServlet
             // Log this
         }
 
-        try (OutputStream os = conn.getOutputStream()) {
-            byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
-            os.write(input, 0, input.length);
-        }
-
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8))) {
-            StringBuilder response = new StringBuilder();
-            String responseLine = null;
-            while ((responseLine = br.readLine()) != null) {
-                response.append(responseLine.trim());
-            }
-            // Parse the JSON response to extract the "id" of the created order
-            // (A simple JSON parser like Gson or Jackson would be better here)
-            String jsonResponse = response.toString();
-            String orderId = jsonResponse.split("\"id\":\"")[1].split("\"")[0];
-
-
-			httpResponse.setContentType("text/json");
-			httpResponse.setCharacterEncoding("utf-8");
-			//response.setContentType("text/xml; charset=UTF-8");
-			PrintWriter out = httpResponse.getWriter();
-			out.write(jsonResponse.toCharArray());
-
-
-            return orderId;
-        }
+        // Post order to paypal
+        String jsonResponse = makeRequest(accessToken, "application/json", "/v2/checkout/orders", jsonInputString);
+        String orderId = jsonResponse.split("\"id\":\"")[1].split("\"")[0];
+        httpResponse.setContentType("text/json");
+        httpResponse.setCharacterEncoding("utf-8");
+        PrintWriter out = httpResponse.getWriter();
+        out.write(jsonResponse.toCharArray());
+        return orderId;
     }
 
 	// Conceptual Java example to capture payment
 	public String captureOrder(String orderId, String accessToken, HttpServletResponse httpResponse) throws Exception {
-		URL url = new URL("https://api-m.sandbox.paypal.com" + orderId + "/capture");
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("POST");
-		conn.setRequestProperty("Authorization", "Bearer " + accessToken); //
-		conn.setRequestProperty("Content-Type", "application/json");
+
+        String jsonInputString = "{}";
+        try{
+            JSONObject jsonOrder = new JSONObject();
+            jsonOrder.put("id", orderId);
+            JSONArray jsonPurchaseUnits = new JSONArray();
+            JSONObject jsonPurchaseUnit = new JSONObject();
+
+            JSONObject jsonPayments = new JSONObject();
+
+            JSONArray jsonCaptures = new JSONArray();
+            jsonPayments.put("captures", jsonCaptures);
+
+            JSONObject jsonAmount = new JSONObject();
+            jsonAmount.put("currency_code", "USD");
+            jsonAmount.put("value", menuOrderBean.getTotal());
+            JSONObject jsonCapture = new JSONObject();
+            jsonCapture.put("amount", jsonAmount);
+
+            jsonCaptures.put(jsonCapture);
+            jsonPurchaseUnit.put("payments", jsonPayments);
+
+            //jsonPurchaseUnit.put("amount", jsonAmount);
+            jsonPurchaseUnits.put(jsonPurchaseUnit);
+
+            // Add items array
+            jsonOrder.put("purchase_units", jsonPurchaseUnits);
+            JSONObject jsonApplicationContext = new JSONObject();
+            jsonApplicationContext.put("return_url", "https://example.com/returnUrl");
+            jsonApplicationContext.put("cancel_url", "https://example.com/cancelUrl");
+            jsonOrder.put("application_context", jsonApplicationContext);
+            jsonInputString = jsonOrder.toString();
+        } catch (JSONException e) {
+            throw new ServletException(e.getMessage(), e);
+        }
+
+		// URL url = new URL("https://api-m.sandbox.paypal.com" + orderId + "/capture");
+		// HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		// conn.setRequestMethod("POST");
+		// conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+		// conn.setRequestProperty("Content-Type", "application/json");
 		// Perform POST request and read response
+        // try (OutputStream os = conn.getOutputStream()) {
+        //     byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
+        //     os.write(input, 0, input.length);
+        // }
+
 		// ... input stream handling ...
-		return httpResponse.toString();
+		//return httpResponse.toString();
+
+        // Post order to paypal
+        String jsonResponse = makeRequest(accessToken, "application/json", "/v2/checkout/orders/" + orderId + "/capture", jsonInputString);
+        httpResponse.setContentType("text/json");
+        httpResponse.setCharacterEncoding("utf-8");
+        PrintWriter out = httpResponse.getWriter();
+        out.write(jsonResponse.toCharArray());
+        return orderId;
 	}
 
 }

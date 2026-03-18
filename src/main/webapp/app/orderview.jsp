@@ -213,7 +213,7 @@ src="https://www.paypal.com/sdk/js?client-id=AU2TRC2m41gTinrJfNVas_8sFyqjC5EaUYj
 					return response.json();
 				}).then(function(orderData) {
 					// Show a success message to the buyer
-					alert('Transaction completed by ' + orderData.payer_name);
+					alert("SUCCESS");
 					// Redirect to a success page or update UI
 					// window.location.href = '/success.html';
 				});
