@@ -46,7 +46,7 @@ All Rights Reserved
 		if( errMsg == null ) errMsg = new String("");
 	%>
 	
-	<form id="deliveryOptions" method="post" action="<%=request.getContextPath()%>/app/ordersubmit.jsp">
+	<form id="deliveryOptions" method="post" action="<%=request.getContextPath()%>/app/checkout.jsp">
 	<table style="width:100%"><tr><td style="text-align:center">
 		<span style="color:red;"><%=errMsg%></span>
 		<div class='menuTitle'>Select Delivery Options</div>

@@ -109,7 +109,7 @@ public class LoginPatron extends HttpServlet
 		if( menuOrderBean.isDeliveryAvailable() )
 			redirectTo(request, response, "delivery_options.jsp");
 		else
-			redirectTo(request, response, "ordersubmit.jsp");
+			redirectTo(request, response, "checkout.jsp");
 
 	}
 }
