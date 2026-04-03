@@ -27,7 +27,6 @@ import java.util.regex.*;
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.net.*;
-import java.io.InputStream;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -776,13 +775,17 @@ public class MenuDesigner extends HttpServlet
 		{
 			//String sResponse = "";
 			BufferedReader in = new BufferedReader(new InputStreamReader(request.getInputStream(), "UTF-8"));
-			String line = null;
 			StringBuffer sb = new StringBuffer();
-	        while((line = in.readLine()) != null)
-	        {
-	            sb.append(line);
-	            sb.append('\n');
-	        }
+			try {
+				String line = null;
+				while((line = in.readLine()) != null)
+				{
+					sb.append(line);
+					sb.append('\n');
+				}
+			} finally {
+				in.close();
+			}
 	        String menuXml = sb.toString();
 	        XMLDocument menuDoc = new XMLDocument();
 	        menuDoc.loadXMLStream(menuXml);

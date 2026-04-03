@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS webmenus_location_payment_method_list
+DROP TABLE IF EXISTS webmenus_payment_method
 DROP TABLE IF EXISTS webmenus_menu_order_item;
 DROP TABLE IF EXISTS webmenus_menu_order;
 DROP TABLE IF EXISTS webmenus_menu_item_option;
@@ -427,4 +429,42 @@ CONSTRAINT FK_webmenus_menu_order_item__menu FOREIGN KEY
 ) REFERENCES webmenus_menu_order
 (
 	id
+);
+
+-- ---------------------------------
+
+CREATE TABLE webmenus_payment_method
+(
+	-- meta data
+	id varchar (36) not null,
+	owner varchar (36) null,
+	role varchar (36) null,
+	author varchar (36) null,
+	publisher varchar (36) null,
+	created datetime null,
+	modified datetime null,
+
+	name varchar (64) character set utf8 NOT NULL,
+	type varchar (16) character set utf8 NOT NULL,
+	description varchar (128) character set utf8 NOT NULL,
+	config longtext character set utf8
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+ALTER TABLE webmenus_payment_method ADD
+CONSTRAINT PK_webmenus_payment_method PRIMARY KEY NONCLUSTERED 
+(
+	id
+);
+
+-- ----------------------------------------------
+CREATE TABLE webmenus_location_payment_method_list
+(
+	-- properties
+	fkey varchar (36) not null,
+	objid varchar (36) not null,
+	objindex int not null
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;;
+ALTER TABLE webmenus_location_payment_method_list ADD
+INDEX PK_webmenus_location_payment_method_list
+(
+	fkey
 );

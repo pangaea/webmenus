@@ -82,6 +82,12 @@ public class LoginPatron extends HttpServlet
 				return;
 			}
 		}
+		else if( type.equalsIgnoreCase("logout") )
+		{
+			menuOrderBean.logoutPatron();
+			redirectTo(request, response, "login_patron.jsp");
+			return;
+		}
 		else if( type.equalsIgnoreCase("create") )
 		{
 			try

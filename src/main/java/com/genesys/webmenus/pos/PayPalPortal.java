@@ -17,6 +17,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.genesys.api.RepositoryResource;
 import com.genesys.webmenus.MenuOrderBean;
 import com.genesys.webmenus.OrderItem;
@@ -24,9 +26,10 @@ import com.genesys.webmenus.OrderItem;
 public class PayPalPortal extends HttpServlet
 {
     // Use PayPal Developer Dashboard to get your credentials for Sandbox/Live
-    private static final String CLIENT_ID = "AU2TRC2m41gTinrJfNVas_8sFyqjC5EaUYjjgTc3sZvJk5Hs1U1mWbSNPz3lgl3rOzkeCPS0kfeSBaWX";
-    private static final String CLIENT_SECRET = "EBaANfiMaanSblIinBj1p0lldHxVuCb0sWje5NSVElYfjVoUF06rQrXEjzVBlLAgNhiaS0hJV0IUq_EC";
+    //private static final String CLIENT_ID = "AU2TRC2m41gTinrJfNVas_8sFyqjC5EaUYjjgTc3sZvJk5Hs1U1mWbSNPz3lgl3rOzkeCPS0kfeSBaWX";
+    //private static final String CLIENT_SECRET = "EBaANfiMaanSblIinBj1p0lldHxVuCb0sWje5NSVElYfjVoUF06rQrXEjzVBlLAgNhiaS0hJV0IUq_EC";
     private static final String PAYPAL_API_BASE = "https://api-m.sandbox.paypal.com"; // Use "https://api-m.paypal.com" for live
+    String clientId, clientSecret;
 
     MenuOrderBean menuOrderBean;
     String accessToken;
@@ -68,9 +71,28 @@ public class PayPalPortal extends HttpServlet
 			String resPath = request.getPathInfo();
 			if( resPath != null )
 			{
+                // Extract JSON from POST body
+                StringBuilder sb = new StringBuilder();
+                BufferedReader reader = request.getReader();
+                try {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        sb.append(line).append('\n');
+                    }
+                } finally {
+                    reader.close();
+                }
+
+                // Parse settings of payment config based on index from post
+                ObjectMapper mapper = new ObjectMapper();
+				JsonNode node = mapper.readTree(sb.toString());
+				int payment_index = node.get("payment_index").asInt();
+                clientId = menuOrderBean.queryPmConfig(payment_index, "CLIENT_ID");
+				clientSecret = menuOrderBean.queryPmConfig(payment_index, "CLIENT_SECRET");
 				if( resPath.equalsIgnoreCase("/createOrder") )
 				{
-					String orderId = createOrder(accessToken, response);
+					//String orderId = createOrder(accessToken, response);
+                    createOrder(accessToken, response);
 				}
 				else if( resPath.startsWith("/order/") )
 				{
@@ -98,7 +120,7 @@ public class PayPalPortal extends HttpServlet
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", contentType);
         if (accessToken == null) {
-            String auth = CLIENT_ID + ":" + CLIENT_SECRET;
+            String auth = clientId + ":" + clientSecret;
             String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes(StandardCharsets.UTF_8));
             conn.setRequestProperty("Authorization", "Basic " + encodedAuth);
         } else {

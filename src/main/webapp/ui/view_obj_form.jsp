@@ -97,6 +97,19 @@
 							    stylesheet: "<%=request.getContextPath()%>/xlibs/CodeMirror/css/jscolors.css",
 							    path: "<%=request.getContextPath()%>/xlibs/CodeMirror/js/"
 							  });
+							</script>
+					<% 		}else if( inputType.equalsIgnoreCase( "json" ) == true ){ %>
+							<div style="border:1px solid black;width:100%">
+							<textarea ID="<%=inputField%>" NAME="<%=viewParam%>_data_<%=inputField%>"></textarea>
+							</div>
+							<script type="text/javascript"> 
+							codemirrorCrtls['<%=inputField%>'] = CodeMirror.fromTextArea('<%=inputField%>', {
+								mode: { name: "javascript", json: true },
+							    height: "dynamic",
+							    width: "100%",
+							    stylesheet: "<%=request.getContextPath()%>/xlibs/CodeMirror/css/jscolors.css",
+							    path: "<%=request.getContextPath()%>/xlibs/CodeMirror/js/"
+							  });
 							</script> 
 					<% 		}else if( inputType.equalsIgnoreCase( "date" ) == true ){ %>
 							<table cellpadding="0" cellspacing="0"><tr><td>

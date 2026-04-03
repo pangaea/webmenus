@@ -20,6 +20,8 @@ import org.apache.xerces.parsers.DOMParser;
 //import javax.xml.stream.XMLStreamException;
 //import javax.xml.stream.XMLStreamWriter;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.genesys.SystemServlet;
 import com.genesys.repository.*;
 import com.genesys.util.RandomGUID;
@@ -57,6 +59,7 @@ public class MenuOrderBean
 	private boolean					m_deliveryYes = false;
 	private String						m_deliveryInfo = null;
 	private HashMap<String, Vector<OpHours>>	m_opHoursMap;
+	private Vector<PaymentMethod>			m_paymentMethodList;
 
 	public MenuOrderBean()
 	{
@@ -70,6 +73,7 @@ public class MenuOrderBean
 		//m_menuwidth = new String("100%");
 		m_deliveryInfo = new String("");
 		m_opHoursMap = new HashMap<String, Vector<OpHours>>();
+		m_paymentMethodList = new Vector<PaymentMethod>();
 		
 		m_objectBean = SystemServlet.getObjectManager();
 	}
@@ -93,6 +97,11 @@ public class MenuOrderBean
 	public String getPatronEmail()
 	{
 		return m_patronEmail;
+	}
+	public void logoutPatron()
+	{
+		m_patronEmail = null;
+		m_patronId = null;
 	}
 	public String getExitURL()
 	{
@@ -302,6 +311,24 @@ public class MenuOrderBean
 				m_devlieryOffered = oLoc.getPropertyValue_Boolean("delivery_avail");
 				m_emailOrders = oLoc.getPropertyValue_Boolean("email_orders");
 				String sRole = oLoc.getPropertyValue("role");
+
+				// Pull in payment methods
+				RepositoryObjectRefList payment_methods = oLoc.getPropertyObjectRefs("payment_methods");
+				for (int i = 0; i < payment_methods.count(); i++){
+					RepositoryObjectRef ref = payment_methods.get(i);
+					ObjectQuery queryPM = new ObjectQuery( "CCPaymentMethod" );
+					queryPM.addProperty("id", ref.getId());
+					QueryResponse qrPM = m_objectBean.Query( m_creds, queryPM );
+					RepositoryObjects oPMs = qrPM.getObjects( queryPM.getClassName() );
+					if (oPMs.count() > 0) {
+						RepositoryObject o = oPMs.get(0);
+						PaymentMethod oo = new PaymentMethod(o.getPropertyValue("name"),
+															 o.getPropertyValue("type"),
+															 o.getPropertyValue("description"),
+															 o.getPropertyValue("config"));
+						m_paymentMethodList.add(oo);
+					}
+				}
 				
 				// H.I.V.E.
 				// Use the location role to for all objects
@@ -407,6 +434,30 @@ public class MenuOrderBean
 				SystemServlet.g_logger.error( "AuthenticationException thrown - " + ex.getErrMsg() );
 			}
 		}
+	}
+
+	public int getPaymentMethodCount() {
+		return m_paymentMethodList.size();
+	}
+
+	public String getPMType(int index) {
+		if (index < m_paymentMethodList.size()) {
+			return m_paymentMethodList.get(index).type();
+		}
+		return "";
+	}
+
+	public String queryPmConfig(int index, String propName) {
+		if (index < m_paymentMethodList.size()) {
+			PaymentMethod pm = m_paymentMethodList.get(index);
+			try {
+				ObjectMapper mapper = new ObjectMapper();
+				JsonNode node = mapper.readTree(pm.config());
+				return node.get(propName).asText();
+			}
+			catch (Exception e) {}
+		}
+		return "";
 	}
 	
 	public String getCurrentLocationId()
@@ -919,6 +970,8 @@ public class MenuOrderBean
 					try
 					{
 						m_objectBean.Insert(m_creds, order_item);
+						m_validated = false;
+						m_patronEmail = null;
 					}
 					catch(AuthenticationException ex)
 					{

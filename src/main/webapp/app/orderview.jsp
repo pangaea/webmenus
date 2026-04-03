@@ -65,7 +65,7 @@ function updateOrder(qid)
 }
 function checkoutOrder()
 {
-	document.location.href = "../checkout.jsp";
+	document.location.href = "../login_patron.jsp";
 }
 </script>
 </head>

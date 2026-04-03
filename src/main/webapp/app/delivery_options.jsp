@@ -96,7 +96,7 @@ All Rights Reserved
 					var zipIN = dojo.byId("zip");
 					var contactNumberIN = dojo.byId("contact_number");
 					var oTextArea = document.getElementById("delivery_info");
-					oTextArea.innerText = addressIN.value + "\r\n" + cityIN.value + ", " + stateIN.value + " " + zipIN.value + "\r\n" + contactNumberIN.value + "\r\n";
+					oTextArea.innerText = addressIN.value + " / " + cityIN.value + ", " + stateIN.value + " " + zipIN.value + " / " + contactNumberIN.value;
 				}
 			}
 			
@@ -242,13 +242,21 @@ All Rights Reserved
 				<tr>
 					<td/><td colspan="2"><span style="color:red;font:8pt verdana;">* Required</span></td>
 				</tr>
+
 				<tr><td valign="middle" colspan="3" style="text-align:center;">
 					<button dojoType="dijit.form.Button">
-						Submit Order
+						Continue to Checkout
 						<script type="dojo/method" event="onClick">
 						if( validateParams() )
 							deliveryOptions.submit();
 					</script>
+					</button>
+				</td><td valign="middle" colspan="3" style="text-align:center;">
+					<button dojoType="dijit.form.Button">
+						Go Back to Menus
+						<script type="dojo/method" event="onClick">
+							parent.closeOrderDialog();
+						</script>
 					</button>
 				</td><td/></tr>
 			</table>

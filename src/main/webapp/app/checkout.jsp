@@ -18,10 +18,17 @@ All Rights Reserved
 	}
 	
 	//if( request.getSession().getAttribute( "patron_id" ) == null )
-	if( menuOrderBean.isValidated() == false )
-	{
+	if( menuOrderBean.isValidated() == false ) {
 		response.sendRedirect( "login_patron.jsp" );
 		return;
+	}
+
+	// Check for delivery options and record them if present
+	String sDelivery = request.getParameter("delivery_option");
+	if( sDelivery != null && sDelivery.equalsIgnoreCase("delivery") == true )
+	{	
+		String sDeliveryInfo = request.getParameter("delivery_info");
+		menuOrderBean.setDeliveryAddress( sDeliveryInfo );
 	}
 %>
 <html>
@@ -69,17 +76,129 @@ function submitOrder()
 	document.location.href = "ordersubmit.jsp";
 }
 </script>
-<script 
-src="https://www.paypal.com/sdk/js?client-id=AU2TRC2m41gTinrJfNVas_8sFyqjC5EaUYjjgTc3sZvJk5Hs1U1mWbSNPz3lgl3rOzkeCPS0kfeSBaWX&components=buttons">
-</script>
 </head>
 
 	<body class="tundra">
-		<div id="paypal-container-5WK5HP852M52J"></div>
+		<table id="itemTable" cellpadding="2" class="orderTable">
+			<tr>
+				<th valign="top">Order</th>
+				<th valign="top">Each</th>
+				<th valign="top">Quantity</th>
+				<th valign="top">Price</th>
+			</tr>
+<%
+	for( int i = 0; i < menuOrderBean.itemCount(); i++ )
+	{
+		OrderItem item;
+		while(true)
+		{
+			item = menuOrderBean.getItemByIndex(i);
+			if( item == null ) break;
+			String newQuan = request.getParameter(item.getId());
+			if( newQuan != null )
+			{
+				try
+				{
+					int newQuantity = new Long(newQuan).intValue();
+					if( newQuantity == 0 )
+					{
+						menuOrderBean.removeItemByIndex(i);
+						continue;
+						//item = menuOrderBean.getItemByIndex(i);
+						//if( item == null ) break;
+					}
+					else
+					{
+						item.setQuantity(newQuantity);
+					}
+				}
+				catch(NumberFormatException e){}
+			}
+			break;
+		}
+		if( item == null ) break;
+%>
+			<tr>
+				<td valign="top">
+
+						<div class='menuItemTitle'>
+						<%=item.getName()%>
+						<% if( item.getSize().length() > 0 ){ %>
+							(<%=item.getSize()%>)
+						<% } %>
+						</div>
+						<div class='menuItemDesc'>
+						<%=item.getDesc()%>
+						</div>
+						<div class='menuOptions'>
+<pre>
+<%=item.getOptions()%>
+</pre>
+						</div>
+
+				</td>
+				<td valign="top"><%=item.getPriceStr()%></td>
+				<td valign="top"><%=item.getQuantity()%></td>
+				<td valign="top"><%=item.getTotalStr()%></td>
+			</tr>
+<%
+	}
+	if( menuOrderBean.itemCount() == 0 )
+	{
+%>
+			<tr>
+				<td colspan="4"><span style="width:100%;text-align:center;">Empty Order Form</span></td>
+			</tr>
+<%
+	}
+%>
+			<tr>
+				<th valign="top"></th>
+				<th valign="top"></th>
+				<th valign="top">Subtotal</th>
+				<td valign="top"><%=menuOrderBean.getSubTotalStr()%></td>
+			</tr>
+			<tr>
+				<th valign="top"></th>
+				<th valign="top"></th>
+				<th valign="top">Tax<small>(%<%=menuOrderBean.getTaxRate()%>)</small></th>
+				<td valign="top"><%=menuOrderBean.getTaxTotalStr()%></td>
+			</tr>
+			<tr>
+				<th valign="top"></th>
+				<th valign="top"></th>
+				<th valign="top">Total</th>
+				<td valign="top"><%=menuOrderBean.getTotalStr()%></td>
+			</tr>
+		</table>
+
+
+
+
+
+
+		<table class="pageSeperator"><tr>
+			<td width="100%"><hr/></td>
+		</tr></table>
+
+
+<%
+	for( int i = 0; i < menuOrderBean.getPaymentMethodCount(); i++ )
+	{
+		String type = menuOrderBean.getPMType(i);
+		switch (type) {
+			case "PayPal":
+				String clientId = menuOrderBean.queryPmConfig(i, "CLIENT_ID");
+				String clientSecret = menuOrderBean.queryPmConfig(i, "CLIENT_SECRET");
+%>
+		<script 
+		src="https://www.paypal.com/sdk/js?client-id=<%=clientId%>&components=buttons">
+		</script>
+		<div id="paypal-container-<%=clientId%>"></div>
 		<script>
 		paypal.Buttons({
 			style: {
-				layout: 'vertical',
+				layout: 'horizontal',
 				color:  'blue',
 				shape:  'rect',
 				label:  'paypal'
@@ -93,10 +212,7 @@ src="https://www.paypal.com/sdk/js?client-id=AU2TRC2m41gTinrJfNVas_8sFyqjC5EaUYj
 						'Content-Type': 'application/json'
 					},
 					body: JSON.stringify({
-						cart: [{
-							sku: 'YOUR_PRODUCT_SKU',
-							quantity: 'YOUR_PRODUCT_QUANTITY',
-						}]
+						payment_index: "<%=i%>"
 					})
 				}).then(function(response) {
 					return response.json();
@@ -112,7 +228,10 @@ src="https://www.paypal.com/sdk/js?client-id=AU2TRC2m41gTinrJfNVas_8sFyqjC5EaUYj
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json'
-					}
+					},
+					body: JSON.stringify({
+						payment_index: "<%=i%>"
+					})
 				}).then(function(response) {
 					return response.json();
 				}).then(function(orderData) {
@@ -133,12 +252,17 @@ src="https://www.paypal.com/sdk/js?client-id=AU2TRC2m41gTinrJfNVas_8sFyqjC5EaUYj
 				alert('An error occurred during the transaction. Please try again.');
 			}
 
-		}).render('#paypal-container-5WK5HP852M52J');
+		}).render('#paypal-container-<%=clientId%>');
 		</script>
+<%
+			break;
+		}
+	}
+%>
 
 <% if( menuOrderBean.itemCount() > 0 ){ %>
 		<button dojoType="dijit.form.Button">
-			Submit Order
+			Pay at Location
 			<script type="dojo/method" event="onClick">
 				submitOrder();
 			</script>
