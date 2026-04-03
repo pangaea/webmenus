@@ -26,8 +26,6 @@ import com.genesys.webmenus.OrderItem;
 public class PayPalPortal extends HttpServlet
 {
     // Use PayPal Developer Dashboard to get your credentials for Sandbox/Live
-    //private static final String CLIENT_ID = "AU2TRC2m41gTinrJfNVas_8sFyqjC5EaUYjjgTc3sZvJk5Hs1U1mWbSNPz3lgl3rOzkeCPS0kfeSBaWX";
-    //private static final String CLIENT_SECRET = "EBaANfiMaanSblIinBj1p0lldHxVuCb0sWje5NSVElYfjVoUF06rQrXEjzVBlLAgNhiaS0hJV0IUq_EC";
     private static final String PAYPAL_API_BASE = "https://api-m.sandbox.paypal.com"; // Use "https://api-m.paypal.com" for live
     String clientId, clientSecret;
 
