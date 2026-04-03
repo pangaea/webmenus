@@ -18,6 +18,7 @@
 		<form-bean name="restaurant_info" type="com.genesys.webmenus.account.RestaurantInfo_Form"/>
 		<form-bean name="create_account_summary" type="com.genesys.webmenus.account.CreateSummary_Form"/>
 		<form-bean name="schedule_designer" type="com.genesys.webmenus.scheduler.ScheduleDesignerForm"/>
+		<form-bean name="paypal_form" type="com.genesys.webmenus.pos.PayPalSettingsForm"/>
 	</form-beans>
 	
     <action-mappings>
@@ -57,6 +58,11 @@
 		<action path="/schedule_designer" name="schedule_designer" type="com.genesys.webmenus.scheduler.ScheduleDesignerAction"
 				scope="request" validate="true" input="/app/scheduler/schedule_designer.jsp">
 			<forward name="success" path="/app/scheduler/success.jsp"/>
+		</action>
+
+		<action path="/paypal_form" name="paypal_form" type="com.genesys.webmenus.pos.PayPalSettingsAction"
+				scope="request" validate="true" input="/app/payment_methods/paypal_form.jsp">
+			<forward name="success" path="/app/payment_methods/paypal_success.jsp"/>
 		</action>
 
     </action-mappings>

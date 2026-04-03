@@ -50,5 +50,34 @@ function backtologin()
 <body>
 PAYPAL SETTINGS
 <hr/>
+<style>
+.settings {
+	width: 100%;
+}
+.settings td:last-child {
+	width: 100%;
+}
+.settings td:first-child {
+	min-width:100px;
+}
+.settings input {
+	width: 100%;
+}
+</style>
+<html:form action="paypal_form.do">
+	<html:hidden property="id"/>
+	<table class="settings"><tr>
+	<td>Client Id:</td> <td>
+		<html:text property="clientId" title="Client ID"/></td>
+	</tr><tr>
+	<td>Client Secret:</td> <td>
+		<html:text property="clientSecret" title="Client Secret"/></td>
+	</tr></table>
+	<hr/>
+	<div style="float:right;">
+		<html:submit>Save</html:submit>
+		<button onclick="parent.$.fancybox.close();">Close</button>
+	</div>
+</html:form>
 </body>
 </html:html>

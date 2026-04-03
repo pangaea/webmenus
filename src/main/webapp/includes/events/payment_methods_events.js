@@ -21,7 +21,7 @@ function OpenPaypalSettings( id )
 		$("<a id='paypal_form_link-" + id + "' href='../app/payment_methods/paypal_form.jsp?id=" + id + "'/>").insertAfter( $("body") );
 	$("#paypal_form_link-" + id).fancybox({
 	    'width' : 940,
-	    'height' : 570,
+	    'height' : 200,
 	    'transitionIn' : 'none',
 	    'transitionOut' : 'none',
 	    'hideOnOverlayClick' : false,
