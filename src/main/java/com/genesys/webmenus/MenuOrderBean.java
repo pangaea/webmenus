@@ -48,6 +48,7 @@ public class MenuOrderBean
 	private String						m_phoneNum = null;
 	private String						m_emailAddr = null;
 	private boolean					m_devlieryOffered = false;
+	private boolean					m_payOnPickup = false;
 	private boolean					m_emailOrders = false;
 	private boolean					m_validated = false;
 	private String						m_patronId = null;
@@ -140,6 +141,50 @@ public class MenuOrderBean
 		m_objectBean.Logout(m_creds);
 		m_creds = null;
 	}
+
+	public String processOrder(String email, boolean paymentRequired, Map<String, Object> params) {
+		try {
+			Boolean deliveryOrder = params.get("delivery_option").toString().equalsIgnoreCase("delivery");
+			if (deliveryOrder) {
+				String addr = (String)params.get("address");
+				setDeliveryAddress(addr);
+			}
+
+			if (loginPatron(email) == null) {
+				createPatron(email, params.get("firstname").toString(), params.get("lastname").toString(),
+							params.get("phone_num").toString());
+			}
+			return submitOrder(paymentRequired);
+		}
+		catch(AuthenticationException ex)
+		{
+			SystemServlet.g_logger.error( "AuthenticationException thrown - " + ex.getErrMsg() );
+		}
+		catch(RepositoryException ex)
+		{
+			SystemServlet.g_logger.error( "RepositoryException thrown - " + ex.getErrMsg() );
+		}
+		return null;
+	}
+
+	public boolean updateOrderStatus(String orderId, int status) {
+		if( verifyObjManCreds() ) {
+			ObjectSubmit order = new ObjectSubmit("CCMenuOrder");
+			order.addProperty("status", status);
+			
+			try {
+				m_objectBean.Update(m_creds, orderId, order);
+				return true;
+			}
+			catch(AuthenticationException ex) {
+				SystemServlet.g_logger.error( "AuthenticationException thrown - " + ex.getErrMsg() );
+			}
+			catch(RepositoryException ex) {
+				SystemServlet.g_logger.error( "Exception thrown inserting order in {MenuOrderBean::updateOrderStatus} - " + ex.getErrMsg() );
+			}
+		}
+		return false;
+	}
 	
 	public String loginPatron( String email )
 	{
@@ -172,29 +217,33 @@ public class MenuOrderBean
 		return retId;
 	}
 	
-	public String createPatron( HttpServletRequest request ) throws AuthenticationException, RepositoryException
+	public String createPatron(String email, String firstname, String lastname, String phone_num) throws AuthenticationException, RepositoryException
 	{
 		String retId = null;
 		if( verifyObjManCreds() )
 		{
 			//ObjectQuery queryPatron = new ObjectQuery( "CEPatron" );
 			ObjectSubmit submitStmt = new ObjectSubmit("CEPatron");
-			InterfaceCfg interfaceCfg = SystemServlet.getGenesysInterfaceCfg();
-			InterfaceCfg.View viewNode = interfaceCfg.getView("patrons");
-			if(viewNode!=null)
-			{
-				List<InterfaceCfg.View.Input> _inputs = viewNode.getInputs();
-				Iterator<InterfaceCfg.View.Input> _iter_inputs = _inputs.iterator();
-				while( _iter_inputs.hasNext() )
-				{
-					InterfaceCfg.View.Input input = _iter_inputs.next();
-					String visible = input.getVisible();
-					if( visible.equalsIgnoreCase("false") == true ) continue;
-					String field = input.getField();
-					String value = (String)request.getParameter(field);
-					submitStmt.addProperty(field, value);
-				}
-			}
+			// InterfaceCfg interfaceCfg = SystemServlet.getGenesysInterfaceCfg();
+			// InterfaceCfg.View viewNode = interfaceCfg.getView("patrons");
+			// if(viewNode!=null)
+			// {
+			// 	List<InterfaceCfg.View.Input> _inputs = viewNode.getInputs();
+			// 	Iterator<InterfaceCfg.View.Input> _iter_inputs = _inputs.iterator();
+			// 	while( _iter_inputs.hasNext() )
+			// 	{
+			// 		InterfaceCfg.View.Input input = _iter_inputs.next();
+			// 		String visible = input.getVisible();
+			// 		if( visible.equalsIgnoreCase("false") == true ) continue;
+			// 		String field = input.getField();
+			// 		String value = (String)request.getParameter(field);
+			// 		submitStmt.addProperty(field, value);
+			// 	}
+			// }
+			submitStmt.addProperty("email", email);
+			submitStmt.addProperty("firstname", firstname);
+			submitStmt.addProperty("lastname", lastname);
+			submitStmt.addProperty("phone_num", phone_num);
 			
 			String newId = null;
 			try
@@ -218,7 +267,7 @@ public class MenuOrderBean
 				m_validated = true;
 				
 				m_patronId = retId;
-				m_patronEmail = (String)request.getParameter("email");
+				m_patronEmail = email;
 			}
 			//RepositoryObjects oPatrons = qrPatron.getObjects( queryPatron.getClassName() );
 			//if( oPatrons.count() > 0 )
@@ -309,6 +358,7 @@ public class MenuOrderBean
 				m_logo = oLoc.getPropertyValue("logo");
 				//m_menuwidth = oLoc.getPropertyValue("theme.menuwidth");
 				m_devlieryOffered = oLoc.getPropertyValue_Boolean("delivery_avail");
+				m_payOnPickup = oLoc.getPropertyValue_Boolean("pay_on_pickup");
 				m_emailOrders = oLoc.getPropertyValue_Boolean("email_orders");
 				String sRole = oLoc.getPropertyValue("role");
 
@@ -727,6 +777,9 @@ public class MenuOrderBean
 	{
 		return m_devlieryOffered;
 	}
+	public boolean isPayOnPickup() {
+		return m_payOnPickup;
+	}
 	public double getSubTotal()
 	{
 		BigDecimal subTotal = new BigDecimal(0);
@@ -919,8 +972,9 @@ public class MenuOrderBean
 		return errors;
 	}
 */
-	public boolean submitOrder()
+	public String submitOrder(boolean paymentRequired)
 	{
+		String order_id = null;
 		if( verifyObjManCreds() )
 		{
 			ObjectSubmit order = new ObjectSubmit("CCMenuOrder");
@@ -939,8 +993,8 @@ public class MenuOrderBean
 				order.addProperty("delivery_info", m_deliveryInfo);
 				order.addProperty("fulfilled", false);
 				order.addProperty("notification_status", (m_emailOrders)?0:2);
+				order.addProperty("status", (paymentRequired)?0:1);
 				
-				String order_id = null;
 				try
 				{
 					order_id = m_objectBean.Insert(m_creds, order);
@@ -948,11 +1002,12 @@ public class MenuOrderBean
 				catch(AuthenticationException ex)
 				{
 					SystemServlet.g_logger.error( "AuthenticationException thrown - " + ex.getErrMsg() );
+					return null;
 				}
 				catch(RepositoryException ex)
 				{
 					SystemServlet.g_logger.error( "Exception thrown inserting order in {MenuOrderBean::submitOrder} - " + ex.getErrMsg() );
-					return false;
+					return null;
 				}
 	
 				for( int i = 0; i < m_orderItemList.size(); i++ )
@@ -976,11 +1031,12 @@ public class MenuOrderBean
 					catch(AuthenticationException ex)
 					{
 						SystemServlet.g_logger.error( "AuthenticationException thrown - " + ex.getErrMsg() );
+						return null;
 					}
 					catch(RepositoryException ex)
 					{
 						SystemServlet.g_logger.error( "Exception thrown inserting order item in {MenuOrderBean::submitOrder} - " + ex.getErrMsg() );
-						return false;
+						return null;
 					}
 				}
 				
@@ -996,7 +1052,7 @@ public class MenuOrderBean
 			catch(FactoryConfigurationError e)
 			{
 				SystemServlet.g_logger.error(e.getMessage());
-				//e.printStackTrace();
+				return null;
 			}
 
 			// Clear items from order after successful submission
@@ -1004,6 +1060,6 @@ public class MenuOrderBean
 			m_orderItemList.clear();
 		}
 
-		return true;
+		return order_id;
 	}
 }

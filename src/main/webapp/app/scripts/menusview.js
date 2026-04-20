@@ -35,7 +35,7 @@ function showOrderDialog(url)
 function openOrderDialog(url)
 {
 	var dlgWidth = 800;//(document.body.clientWidth / 2);
-	var dlgHeight = 600;//(document.body.clientHeight / 2);
+	var dlgHeight = 800;//(document.body.clientHeight / 2);
 	var txtContent = "<iframe width='" + dlgWidth + "px' height='" + dlgHeight + "px' src='" + url + "'></iframe>";
 	var theDialog = new dijit.Dialog({
 		id: "wm_modal_dialog",

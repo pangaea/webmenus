@@ -17,9 +17,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.genesys.api.RepositoryResource;
+import com.genesys.repository.AuthenticationException;
 import com.genesys.webmenus.MenuOrderBean;
 import com.genesys.webmenus.OrderItem;
 
@@ -101,7 +103,7 @@ public class PayPalPortal extends HttpServlet
                     if (matcher.find()) {
                         // group(1) refers to the first capturing group (the actual ID number)
                         String orderId = matcher.group(1); 
-                        captureOrder(orderId, accessToken, response);
+                        captureOrder(orderId, accessToken, response, node);
                     } else {
                         System.out.println("No ID found.");
                     }
@@ -206,7 +208,7 @@ public class PayPalPortal extends HttpServlet
     }
 
 	// Conceptual Java example to capture payment
-	public String captureOrder(String orderId, String accessToken, HttpServletResponse httpResponse) throws Exception {
+	public String captureOrder(String orderId, String accessToken, HttpServletResponse httpResponse, JsonNode node) throws Exception {
 
         String jsonInputString = "{}";
         try{
@@ -243,6 +245,14 @@ public class PayPalPortal extends HttpServlet
             throw new ServletException(e.getMessage(), e);
         }
 
+        String email = node.get("email").asText();
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> attrs = mapper.convertValue(node, new TypeReference<Map<String, Object>>(){});
+        String currentOrderId = menuOrderBean.processOrder(email, true, attrs);
+        if (currentOrderId == null) {
+            throw new ServletException("Failed to create order");
+        }
+
 		// URL url = new URL("https://api-m.sandbox.paypal.com" + orderId + "/capture");
 		// HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		// conn.setRequestMethod("POST");
@@ -257,13 +267,29 @@ public class PayPalPortal extends HttpServlet
 		// ... input stream handling ...
 		//return httpResponse.toString();
 
-        // Post order to paypal
-        String jsonResponse = makeRequest(accessToken, "application/json", "/v2/checkout/orders/" + orderId + "/capture", jsonInputString);
-        httpResponse.setContentType("text/json");
-        httpResponse.setCharacterEncoding("utf-8");
-        PrintWriter out = httpResponse.getWriter();
-        out.write(jsonResponse.toCharArray());
-        return orderId;
+        String captureId = null;
+        try {
+            // Post order to paypal
+            String jsonResponse = makeRequest(accessToken, "application/json", "/v2/checkout/orders/" + orderId + "/capture", jsonInputString);
+            JsonNode payPalResponse = mapper.readTree(jsonResponse);
+            String status = payPalResponse.get("status").asText();
+            httpResponse.setContentType("text/json");
+            httpResponse.setCharacterEncoding("utf-8");
+            PrintWriter out = httpResponse.getWriter();
+            out.write(jsonResponse.toCharArray());
+
+            // Process paypal response
+            if (status.equalsIgnoreCase("COMPLETED")) {
+                captureId = payPalResponse.at("/purchase_units/0/payments/captures/0/id").asText(); 
+                menuOrderBean.updateOrderStatus(currentOrderId, 1);
+            } else {
+                menuOrderBean.updateOrderStatus(currentOrderId, 2);
+            }
+        } catch (Exception e) {
+            menuOrderBean.updateOrderStatus(currentOrderId, 2);
+        }
+
+        return captureId;
 	}
 
 }

@@ -61,11 +61,11 @@ function updateOrder(qid)
 	//var qt = (String)dijit.byId(id).value;
 	var qt = document.getElementById(qid).value;
 	if(qt.length > 0)
-		window.setTimeout('orderForm.submit();',500);
+		window.setTimeout('orderForm.submit();', 500);
 }
 function checkoutOrder()
 {
-	document.location.href = "../login_patron.jsp";
+	document.location.href = "../checkout.jsp";
 }
 </script>
 </head>

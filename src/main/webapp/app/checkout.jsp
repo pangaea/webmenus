@@ -2,10 +2,11 @@
 Copyright (c) 2004-2005 Kevin Jacovelli
 All Rights Reserved
 -->
+<%@ taglib uri="/WEB-INF/tlds/views.tld" prefix="viewCfg" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="ISO-8859-1" %>
 <%@ page import="com.genesys.webmenus.*"%>
 <%@ page import="java.math.BigDecimal"%>
-
+<%@ page import="java.util.*"%>
 <jsp:useBean id="menuOrderBean" scope="session" class="com.genesys.webmenus.MenuOrderBean"/>
 <%
 	boolean bOpen = menuOrderBean.isWithinOpertingHours();
@@ -16,20 +17,6 @@ All Rights Reserved
 <%
 		return;
 	}
-	
-	//if( request.getSession().getAttribute( "patron_id" ) == null )
-	if( menuOrderBean.isValidated() == false ) {
-		response.sendRedirect( "login_patron.jsp" );
-		return;
-	}
-
-	// Check for delivery options and record them if present
-	String sDelivery = request.getParameter("delivery_option");
-	if( sDelivery != null && sDelivery.equalsIgnoreCase("delivery") == true )
-	{	
-		String sDeliveryInfo = request.getParameter("delivery_info");
-		menuOrderBean.setDeliveryAddress( sDeliveryInfo );
-	}
 %>
 <html>
 	<head>
@@ -37,12 +24,18 @@ All Rights Reserved
 		
 		<style type="text/css">
 			@import "<%=request.getContextPath()%>/xlibs/dojo/dijit/themes/tundra/tundra.css";
+			.pageSeperator2 hr
+			{
+				background-color: black !important;
+				height:2px !important;
+			}
 		</style>
 	
 		<script type="text/javascript" src="<%=request.getContextPath()%>/xlibs/dojo/dojo/dojo.js" djConfig="parseOnLoad: true"></script>
 
 		<script type="text/javascript" src="<%=request.getContextPath()%>/includes/fields.js"></script>
 		<script type="text/javascript" src="<%=request.getContextPath()%>/includes/controls.js"></script>
+		<script type="text/javascript" src="<%=request.getContextPath()%>/app/scripts/checkout.js"></script>
 		
 <%
 	String themeName = menuOrderBean.getTheme();
@@ -61,24 +54,30 @@ All Rights Reserved
 
 <script type="text/javascript">
 	dojo.require("dijit.form.Button");
+	dojo.require("dijit.Dialog");
 	dojo.require("dijit.form.NumberSpinner");
 	dojo.require("dojo.parser");
+	dojo.require("dijit.form.CheckBox");
 </script>
 
 <script type="text/javascript">
 //document.onload = function()
 dojo.addOnLoad( function()
 {
-	window.scrollBy(0,1000);
+	//window.scrollBy(0,1000);
+	window.scrollTo({
+		top: document.body.scrollHeight,
+		behavior: 'smooth'
+	});
 });
-function submitOrder()
-{
-	document.location.href = "ordersubmit.jsp";
-}
+// function submitOrder()
+// {
+// 	document.location.href = "ordersubmit.jsp";
+// }
 </script>
 </head>
 
-	<body class="tundra">
+	<body class="tundra" onload="selectDeliveryOption('pickup')">
 		<table id="itemTable" cellpadding="2" class="orderTable">
 			<tr>
 				<th valign="top">Order</th>
@@ -181,6 +180,162 @@ function submitOrder()
 			<td width="100%"><hr/></td>
 		</tr></table>
 
+		<div class='menuTitle'>Your Information</div>
+
+		<form id="orderCheckout" method="post" action="<%=request.getContextPath()%>/OrderCheckout">
+		<table style="margin:auto;padding:20px;">
+		<% int index = 0; %>
+		<viewCfg:ViewForm viewName="patrons">
+		<% if( inputVisible.equalsIgnoreCase("false") == false ){
+			if((index & 1) == 0){ %>
+			<tr>
+			<% } %>
+				<td>
+					<div class='patronLoginLabel'><%=inputText%></div>
+				</td>
+				<td>
+					<input WMrequired="<%=inputRequired%>" title="<%=inputText%>" type="text"
+							ID="<%=inputField%>" NAME="<%=inputField%>" maxlength="<%=inputLen%>"/>
+				</td>
+				<td style="padding-right:20px;">
+			<% if( inputRequired == true ){ %>
+					<span style="color:red">*</span>
+			<% } %>
+				</td>
+			<% if((index & 1) == 1){ %>
+			</tr>
+			<% }
+			index++;
+		} %>
+		</viewCfg:ViewForm>
+		</table>
+
+
+
+<% if( menuOrderBean.isDeliveryAvailable() ) { %>
+		<table class="pageSeperator"><tr>
+			<td width="100%"><hr/></td>
+		</tr></table>
+
+
+
+
+
+
+
+
+	<table style="width:100%"><tr><td style="text-align:center">
+		<span style="color:red;"><!--%=errMsg%--></span>
+		<div class='menuTitle'>Select Delivery Options</div>
+		<br/>
+		<div class="menuItemTitle">
+			<input dojoType="dijit.form.RadioButton" type="radio" id="option_pickup" name="delivery_option" checked value="pickup"  onclick="selectDeliveryOption(this.value)"/>Pickup Order
+		</div>
+
+		<table class="pageSeperator pageSeperator2"><tr>
+			<td width="100%"><hr width="100%"/></td>
+		</tr></table>
+
+		<div class="menuItemTitle">
+		<input dojoType="dijit.form.RadioButton" type="radio" id="option_delivery" name="delivery_option" value="delivery" onclick="selectDeliveryOption(this.value)"/>Deliver Order to...
+		
+	<%
+		Vector<String> addrs = menuOrderBean.getPartonDeliveryAddresses();
+		Iterator itr = addrs.iterator();
+		int ii = 1;
+	    while(itr.hasNext()){
+	%>
+	    	<textarea id="addr_<%=Integer.toString(ii)%>" style="display:none"><%=itr.next()%></textarea>
+	<%
+			ii++;
+	    }
+	%>
+		<select id="previous_deliveries" style="width:250px;" onchange="selectDeliverAddr(this)">
+		<option value="0">[New Address]</option>
+	<%
+		itr = addrs.iterator();
+		ii = 1;
+	    while(itr.hasNext()){
+	    	String body = (String)itr.next();
+	%>
+			<option value="<%=Integer.toString(ii)%>" title="<%=body%>">
+	    	<%=body%>
+	    	</option>
+	<%
+			ii++;
+		}
+	%>
+		</select>
+		<br/><br/>
+		</div>
+			<textarea id="delivery_info" name="delivery_info" style="display:none;"></textarea>
+			<table>
+				<tr>
+					<td><div class='patronLoginLabel'>Address</div></td><td>
+						<input WMrequired="true" title="Address" type="text" ID="address" name="address" maxlength="64"/>
+					</td>
+					<td>
+						<span style="color:red">*</span>
+					</td>
+				</tr>
+				<tr>
+					<td><div class='patronLoginLabel'>City</div></td><td>
+						<input WMrequired="true" title="City" type="text" ID="city" name="city" maxlength="64"/>
+					</td>
+					<td>
+						<span style="color:red">*</span>
+					</td>
+				</tr>
+				<tr>
+					<td><div class='patronLoginLabel'>State</div></td><td>
+						<input WMrequired="true" title="State" type="text" ID="state" name="state" maxlength="64"/>
+					</td>
+					<td>
+						<span style="color:red">*</span>
+					</td>
+				</tr>
+				<tr>
+					<td><div class='patronLoginLabel'>Zip</div></td><td>
+						<input WMrequired="true" title="Zip" type="text" ID="zip" name="zip" maxlength="64"/>
+					</td>
+					<td>
+						<span style="color:red">*</span>
+					</td>
+				</tr>
+				<tr>
+					<td><div class='patronLoginLabel'>Contact Phone #</div></td><td>
+						<input WMrequired="true" title="Contact Phone #" type="text" ID="contact_number" name="contact_number" maxlength="64"/>
+					</td>
+					<td>
+						<span style="color:red">*</span>
+					</td>
+				</tr>
+				<tr>
+					<td/><td colspan="2"><span style="color:red;font:8pt verdana;">* Required</span></td>
+				</tr>
+			</table>
+			</td>
+			</tr>
+			</table>
+			</form>
+<% } %>
+
+
+
+
+
+
+
+
+		<table class="pageSeperator"><tr>
+			<td width="100%"><hr/></td>
+		</tr></table>
+
+
+
+
+
+<% if( menuOrderBean.itemCount() > 0 ){ %>
 
 <%
 	for( int i = 0; i < menuOrderBean.getPaymentMethodCount(); i++ )
@@ -191,6 +346,7 @@ function submitOrder()
 				String clientId = menuOrderBean.queryPmConfig(i, "CLIENT_ID");
 				String clientSecret = menuOrderBean.queryPmConfig(i, "CLIENT_SECRET");
 %>
+<!-- &enable-funding=venmo&buyer-country=US -->
 		<script 
 		src="https://www.paypal.com/sdk/js?client-id=<%=clientId%>&components=buttons">
 		</script>
@@ -224,21 +380,35 @@ function submitOrder()
 
 			// Call your server to capture the payment
 			onApprove: function(data, actions) {
+				debugger;
 				return fetch('/webmenus/PayPalPortal/order/' + data.orderID + '/capture', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json'
 					},
 					body: JSON.stringify({
-						payment_index: "<%=i%>"
+						payment_index: "<%=i%>",
+						email: document.getElementsByName('email')[0].value,
+						firstname: document.getElementsByName('firstname')[0].value,
+						lastname: document.getElementsByName('lastname')[0].value,
+						phone_num: document.getElementsByName('phone_num')[0].value,
+						delivery_option: document.getElementById('option_delivery').checked ?
+							document.getElementsByName('delivery_option')[1].value :
+							document.getElementsByName('delivery_option')[0].value,
+						address: document.getElementsByName('address')[0].value,
+						city: document.getElementsByName('city')[0].value,
+						state: document.getElementsByName('state')[0].value,
+						contact_number:document.getElementsByName('contact_number')[0].value
 					})
 				}).then(function(response) {
 					return response.json();
 				}).then(function(orderData) {
 					// Show a success message to the buyer
-					submitOrder();
+					//submitOrder();
+					//orderCheckout.submit();
+					//document.getElementById("orderCheckout").submit();
 					// Redirect to a success page or update UI
-					// window.location.href = '/success.html';
+					window.location.href = '/success.html';
 				});
 			},
 
@@ -260,14 +430,15 @@ function submitOrder()
 	}
 %>
 
-<% if( menuOrderBean.itemCount() > 0 ){ %>
+<% if( menuOrderBean.isPayOnPickup() ){ %>
 		<button dojoType="dijit.form.Button">
 			Pay at Location
 			<script type="dojo/method" event="onClick">
-				submitOrder();
+				//submitOrder();
+				orderCheckout.submit();
 			</script>
 		</button>
-<% } %>
+<% } } %>
 		<button dojoType="dijit.form.Button">
 			Go Back to Menus
 			<script type="dojo/method" event="onClick">
