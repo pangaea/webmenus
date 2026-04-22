@@ -589,9 +589,10 @@ CREATE TABLE `webmenus_menu_order` (
   `location_id` varchar(36) NOT NULL,
   `delivery` varchar(1) NOT NULL,
   `delivery_info` varchar(255) NOT NULL,
-  `fulfilled` varchar(1) NOT NULL,
   `notification_status` varchar(11) NOT NULL,
-  `status` varchar(11) NOT NULL,
+  `status` int NOT NULL DEFAULT '0',
+  `payment_type` int NOT NULL DEFAULT '0',
+  `payment_info` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_webmenus_menu_order__location` (`location_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -685,7 +686,7 @@ CREATE TABLE `webmenus_payment_method` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   `name` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `type` varchar(16) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `type` int NOT NULL,
   `description` varchar(128) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `config` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci,
   PRIMARY KEY (`id`)
@@ -737,4 +738,4 @@ CREATE TABLE `webmenus_schedule_menu_list` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-04-20 18:07:36
+-- Dump completed on 2026-04-22 17:50:51

@@ -48,7 +48,7 @@ public class OrderCheckout extends HttpServlet {
 			String email = request.getParameter("email");
 			ObjectMapper mapper = new ObjectMapper();
         	Map<String, Object> attrs = mapper.convertValue(request.getParameterMap(), new TypeReference<Map<String, Object>>(){});
-			menuOrderBean.processOrder(email, false, attrs);
+			menuOrderBean.processOrder(email, 0, attrs);
 
 			// if (deliveryOption) {
 			// 	menuOrderBean.setDeliveryAddress(address);

@@ -268,7 +268,7 @@ dojo.addOnLoad( function()
 		</select>
 		<br/><br/>
 		</div>
-			<textarea id="delivery_info" name="delivery_info" style="display:none;"></textarea>
+			<!--textarea id="delivery_info" name="delivery_info" style="display:none;"></textarea-->
 			<table>
 				<tr>
 					<td><div class='patronLoginLabel'>Address</div></td><td>
@@ -340,9 +340,9 @@ dojo.addOnLoad( function()
 <%
 	for( int i = 0; i < menuOrderBean.getPaymentMethodCount(); i++ )
 	{
-		String type = menuOrderBean.getPMType(i);
+		Integer type = menuOrderBean.getPMType(i);
 		switch (type) {
-			case "PayPal":
+			case 1: // Paypal
 				String clientId = menuOrderBean.queryPmConfig(i, "CLIENT_ID");
 				String clientSecret = menuOrderBean.queryPmConfig(i, "CLIENT_SECRET");
 %>
@@ -398,6 +398,7 @@ dojo.addOnLoad( function()
 						address: document.getElementsByName('address')[0].value,
 						city: document.getElementsByName('city')[0].value,
 						state: document.getElementsByName('state')[0].value,
+						zip: document.getElementsByName('zip')[0].value,
 						contact_number:document.getElementsByName('contact_number')[0].value
 					})
 				}).then(function(response) {

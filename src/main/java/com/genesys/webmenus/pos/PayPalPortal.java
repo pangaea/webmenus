@@ -248,7 +248,8 @@ public class PayPalPortal extends HttpServlet
         String email = node.get("email").asText();
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> attrs = mapper.convertValue(node, new TypeReference<Map<String, Object>>(){});
-        String currentOrderId = menuOrderBean.processOrder(email, true, attrs);
+        // 0 - PayPal
+        String currentOrderId = menuOrderBean.processOrder(email, 1, attrs);
         if (currentOrderId == null) {
             throw new ServletException("Failed to create order");
         }
@@ -280,13 +281,16 @@ public class PayPalPortal extends HttpServlet
 
             // Process paypal response
             if (status.equalsIgnoreCase("COMPLETED")) {
-                captureId = payPalResponse.at("/purchase_units/0/payments/captures/0/id").asText(); 
-                menuOrderBean.updateOrderStatus(currentOrderId, 1);
+                JsonNode captureIdNode = payPalResponse.at("/purchase_units/0/payments/captures/0/id");
+                if (!captureIdNode.isMissingNode()) {
+                    captureId = captureIdNode.asText();
+                }
+                menuOrderBean.updateOrderStatus(currentOrderId, 0, captureId);
             } else {
-                menuOrderBean.updateOrderStatus(currentOrderId, 2);
+                menuOrderBean.updateOrderStatus(currentOrderId, 2, null);
             }
         } catch (Exception e) {
-            menuOrderBean.updateOrderStatus(currentOrderId, 2);
+            menuOrderBean.updateOrderStatus(currentOrderId, 2, null);
         }
 
         return captureId;

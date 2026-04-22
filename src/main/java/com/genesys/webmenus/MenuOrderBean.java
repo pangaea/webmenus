@@ -142,19 +142,23 @@ public class MenuOrderBean
 		m_creds = null;
 	}
 
-	public String processOrder(String email, boolean paymentRequired, Map<String, Object> params) {
+	public String processOrder(String email, int paymentType, Map<String, Object> params) {
 		try {
 			Boolean deliveryOrder = params.get("delivery_option").toString().equalsIgnoreCase("delivery");
 			if (deliveryOrder) {
-				String addr = (String)params.get("address");
-				setDeliveryAddress(addr);
+				String delivery_info = MessageFormat.format("{0}\n{1}, {2} {3}\n{4}", (String)params.get("address"),
+																			(String)params.get("city"),
+																			(String)params.get("state"),
+																			(String)params.get("zip"),
+																			(String)params.get("contact_number"));
+				setDeliveryAddress(delivery_info);
 			}
 
 			if (loginPatron(email) == null) {
 				createPatron(email, params.get("firstname").toString(), params.get("lastname").toString(),
 							params.get("phone_num").toString());
 			}
-			return submitOrder(paymentRequired);
+			return submitOrder(paymentType);
 		}
 		catch(AuthenticationException ex)
 		{
@@ -167,10 +171,11 @@ public class MenuOrderBean
 		return null;
 	}
 
-	public boolean updateOrderStatus(String orderId, int status) {
+	public boolean updateOrderStatus(String orderId, int status, String paymentInfo) {
 		if( verifyObjManCreds() ) {
 			ObjectSubmit order = new ObjectSubmit("CCMenuOrder");
 			order.addProperty("status", status);
+			order.addProperty("payment_info", paymentInfo);
 			
 			try {
 				m_objectBean.Update(m_creds, orderId, order);
@@ -363,6 +368,7 @@ public class MenuOrderBean
 				String sRole = oLoc.getPropertyValue("role");
 
 				// Pull in payment methods
+				m_paymentMethodList.clear();
 				RepositoryObjectRefList payment_methods = oLoc.getPropertyObjectRefs("payment_methods");
 				for (int i = 0; i < payment_methods.count(); i++){
 					RepositoryObjectRef ref = payment_methods.get(i);
@@ -373,7 +379,7 @@ public class MenuOrderBean
 					if (oPMs.count() > 0) {
 						RepositoryObject o = oPMs.get(0);
 						PaymentMethod oo = new PaymentMethod(o.getPropertyValue("name"),
-															 o.getPropertyValue("type"),
+															 o.getPropertyValue_Int("type"),
 															 o.getPropertyValue("description"),
 															 o.getPropertyValue("config"));
 						m_paymentMethodList.add(oo);
@@ -490,11 +496,11 @@ public class MenuOrderBean
 		return m_paymentMethodList.size();
 	}
 
-	public String getPMType(int index) {
+	public Integer getPMType(int index) {
 		if (index < m_paymentMethodList.size()) {
 			return m_paymentMethodList.get(index).type();
 		}
-		return "";
+		return -1;
 	}
 
 	public String queryPmConfig(int index, String propName) {
@@ -972,7 +978,7 @@ public class MenuOrderBean
 		return errors;
 	}
 */
-	public String submitOrder(boolean paymentRequired)
+	public String submitOrder(int paymentType)
 	{
 		String order_id = null;
 		if( verifyObjManCreds() )
@@ -991,9 +997,9 @@ public class MenuOrderBean
 				order.addProperty("location", m_LocId);
 				order.addProperty("delivery", m_deliveryYes);
 				order.addProperty("delivery_info", m_deliveryInfo);
-				order.addProperty("fulfilled", false);
 				order.addProperty("notification_status", (m_emailOrders)?0:2);
-				order.addProperty("status", (paymentRequired)?0:1);
+				order.addProperty("status", (paymentType == 0)?0:1);
+				order.addProperty("payment_type", paymentType);
 				
 				try
 				{
