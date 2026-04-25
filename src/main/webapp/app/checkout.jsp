@@ -412,7 +412,7 @@ dojo.addOnLoad( function()
 					//orderCheckout.submit();
 					//document.getElementById("orderCheckout").submit();
 					// Redirect to a success page or update UI
-					window.location.href = '<%=request.getContextPath()%>/app/my_order.jsp?id=' + orderData.order_id;
+					window.location.href = '<%=request.getContextPath()%>/app/my_order.jsp?loc=<%=menuOrderBean.getCurrentLocationId()%>&id=' + orderData.order_id;
 				});
 			},
 

@@ -61,6 +61,7 @@ public class MenuOrderBean
 	private String						m_deliveryInfo = null;
 	private HashMap<String, Vector<OpHours>>	m_opHoursMap;
 	private Vector<PaymentMethod>			m_paymentMethodList;
+	private String							m_locationFullAddr = "";
 
 	public MenuOrderBean()
 	{
@@ -368,7 +369,7 @@ public class MenuOrderBean
 //				RepositoryObjects oLocs = qrLoc.getObjects( queryLoc.getClassName() );
 //				if( oLocs.count() == 0 ) return;	// Invalid location id
 //				RepositoryObject oLoc = oLocs.get(0);
-				String temp = oLoc.getPropertyValue("tax");
+				//String temp = oLoc.getPropertyValue("tax");
 				m_locationName = oLoc.getPropertyValue("name");
 				m_phoneNum = oLoc.getPropertyValue("phone_num");
 				m_emailAddr = oLoc.getPropertyValue("email_addr");
@@ -385,6 +386,29 @@ public class MenuOrderBean
 				m_payOnPickup = oLoc.getPropertyValue_Boolean("pay_on_pickup");
 				m_emailOrders = oLoc.getPropertyValue_Boolean("email_orders");
 				String sRole = oLoc.getPropertyValue("role");
+
+				String address = oLoc.getPropertyValue("address");
+				String address2 = oLoc.getPropertyValue("address2");
+				String address3 = oLoc.getPropertyValue("address3");
+				String city = oLoc.getPropertyValue("city");
+				String state = oLoc.getPropertyValue("state");
+				String zip = oLoc.getPropertyValue("zip");
+				StringBuilder sb = new StringBuilder(address);
+				if (!address2.isBlank()) {
+					sb.append(", ");
+					sb.append(address2);
+				}
+				if (!address3.isBlank()) {
+					sb.append(", ");
+					sb.append(address3);
+				}
+				sb.append("<br/>");
+				sb.append(city);
+				sb.append(", ");
+				sb.append(state);
+				sb.append(", ");
+				sb.append(zip);
+				m_locationFullAddr = sb.toString();
 
 				// Pull in payment methods
 				m_paymentMethodList.clear();
@@ -509,6 +533,10 @@ public class MenuOrderBean
 				SystemServlet.g_logger.error( "AuthenticationException thrown - " + ex.getErrMsg() );
 			}
 		}
+	}
+
+	public String getLocationAddress() {
+		return m_locationFullAddr;
 	}
 
 	public int getPaymentMethodCount() {

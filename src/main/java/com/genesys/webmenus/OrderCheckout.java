@@ -62,7 +62,7 @@ public class OrderCheckout extends HttpServlet {
 			// String sDeliveryInfo = request.getParameter("delivery_info");
 			// menuOrderBean.setDeliveryAddress( sDeliveryInfo );
 			if(orderId != null ){
-				response.sendRedirect( request.getContextPath() + "/app/my_order.jsp?id=" + orderId );
+				response.sendRedirect( request.getContextPath() + "/app/my_order.jsp?loc=" + menuOrderBean.getCurrentLocationId() + "&id=" + orderId );
 			}
 		}
 		catch(Exception e){
