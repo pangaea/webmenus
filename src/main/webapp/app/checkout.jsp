@@ -360,6 +360,10 @@ dojo.addOnLoad( function()
 				label:  'paypal'
 			},
 
+			oniClick: function() {
+				validateCreateParams()
+			},
+
 			// Call your server to create an order
 			createOrder: function(data, actions) {
 				return fetch('/webmenus/PayPalPortal/createOrder', {
@@ -380,7 +384,6 @@ dojo.addOnLoad( function()
 
 			// Call your server to capture the payment
 			onApprove: function(data, actions) {
-				debugger;
 				return fetch('/webmenus/PayPalPortal/order/' + data.orderID + '/capture', {
 					method: 'POST',
 					headers: {
@@ -409,7 +412,7 @@ dojo.addOnLoad( function()
 					//orderCheckout.submit();
 					//document.getElementById("orderCheckout").submit();
 					// Redirect to a success page or update UI
-					window.location.href = '/success.html';
+					window.location.href = '<%=request.getContextPath()%>/app/my_order.jsp?id=' + orderData.order_id;
 				});
 			},
 
@@ -436,7 +439,8 @@ dojo.addOnLoad( function()
 			Pay at Location
 			<script type="dojo/method" event="onClick">
 				//submitOrder();
-				orderCheckout.submit();
+				if( validateCreateParams() )
+					orderCheckout.submit();
 			</script>
 		</button>
 <% } } %>

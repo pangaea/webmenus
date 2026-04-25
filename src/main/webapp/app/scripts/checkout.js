@@ -7,6 +7,22 @@ function messageBox(msg, title)
     theDialog.show();
 }
 
+function validateCreateParams()
+{
+    var createPatronParams = orderCheckout.getElementsByTagName("input");
+    for( i = 0; i < createPatronParams.length; i++ )
+    {
+        var param = createPatronParams[i];
+        if( param.WMrequired == "true" && param.value.length == 0 )
+        {
+            messageBox("Required field '" + param.title + "' is missing.", "Invalid Parameter");
+            param.focus();
+            return false;
+        }
+    }
+    return true;
+}
+
 function validateParams()
 {
     var optionDeliveryRB = dojo.byId("option_delivery");

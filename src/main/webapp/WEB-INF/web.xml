@@ -198,6 +198,23 @@
         </url-pattern>
     </servlet-mapping>
 
+        <servlet>
+        <servlet-name>
+            MyOrder
+        </servlet-name>
+        <servlet-class>
+            com.genesys.webmenus.MyOrder
+        </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>
+            MyOrder
+        </servlet-name>
+        <url-pattern>
+            /MyOrder/*
+        </url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <servlet-name>
             OrderCheckout

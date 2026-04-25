@@ -48,7 +48,7 @@ public class OrderCheckout extends HttpServlet {
 			String email = request.getParameter("email");
 			ObjectMapper mapper = new ObjectMapper();
         	Map<String, Object> attrs = mapper.convertValue(request.getParameterMap(), new TypeReference<Map<String, Object>>(){});
-			menuOrderBean.processOrder(email, 0, attrs);
+			String orderId = menuOrderBean.processOrder(email, 0, attrs);
 
 			// if (deliveryOption) {
 			// 	menuOrderBean.setDeliveryAddress(address);
@@ -61,9 +61,9 @@ public class OrderCheckout extends HttpServlet {
 			// //String type = request.getParameter("type");
 			// String sDeliveryInfo = request.getParameter("delivery_info");
 			// menuOrderBean.setDeliveryAddress( sDeliveryInfo );
-			// if(menuOrderBean.submitOrder() == true ){
-			// 	response.sendRedirect( request.getContextPath() + "/app/menusview2.jsp?loc=" + locationId );
-			// }
+			if(orderId != null ){
+				response.sendRedirect( request.getContextPath() + "/app/my_order.jsp?id=" + orderId );
+			}
 		}
 		catch(Exception e){
 			System.out.println("DEBUG: Exception ==> " + e.getMessage());

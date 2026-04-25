@@ -190,6 +190,25 @@ public class MenuOrderBean
 		}
 		return false;
 	}
+
+	public Integer getOrderStatus(String orderId) {
+		if( verifyObjManCreds() ) {
+			try {
+				ObjectQuery queryObj = new ObjectQuery( "CCMenuOrder" );
+				queryObj.addProperty("id", orderId);
+				QueryResponse qrObj = m_objectBean.Query( m_creds, queryObj );
+				RepositoryObjects oObjs = qrObj.getObjects( queryObj.getClassName() );
+				if (oObjs.count() > 0) {
+					RepositoryObject obj = oObjs.get(0);
+					return obj.getPropertyValue_Int("status");
+				}
+			}
+			catch(AuthenticationException ex) {
+				SystemServlet.g_logger.error( "AuthenticationException thrown - " + ex.getErrMsg() );
+			}
+		}
+		return null;
+	}
 	
 	public String loginPatron( String email )
 	{

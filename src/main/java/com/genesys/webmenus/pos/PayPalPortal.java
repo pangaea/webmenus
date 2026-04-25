@@ -20,6 +20,7 @@ import org.json.JSONObject;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.genesys.api.RepositoryResource;
 import com.genesys.repository.AuthenticationException;
 import com.genesys.webmenus.MenuOrderBean;
@@ -274,10 +275,13 @@ public class PayPalPortal extends HttpServlet
             String jsonResponse = makeRequest(accessToken, "application/json", "/v2/checkout/orders/" + orderId + "/capture", jsonInputString);
             JsonNode payPalResponse = mapper.readTree(jsonResponse);
             String status = payPalResponse.get("status").asText();
+            ((ObjectNode) payPalResponse).put("order_id", currentOrderId);
             httpResponse.setContentType("text/json");
             httpResponse.setCharacterEncoding("utf-8");
             PrintWriter out = httpResponse.getWriter();
-            out.write(jsonResponse.toCharArray());
+            //out.write(jsonResponse.toCharArray());
+            out.write(payPalResponse.toString());
+            //out.write("\"order_id\":\"" + currentOrderId + "\"");
 
             // Process paypal response
             if (status.equalsIgnoreCase("COMPLETED")) {
@@ -293,7 +297,7 @@ public class PayPalPortal extends HttpServlet
             menuOrderBean.updateOrderStatus(currentOrderId, 2, null);
         }
 
-        return captureId;
+        return currentOrderId;
 	}
 
 }

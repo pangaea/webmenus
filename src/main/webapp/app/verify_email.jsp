@@ -1,5 +1,5 @@
 <!--
-Copyright (c) 2004-2005 Kevin Jacovelli
+Copyright (c) 2026 Kevin Jacovelli
 All Rights Reserved
 -->
 <%@ taglib uri="/WEB-INF/tlds/views.tld" prefix="viewCfg" %>
