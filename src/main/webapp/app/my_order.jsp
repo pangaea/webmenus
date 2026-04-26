@@ -69,7 +69,7 @@ All Rights Reserved
             dojo.addOnLoad( function() {
                 window.setInterval(() => {
                     getOrderStatus("<%=order_id%>", "<%=request.getContextPath()%>");
-                }, 3000);
+                }, 10000);
             });
         </script>
 	</head>

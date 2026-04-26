@@ -281,7 +281,6 @@ public class PayPalPortal extends HttpServlet
             PrintWriter out = httpResponse.getWriter();
             //out.write(jsonResponse.toCharArray());
             out.write(payPalResponse.toString());
-            //out.write("\"order_id\":\"" + currentOrderId + "\"");
 
             // Process paypal response
             if (status.equalsIgnoreCase("COMPLETED")) {

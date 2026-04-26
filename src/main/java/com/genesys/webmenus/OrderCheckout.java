@@ -45,22 +45,11 @@ public class OrderCheckout extends HttpServlet {
 				}
 			}
 
+			// Save order
 			String email = request.getParameter("email");
 			ObjectMapper mapper = new ObjectMapper();
         	Map<String, Object> attrs = mapper.convertValue(request.getParameterMap(), new TypeReference<Map<String, Object>>(){});
 			String orderId = menuOrderBean.processOrder(email, 0, attrs);
-
-			// if (deliveryOption) {
-			// 	menuOrderBean.setDeliveryAddress(address);
-			// }
-
-			// if (menuOrderBean.loginPatron(email) == null) {
-			// 	menuOrderBean.createPatron(email, firstname, lastname, phoneNum);
-			// }
-			// menuOrderBean.submitOrder();
-			// //String type = request.getParameter("type");
-			// String sDeliveryInfo = request.getParameter("delivery_info");
-			// menuOrderBean.setDeliveryAddress( sDeliveryInfo );
 			if(orderId != null ){
 				response.sendRedirect( request.getContextPath() + "/app/my_order.jsp?loc=" + menuOrderBean.getCurrentLocationId() + "&id=" + orderId );
 			}

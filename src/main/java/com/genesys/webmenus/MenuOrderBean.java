@@ -406,7 +406,7 @@ public class MenuOrderBean
 				sb.append(city);
 				sb.append(", ");
 				sb.append(state);
-				sb.append(", ");
+				sb.append(" ");
 				sb.append(zip);
 				m_locationFullAddr = sb.toString();
 
