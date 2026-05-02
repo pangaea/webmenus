@@ -61,11 +61,11 @@ function updateOrder(qid)
 	//var qt = (String)dijit.byId(id).value;
 	var qt = document.getElementById(qid).value;
 	if(qt.length > 0)
-		window.setTimeout('orderForm.submit();',500);
+		window.setTimeout('orderForm.submit();', 500);
 }
-function submitOrder()
+function checkoutOrder()
 {
-	document.location.href = "../ordersubmit.jsp";
+	document.location.href = "../checkout.jsp";
 }
 </script>
 </head>
@@ -167,11 +167,12 @@ function submitOrder()
 			</tr>
 		</table>
 		</form>
+
 <% if( menuOrderBean.itemCount() > 0 ){ %>
 		<button dojoType="dijit.form.Button">
-			Submit Order
+			Checkout
 			<script type="dojo/method" event="onClick">
-				submitOrder();
+				checkoutOrder();
 			</script>
 		</button>
 <% } %>

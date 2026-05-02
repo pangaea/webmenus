@@ -2,7 +2,7 @@
 function OpenMenuWindow( id )
 {
 	var rnumber = Math.round( Math.random() * ( 200 - 1 ) );
-	window.open("../Menus/" + id,"_blank","resizable=yes,menubar=no,location=no,toolbar=no,status=no,scrollbars=yes,directories=no,width=1040,height=600");
+	window.open("../Menus/" + id,"_blank","resizable=yes,menubar=no,location=no,toolbar=no,status=no,scrollbars=yes,directories=no,width=1920,height=1080");
 }
 
 function OpenMenuDesigner( id )

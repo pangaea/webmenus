@@ -180,6 +180,57 @@
             /MenuDesigner/*
         </url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>
+            PayPalPortal
+        </servlet-name>
+        <servlet-class>
+            com.genesys.webmenus.pos.PayPalPortal
+        </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>
+            PayPalPortal
+        </servlet-name>
+        <url-pattern>
+            /PayPalPortal/*
+        </url-pattern>
+    </servlet-mapping>
+
+        <servlet>
+        <servlet-name>
+            MyOrder
+        </servlet-name>
+        <servlet-class>
+            com.genesys.webmenus.MyOrder
+        </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>
+            MyOrder
+        </servlet-name>
+        <url-pattern>
+            /MyOrder/*
+        </url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>
+            OrderCheckout
+        </servlet-name>
+        <servlet-class>
+            com.genesys.webmenus.OrderCheckout
+        </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>
+            OrderCheckout
+        </servlet-name>
+        <url-pattern>
+            /OrderCheckout
+        </url-pattern>
+    </servlet-mapping>
     
     <!--servlet>
         <servlet-name>

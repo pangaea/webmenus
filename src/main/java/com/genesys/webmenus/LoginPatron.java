@@ -82,34 +82,40 @@ public class LoginPatron extends HttpServlet
 				return;
 			}
 		}
+		else if( type.equalsIgnoreCase("logout") )
+		{
+			menuOrderBean.logoutPatron();
+			redirectTo(request, response, "login_patron.jsp");
+			return;
+		}
 		else if( type.equalsIgnoreCase("create") )
 		{
-			try
-			{
-				menuOrderBean.createPatron(request);
-			}
-			catch(AuthenticationException ex)
-			{
-				String msg = URLEncoder.encode(ex.getErrMsg());
-				redirectTo(request, response, "login_patron.jsp?msg=" + msg);
-				return;
-			}
-			catch(RepositoryException ex)
-			{
-				String msg;
-				if( ex.getType() == RepositoryException.VALIDATION_ERROR )
-					msg = URLEncoder.encode("Phone number is invalid.");
-				else
-					msg = URLEncoder.encode("Email already exists.");
-				redirectTo(request, response, "login_patron.jsp?msg=" + msg);
-				return;
-			}
+			// try
+			// {
+			// 	menuOrderBean.createPatron(request);
+			// }
+			// catch(AuthenticationException ex)
+			// {
+			// 	String msg = URLEncoder.encode(ex.getErrMsg());
+			// 	redirectTo(request, response, "login_patron.jsp?msg=" + msg);
+			// 	return;
+			// }
+			// catch(RepositoryException ex)
+			// {
+			// 	String msg;
+			// 	if( ex.getType() == RepositoryException.VALIDATION_ERROR )
+			// 		msg = URLEncoder.encode("Phone number is invalid.");
+			// 	else
+			// 		msg = URLEncoder.encode("Email already exists.");
+			// 	redirectTo(request, response, "login_patron.jsp?msg=" + msg);
+			// 	return;
+			// }
 		}
 		
 		if( menuOrderBean.isDeliveryAvailable() )
 			redirectTo(request, response, "delivery_options.jsp");
 		else
-			redirectTo(request, response, "ordersubmit.jsp");
+			redirectTo(request, response, "checkout.jsp");
 
 	}
 }

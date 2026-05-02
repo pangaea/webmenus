@@ -50,7 +50,7 @@ function backtologin()
 	<body>
 		<table id="itemTable" cellpadding="2" class="orderTable">
 			<tr>
-				<th valign="top">Order</th>
+				<th valign="top">OrderXXXXX</th>
 				<th valign="top">Each</th>
 				<th valign="top">Quantity</th>
 				<th valign="top">Price</th>

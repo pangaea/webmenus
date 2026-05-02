@@ -36,6 +36,9 @@ All Rights Reserved
 		dojo.require("dijit.form.Button");
 		dojo.require("dijit.Dialog");
 		dojo.require("dojo.parser");
+		function challengeSubmit(callback) {
+			messageBox("test", "debug");
+		}
 		</script>
 	</head>
 	<body class="tundra">
@@ -43,8 +46,38 @@ All Rights Reserved
 		String errMsg = request.getParameter("msg");
 		if( errMsg == null ) errMsg = new String("");
 	%>
+
 	<table style="width:100%"><tr><td style="text-align:center">
 		<span style="color:red;"><%=errMsg%></span>
+
+		<% if (menuOrderBean.isValidated() == true && menuOrderBean.getPatronEmail() != null) {%>
+		<form id="patronContinue" method="post" action="<%=request.getContextPath()%>/LoginPatron">
+			<input type="hidden" name="type" value="continue"/>
+		</form>
+		<div class='patronLoginTitle'>You are already logged in as <%=menuOrderBean.getPatronEmail()%></div>
+		<form id="patronLogout" method="post" action="<%=request.getContextPath()%>/LoginPatron">
+			<input type="hidden" name="type" value="logout"/>
+			<table style="margin:auto;">
+				<tr><td>
+					<div class='patronLoginLabel'>Do you want to continue with this account?</div></td>
+				</td></tr>
+			<tr><td valign="middle" colspan="2" style="text-align:center;">
+				<button dojoType="dijit.form.Button">
+					Logout
+					<script type="dojo/method" event="onClick">
+						patronLogout.submit();
+					</script>
+				</button>
+				<button dojoType="dijit.form.Button">
+					Continue
+					<script type="dojo/method" event="onClick">
+						patronContinue.submit();
+					</script>
+				</button>
+			</td><td/></tr>
+			</table>
+		</form>
+		<% } else { %>
 		<div class='patronLoginTitle'>Existing Account</div>
 		<form id="patronLogin" method="post" action="<%=request.getContextPath()%>/LoginPatron">
 			<input type="hidden" name="type" value="login"/>
@@ -127,6 +160,13 @@ All Rights Reserved
 				</td><td/></tr>
 			</table>
 		</form>
+		<% } %>
 	</td></tr></table>
+	<button dojoType="dijit.form.Button">
+		Go Back to Menus
+		<script type="dojo/method" event="onClick">
+			parent.closeOrderDialog();
+		</script>
+	</button>
 	</body>
 </html>

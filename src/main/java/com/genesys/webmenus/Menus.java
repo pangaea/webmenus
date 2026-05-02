@@ -141,35 +141,35 @@ public class Menus extends HttpServlet
 	
 	public void createPatron( HttpServletRequest request, HttpServletResponse response ) throws IOException, ServletException
 	{
-		try{
-			menuOrderBean.createPatron(request);
-		}
-		catch(AuthenticationException ex){
-			String msg = URLEncoder.encode(ex.getErrMsg(), "UTF-8");
-			response.sendRedirect( rootMenuPath + "/login_patron?create=1&msg=" + msg );
-			return;
-		}
-		catch(RepositoryException ex){
+		// try{
+		// 	menuOrderBean.createPatron(request);
+		// }
+		// catch(AuthenticationException ex){
+		// 	String msg = URLEncoder.encode(ex.getErrMsg(), "UTF-8");
+		// 	response.sendRedirect( rootMenuPath + "/login_patron?create=1&msg=" + msg );
+		// 	return;
+		// }
+		// catch(RepositoryException ex){
 			
-			// Make errors more user friendly
-			String msg;
-			if( ex.getType() == RepositoryException.VALIDATION_ERROR ){
-				if( ex.getErrMsg().indexOf("phone_num") >= 0 )
-					msg = URLEncoder.encode("Phone number is missing/invalid.", "UTF-8");
-				else if( ex.getErrMsg().indexOf("email") >= 0 )
-					msg = URLEncoder.encode("Email is missing/invalid.", "UTF-8");
-				else if( ex.getErrMsg().indexOf("firstname") >= 0 )
-					msg = URLEncoder.encode("First name is missing/invalid.", "UTF-8");
-				else
-					msg = URLEncoder.encode(ex.getErrMsg(), "UTF-8");
-			}
-			else{
-				msg = URLEncoder.encode("Email already exists.", "UTF-8");
-			}
+		// 	// Make errors more user friendly
+		// 	String msg;
+		// 	if( ex.getType() == RepositoryException.VALIDATION_ERROR ){
+		// 		if( ex.getErrMsg().indexOf("phone_num") >= 0 )
+		// 			msg = URLEncoder.encode("Phone number is missing/invalid.", "UTF-8");
+		// 		else if( ex.getErrMsg().indexOf("email") >= 0 )
+		// 			msg = URLEncoder.encode("Email is missing/invalid.", "UTF-8");
+		// 		else if( ex.getErrMsg().indexOf("firstname") >= 0 )
+		// 			msg = URLEncoder.encode("First name is missing/invalid.", "UTF-8");
+		// 		else
+		// 			msg = URLEncoder.encode(ex.getErrMsg(), "UTF-8");
+		// 	}
+		// 	else{
+		// 		msg = URLEncoder.encode("Email already exists.", "UTF-8");
+		// 	}
 
-			response.sendRedirect( rootMenuPath + "/login_patron?create=1&msg=" + msg );
-			return;
-		}
+		// 	response.sendRedirect( rootMenuPath + "/login_patron?create=1&msg=" + msg );
+		// 	return;
+		// }
 		handleDeliveryOption(response);
 	}
 	
@@ -201,26 +201,26 @@ public class Menus extends HttpServlet
 		//String errMsg = "There was an error encountered:-(";
 		MenuOrderBean menuOrderBean = (MenuOrderBean) request.getSession().getAttribute("menuOrderBean");
 		boolean bOpen = menuOrderBean.isWithinOpertingHours();
-		if( bOpen ){
+		// if( bOpen ){
 			
-			if( menuOrderBean.isValidated() == false ){
-				response.sendRedirect( rootMenuPath + "/login_patron" );
-				return;
-			}
+		// 	if( menuOrderBean.isValidated() == false ){
+		// 		response.sendRedirect( rootMenuPath + "/login_patron" );
+		// 		return;
+		// 	}
 			
-			String sDelivery = request.getParameter("delivery_option");
-			if( sDelivery != null && sDelivery.equalsIgnoreCase("delivery") == true ){
-				String sDeliveryInfo = request.getParameter("delivery_info");
-				menuOrderBean.setDeliveryAddress( sDeliveryInfo );
-			}
+		// 	String sDelivery = request.getParameter("delivery_option");
+		// 	if( sDelivery != null && sDelivery.equalsIgnoreCase("delivery") == true ){
+		// 		String sDeliveryInfo = request.getParameter("delivery_info");
+		// 		menuOrderBean.setDeliveryAddress( sDeliveryInfo );
+		// 	}
 			
-			if( menuOrderBean.submitOrder() == true ){
-				response.sendRedirect(rootMenuPath + "/order_success");
-			}
-			else{
-				response.sendRedirect(rootMenuPath + "/order_failure");
-			}
-		}
+		// 	if( menuOrderBean.submitOrder() == true ){
+		// 		response.sendRedirect(rootMenuPath + "/order_success");
+		// 	}
+		// 	else{
+		// 		response.sendRedirect(rootMenuPath + "/order_failure");
+		// 	}
+		// }
 		response.sendRedirect(rootMenuPath + "/location_closed");
 	}
 }

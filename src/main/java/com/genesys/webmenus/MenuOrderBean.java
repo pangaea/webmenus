@@ -20,6 +20,8 @@ import org.apache.xerces.parsers.DOMParser;
 //import javax.xml.stream.XMLStreamException;
 //import javax.xml.stream.XMLStreamWriter;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.genesys.SystemServlet;
 import com.genesys.repository.*;
 import com.genesys.util.RandomGUID;
@@ -46,6 +48,7 @@ public class MenuOrderBean
 	private String						m_phoneNum = null;
 	private String						m_emailAddr = null;
 	private boolean					m_devlieryOffered = false;
+	private boolean					m_payOnPickup = false;
 	private boolean					m_emailOrders = false;
 	private boolean					m_validated = false;
 	private String						m_patronId = null;
@@ -57,6 +60,8 @@ public class MenuOrderBean
 	private boolean					m_deliveryYes = false;
 	private String						m_deliveryInfo = null;
 	private HashMap<String, Vector<OpHours>>	m_opHoursMap;
+	private Vector<PaymentMethod>			m_paymentMethodList;
+	private String							m_locationFullAddr = "";
 
 	public MenuOrderBean()
 	{
@@ -70,6 +75,7 @@ public class MenuOrderBean
 		//m_menuwidth = new String("100%");
 		m_deliveryInfo = new String("");
 		m_opHoursMap = new HashMap<String, Vector<OpHours>>();
+		m_paymentMethodList = new Vector<PaymentMethod>();
 		
 		m_objectBean = SystemServlet.getObjectManager();
 	}
@@ -93,6 +99,11 @@ public class MenuOrderBean
 	public String getPatronEmail()
 	{
 		return m_patronEmail;
+	}
+	public void logoutPatron()
+	{
+		m_patronEmail = null;
+		m_patronId = null;
 	}
 	public String getExitURL()
 	{
@@ -131,6 +142,74 @@ public class MenuOrderBean
 		m_objectBean.Logout(m_creds);
 		m_creds = null;
 	}
+
+	public String processOrder(String email, int paymentType, Map<String, Object> params) {
+		try {
+			Boolean deliveryOrder = params.get("delivery_option").toString().equalsIgnoreCase("delivery");
+			if (deliveryOrder) {
+				String delivery_info = MessageFormat.format("{0}\n{1}, {2} {3}\n{4}", (String)params.get("address"),
+																			(String)params.get("city"),
+																			(String)params.get("state"),
+																			(String)params.get("zip"),
+																			(String)params.get("contact_number"));
+				setDeliveryAddress(delivery_info);
+			}
+
+			if (loginPatron(email) == null) {
+				createPatron(email, params.get("firstname").toString(), params.get("lastname").toString(),
+							params.get("phone_num").toString());
+			}
+			return submitOrder(paymentType);
+		}
+		catch(AuthenticationException ex)
+		{
+			SystemServlet.g_logger.error( "AuthenticationException thrown - " + ex.getErrMsg() );
+		}
+		catch(RepositoryException ex)
+		{
+			SystemServlet.g_logger.error( "RepositoryException thrown - " + ex.getErrMsg() );
+		}
+		return null;
+	}
+
+	public boolean updateOrderStatus(String orderId, int status, String paymentInfo) {
+		if( verifyObjManCreds() ) {
+			ObjectSubmit order = new ObjectSubmit("CCMenuOrder");
+			order.addProperty("status", status);
+			order.addProperty("payment_info", paymentInfo);
+			
+			try {
+				m_objectBean.Update(m_creds, orderId, order);
+				return true;
+			}
+			catch(AuthenticationException ex) {
+				SystemServlet.g_logger.error( "AuthenticationException thrown - " + ex.getErrMsg() );
+			}
+			catch(RepositoryException ex) {
+				SystemServlet.g_logger.error( "Exception thrown inserting order in {MenuOrderBean::updateOrderStatus} - " + ex.getErrMsg() );
+			}
+		}
+		return false;
+	}
+
+	public Integer getOrderStatus(String orderId) {
+		if( verifyObjManCreds() ) {
+			try {
+				ObjectQuery queryObj = new ObjectQuery( "CCMenuOrder" );
+				queryObj.addProperty("id", orderId);
+				QueryResponse qrObj = m_objectBean.Query( m_creds, queryObj );
+				RepositoryObjects oObjs = qrObj.getObjects( queryObj.getClassName() );
+				if (oObjs.count() > 0) {
+					RepositoryObject obj = oObjs.get(0);
+					return obj.getPropertyValue_Int("status");
+				}
+			}
+			catch(AuthenticationException ex) {
+				SystemServlet.g_logger.error( "AuthenticationException thrown - " + ex.getErrMsg() );
+			}
+		}
+		return null;
+	}
 	
 	public String loginPatron( String email )
 	{
@@ -163,29 +242,33 @@ public class MenuOrderBean
 		return retId;
 	}
 	
-	public String createPatron( HttpServletRequest request ) throws AuthenticationException, RepositoryException
+	public String createPatron(String email, String firstname, String lastname, String phone_num) throws AuthenticationException, RepositoryException
 	{
 		String retId = null;
 		if( verifyObjManCreds() )
 		{
 			//ObjectQuery queryPatron = new ObjectQuery( "CEPatron" );
 			ObjectSubmit submitStmt = new ObjectSubmit("CEPatron");
-			InterfaceCfg interfaceCfg = SystemServlet.getGenesysInterfaceCfg();
-			InterfaceCfg.View viewNode = interfaceCfg.getView("patrons");
-			if(viewNode!=null)
-			{
-				List<InterfaceCfg.View.Input> _inputs = viewNode.getInputs();
-				Iterator<InterfaceCfg.View.Input> _iter_inputs = _inputs.iterator();
-				while( _iter_inputs.hasNext() )
-				{
-					InterfaceCfg.View.Input input = _iter_inputs.next();
-					String visible = input.getVisible();
-					if( visible.equalsIgnoreCase("false") == true ) continue;
-					String field = input.getField();
-					String value = (String)request.getParameter(field);
-					submitStmt.addProperty(field, value);
-				}
-			}
+			// InterfaceCfg interfaceCfg = SystemServlet.getGenesysInterfaceCfg();
+			// InterfaceCfg.View viewNode = interfaceCfg.getView("patrons");
+			// if(viewNode!=null)
+			// {
+			// 	List<InterfaceCfg.View.Input> _inputs = viewNode.getInputs();
+			// 	Iterator<InterfaceCfg.View.Input> _iter_inputs = _inputs.iterator();
+			// 	while( _iter_inputs.hasNext() )
+			// 	{
+			// 		InterfaceCfg.View.Input input = _iter_inputs.next();
+			// 		String visible = input.getVisible();
+			// 		if( visible.equalsIgnoreCase("false") == true ) continue;
+			// 		String field = input.getField();
+			// 		String value = (String)request.getParameter(field);
+			// 		submitStmt.addProperty(field, value);
+			// 	}
+			// }
+			submitStmt.addProperty("email", email);
+			submitStmt.addProperty("firstname", firstname);
+			submitStmt.addProperty("lastname", lastname);
+			submitStmt.addProperty("phone_num", phone_num);
 			
 			String newId = null;
 			try
@@ -209,7 +292,7 @@ public class MenuOrderBean
 				m_validated = true;
 				
 				m_patronId = retId;
-				m_patronEmail = (String)request.getParameter("email");
+				m_patronEmail = email;
 			}
 			//RepositoryObjects oPatrons = qrPatron.getObjects( queryPatron.getClassName() );
 			//if( oPatrons.count() > 0 )
@@ -286,7 +369,7 @@ public class MenuOrderBean
 //				RepositoryObjects oLocs = qrLoc.getObjects( queryLoc.getClassName() );
 //				if( oLocs.count() == 0 ) return;	// Invalid location id
 //				RepositoryObject oLoc = oLocs.get(0);
-				String temp = oLoc.getPropertyValue("tax");
+				//String temp = oLoc.getPropertyValue("tax");
 				m_locationName = oLoc.getPropertyValue("name");
 				m_phoneNum = oLoc.getPropertyValue("phone_num");
 				m_emailAddr = oLoc.getPropertyValue("email_addr");
@@ -300,8 +383,51 @@ public class MenuOrderBean
 				m_logo = oLoc.getPropertyValue("logo");
 				//m_menuwidth = oLoc.getPropertyValue("theme.menuwidth");
 				m_devlieryOffered = oLoc.getPropertyValue_Boolean("delivery_avail");
+				m_payOnPickup = oLoc.getPropertyValue_Boolean("pay_on_pickup");
 				m_emailOrders = oLoc.getPropertyValue_Boolean("email_orders");
 				String sRole = oLoc.getPropertyValue("role");
+
+				String address = oLoc.getPropertyValue("address");
+				String address2 = oLoc.getPropertyValue("address2");
+				String address3 = oLoc.getPropertyValue("address3");
+				String city = oLoc.getPropertyValue("city");
+				String state = oLoc.getPropertyValue("state");
+				String zip = oLoc.getPropertyValue("zip");
+				StringBuilder sb = new StringBuilder(address);
+				if (!address2.isBlank()) {
+					sb.append(", ");
+					sb.append(address2);
+				}
+				if (!address3.isBlank()) {
+					sb.append(", ");
+					sb.append(address3);
+				}
+				sb.append("<br/>");
+				sb.append(city);
+				sb.append(", ");
+				sb.append(state);
+				sb.append(" ");
+				sb.append(zip);
+				m_locationFullAddr = sb.toString();
+
+				// Pull in payment methods
+				m_paymentMethodList.clear();
+				RepositoryObjectRefList payment_methods = oLoc.getPropertyObjectRefs("payment_methods");
+				for (int i = 0; i < payment_methods.count(); i++){
+					RepositoryObjectRef ref = payment_methods.get(i);
+					ObjectQuery queryPM = new ObjectQuery( "CCPaymentMethod" );
+					queryPM.addProperty("id", ref.getId());
+					QueryResponse qrPM = m_objectBean.Query( m_creds, queryPM );
+					RepositoryObjects oPMs = qrPM.getObjects( queryPM.getClassName() );
+					if (oPMs.count() > 0) {
+						RepositoryObject o = oPMs.get(0);
+						PaymentMethod oo = new PaymentMethod(o.getPropertyValue("name"),
+															 o.getPropertyValue_Int("type"),
+															 o.getPropertyValue("description"),
+															 o.getPropertyValue("config"));
+						m_paymentMethodList.add(oo);
+					}
+				}
 				
 				// H.I.V.E.
 				// Use the location role to for all objects
@@ -407,6 +533,34 @@ public class MenuOrderBean
 				SystemServlet.g_logger.error( "AuthenticationException thrown - " + ex.getErrMsg() );
 			}
 		}
+	}
+
+	public String getLocationAddress() {
+		return m_locationFullAddr;
+	}
+
+	public int getPaymentMethodCount() {
+		return m_paymentMethodList.size();
+	}
+
+	public Integer getPMType(int index) {
+		if (index < m_paymentMethodList.size()) {
+			return m_paymentMethodList.get(index).type();
+		}
+		return -1;
+	}
+
+	public String queryPmConfig(int index, String propName) {
+		if (index < m_paymentMethodList.size()) {
+			PaymentMethod pm = m_paymentMethodList.get(index);
+			try {
+				ObjectMapper mapper = new ObjectMapper();
+				JsonNode node = mapper.readTree(pm.config());
+				return node.get(propName).asText();
+			}
+			catch (Exception e) {}
+		}
+		return "";
 	}
 	
 	public String getCurrentLocationId()
@@ -676,6 +830,9 @@ public class MenuOrderBean
 	{
 		return m_devlieryOffered;
 	}
+	public boolean isPayOnPickup() {
+		return m_payOnPickup;
+	}
 	public double getSubTotal()
 	{
 		BigDecimal subTotal = new BigDecimal(0);
@@ -868,8 +1025,9 @@ public class MenuOrderBean
 		return errors;
 	}
 */
-	public boolean submitOrder()
+	public String submitOrder(int paymentType)
 	{
+		String order_id = null;
 		if( verifyObjManCreds() )
 		{
 			ObjectSubmit order = new ObjectSubmit("CCMenuOrder");
@@ -886,10 +1044,10 @@ public class MenuOrderBean
 				order.addProperty("location", m_LocId);
 				order.addProperty("delivery", m_deliveryYes);
 				order.addProperty("delivery_info", m_deliveryInfo);
-				order.addProperty("fulfilled", false);
 				order.addProperty("notification_status", (m_emailOrders)?0:2);
+				order.addProperty("status", (paymentType == 0)?0:1);
+				order.addProperty("payment_type", paymentType);
 				
-				String order_id = null;
 				try
 				{
 					order_id = m_objectBean.Insert(m_creds, order);
@@ -897,11 +1055,12 @@ public class MenuOrderBean
 				catch(AuthenticationException ex)
 				{
 					SystemServlet.g_logger.error( "AuthenticationException thrown - " + ex.getErrMsg() );
+					return null;
 				}
 				catch(RepositoryException ex)
 				{
 					SystemServlet.g_logger.error( "Exception thrown inserting order in {MenuOrderBean::submitOrder} - " + ex.getErrMsg() );
-					return false;
+					return null;
 				}
 	
 				for( int i = 0; i < m_orderItemList.size(); i++ )
@@ -919,15 +1078,18 @@ public class MenuOrderBean
 					try
 					{
 						m_objectBean.Insert(m_creds, order_item);
+						m_validated = false;
+						m_patronEmail = null;
 					}
 					catch(AuthenticationException ex)
 					{
 						SystemServlet.g_logger.error( "AuthenticationException thrown - " + ex.getErrMsg() );
+						return null;
 					}
 					catch(RepositoryException ex)
 					{
 						SystemServlet.g_logger.error( "Exception thrown inserting order item in {MenuOrderBean::submitOrder} - " + ex.getErrMsg() );
-						return false;
+						return null;
 					}
 				}
 				
@@ -943,7 +1105,7 @@ public class MenuOrderBean
 			catch(FactoryConfigurationError e)
 			{
 				SystemServlet.g_logger.error(e.getMessage());
-				//e.printStackTrace();
+				return null;
 			}
 
 			// Clear items from order after successful submission
@@ -951,6 +1113,6 @@ public class MenuOrderBean
 			m_orderItemList.clear();
 		}
 
-		return true;
+		return order_id;
 	}
 }

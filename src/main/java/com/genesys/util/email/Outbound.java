@@ -14,6 +14,7 @@ import java.util.Properties;
 import java.util.Vector;
 import java.util.Date;
 
+import javax.activation.DataHandler;
 //import javax.activation.*;
 import javax.mail.*;
 //import javax.mail.Message;
@@ -91,52 +92,52 @@ public class Outbound
 		    // Optional : You can also set your custom headers in the Email if you Want
 		    //msg.addHeader("MyHeaderName", "myHeaderValue");
 		    
-		    ///////////////////////////////////////////////////////////
-		    // MimeMultipart content = new MimeMultipart("alternative");
+		    /////////////////////////////////////////////////////////
+		    MimeMultipart content = new MimeMultipart("alternative");
 		    
-		    // MimeBodyPart text = new MimeBodyPart();
-		    // text.setText(textbody);
-		    // //text.setHeader("MIME-Version", "1.0");
-		    // String textMimeType = text.getContentType();
-		    // text.setHeader("Content-Type", textMimeType);
-		    // content.addBodyPart(text);
+		    MimeBodyPart text = new MimeBodyPart();
+		    text.setText(textbody);
+		    //text.setHeader("MIME-Version", "1.0");
+		    String textMimeType = text.getContentType();
+		    text.setHeader("Content-Type", textMimeType);
+		    content.addBodyPart(text);
 		    
-		    // if(htmlbody != null)
-		    // {
-			//     MimeBodyPart html = new MimeBodyPart();
-			//     //html.setContent(arg0, arg1)
+		    if(htmlbody != null)
+		    {
+			    MimeBodyPart html = new MimeBodyPart();
+			    //html.setContent(arg0, arg1)
 			    
-			//     html.setContent(htmlbody, "text/html");
-			//     //html.setHeader("MIME-Version", "1.0");
-			//     //String textHtmlType = html.getContentType();
-			//     html.setHeader("Content-Type", "text/html");
-			//     content.addBodyPart(html);
-		    // }
+			    html.setContent(htmlbody, "text/html");
+			    //html.setHeader("MIME-Version", "1.0");
+			    //String textHtmlType = html.getContentType();
+			    html.setHeader("Content-Type", "text/html");
+			    content.addBodyPart(html);
+		    }
 		    
-		    // if(attach != null){
-			//     // Add file attachment
-			//     MimeBodyPart messageBodyPart = new MimeBodyPart();
-		    //     DataHandler handler = new DataHandler(new ByteArrayDataSource(attach.getContent(), attach.getMimeType()));
-		    //     messageBodyPart.setDataHandler(handler);
-		    //     messageBodyPart.setFileName(attach.getName());
-		    //     content.addBodyPart(messageBodyPart);
-		    //     /////////////////////////////////////////////
-		    // }
+		    if(attach != null){
+			    // Add file attachment
+			    MimeBodyPart messageBodyPart = new MimeBodyPart();
+		        DataHandler handler = new DataHandler(new ByteArrayDataSource(attach.getContent(), attach.getMimeType()));
+		        messageBodyPart.setDataHandler(handler);
+		        messageBodyPart.setFileName(attach.getName());
+		        content.addBodyPart(messageBodyPart);
+		        /////////////////////////////////////////////
+		    }
 	        
-		    // msg.setSubject(subject);
-		    // msg.setContent(content);
-		    // //msg.setHeader("MIME-Version", "1.0");
-		    // String mimeType = content.getContentType();
-		    // msg.setHeader("Content-Type", mimeType);
-		    // msg.setSentDate(new Date());
+		    msg.setSubject(subject);
+		    msg.setContent(content);
+		    //msg.setHeader("MIME-Version", "1.0");
+		    String mimeType = content.getContentType();
+		    msg.setHeader("Content-Type", mimeType);
+		    msg.setSentDate(new Date());
 		    Transport.send(msg);
 		    //////////////////////////////////////////////////////////
 	
-	//	    // Setting the Subject and Content Type
-	//	    msg.setSubject(subject);
-	//	    //msg.setContent(htmlbody, "text/html");
-	//	    msg.setText(textbody);
-	//	    Transport.send(msg);
+		    // Setting the Subject and Content Type
+		    msg.setSubject(subject);
+		    //msg.setContent(htmlbody, "text/html");
+		    msg.setText(textbody);
+		    Transport.send(msg);
 		}
 		catch(MessagingException e)
 		{
