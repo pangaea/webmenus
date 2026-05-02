@@ -3,13 +3,6 @@ Copyright (c) 2004-2011 Kevin Jacovelli
 All Rights Reserved
 -->
 
-<script type="text/javascript">
-function backtologin()
-{
-	window.top.location = "<%=request.getContextPath()%>/ui/login.jsp?backurl=" + escape("<%=request.getRequestURL()%>?<%=request.getQueryString()%>")  + "&err=" + escape("Your session time out. Please login again.");
-}
-var gIndex = 0;
-</script>
 <%	
 	// Validate session
 	if( request.getSession().getAttribute( "ticket" ) == null )
@@ -17,14 +10,21 @@ var gIndex = 0;
 		//response.sendRedirect( "login.jsp" ); return;
 %>
 		<html>
-			<head></head>
+			<head>
+				<script type="text/javascript">
+				function backtologin()
+				{
+					window.top.location = "<%=request.getContextPath()%>/ui/login.jsp?backurl=" + escape("<%=request.getRequestURL()%>?<%=request.getQueryString()%>")  + "&err=" + escape("Your session time out. Please login again.");
+				}
+				var gIndex = 0;
+				</script>
+			</head>
 			<body onload="backtologin();"><em>Your session has timed out...</em></body>
 		</html>
 <%
 		return;
 	}
 %>
-
 
 <jsp:useBean id="menuDesignerBean" class="com.genesys.webmenus.designer.MenuDesignerBean" scope="page"/>
 <jsp:setProperty name="menuDesignerBean" property="*"/> 

@@ -5,6 +5,12 @@ function OpenMenuWindow( id )
 	window.open("../Menus/" + id,"_blank","resizable=yes,menubar=no,location=no,toolbar=no,status=no,scrollbars=yes,directories=no,width=1920,height=1080");
 }
 
+function OpenOrderDashboard( id )
+{
+	var rnumber = Math.round( Math.random() * ( 200 - 1 ) );
+	window.open("../app/orders/order_dashboard.jsp?loc=" + id,"_blank");
+}
+
 function OpenMenuDesigner( id )
 {
 	if($("#menu_designer_link-" + id).size()==0)
@@ -56,6 +62,10 @@ function eventHandler( eventid )
 	case 1:
 		// Copy Link
 		OpenMenusLink( sel_id );
+		break;
+	case 4:
+		// Oper Order Dashboard
+		OpenOrderDashboard( sel_id );
 		break;
 	}
 	return 0;

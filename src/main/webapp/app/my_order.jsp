@@ -67,6 +67,7 @@ All Rights Reserved
             dojo.require("dijit.form.Button");
 
             dojo.addOnLoad( function() {
+                getOrderStatus("<%=order_id%>", "<%=request.getContextPath()%>");
                 window.setInterval(() => {
                     getOrderStatus("<%=order_id%>", "<%=request.getContextPath()%>");
                 }, 10000);

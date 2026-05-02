@@ -88,7 +88,10 @@ All Rights Reserved
 						<button class="buttonx" id="location-designer-<%=locationIndex%>"
 								onclick="OpenMenuDesigner('<%=locationId%>')">Menu Designer</button>
 						<button class="buttonx" id="location-orders-<%=locationIndex%>"
-								onclick="location.href = 'view_obj.jsp?view=menu_orders&menu_orders_searchStr=%2526location%253D<%=locationId%>'">View Orders</button>					
+								onclick="location.href = 'view_obj.jsp?view=menu_orders&menu_orders_searchStr=%2526location%253D<%=locationId%>'">View Orders</button>
+						<button class="buttonx" id="location-order_dashboard-<%=locationIndex%>"
+								onclick="OpenOrderDashboard('<%=locationId%>')">Order Dashboard</button>					
+
 					</div>
 					</summaryCfg:EnumLocations>
 					
