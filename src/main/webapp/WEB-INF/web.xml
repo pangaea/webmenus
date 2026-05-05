@@ -198,7 +198,7 @@
         </url-pattern>
     </servlet-mapping>
 
-        <servlet>
+    <servlet>
         <servlet-name>
             MyOrder
         </servlet-name>
@@ -212,6 +212,23 @@
         </servlet-name>
         <url-pattern>
             /MyOrder/*
+        </url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>
+            OrderDashboard
+        </servlet-name>
+        <servlet-class>
+            com.genesys.webmenus.orders.OrderDashboard
+        </servlet-class>
+     </servlet>
+    <servlet-mapping>
+        <servlet-name>
+            OrderDashboard
+        </servlet-name>
+        <url-pattern>
+            /OrderDashboard/*
         </url-pattern>
     </servlet-mapping>
 

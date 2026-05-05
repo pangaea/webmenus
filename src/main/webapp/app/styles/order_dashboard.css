@@ -1,0 +1,27 @@
+.kanban-board {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    background-color: #f4f4f9;
+}
+
+.column {
+    flex: 1;
+    background-color: #ebedf0;
+    border-radius: 5px;
+    padding: 10px;
+    min-height: 400px;
+}
+
+.task {
+    background-color: white;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    cursor: grab;
+}
+
+.task:active {
+    cursor: grabbing;
+}
