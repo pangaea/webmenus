@@ -2,6 +2,14 @@ package com.genesys.webmenus.orders;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,14 +20,18 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.genesys.SystemServlet;
 import com.genesys.repository.AuthenticationException;
 import com.genesys.repository.Credentials;
 import com.genesys.repository.ObjectManager;
 import com.genesys.repository.ObjectQuery;
+import com.genesys.repository.ObjectSubmit;
 import com.genesys.repository.QueryResponse;
+import com.genesys.repository.RepositoryException;
 import com.genesys.repository.RepositoryObject;
 import com.genesys.repository.RepositoryObjects;
+import com.genesys.util.ServletUtilities;
 import com.genesys.views.ViewResponseWriter;
 
 public class OrderDashboard extends HttpServlet {
@@ -65,9 +77,10 @@ public class OrderDashboard extends HttpServlet {
 			{
 				Handle_Query( request, response );
 			}
-			else if( resPath.equalsIgnoreCase("/updateorder") )
+			else if( resPath.startsWith("/updateorder/") )
 			{
-				//Handle_Query( request, response );
+				String id = resPath.substring(13);
+				Handle_Update( id, request, response );
 			}
 			else if( resPath.equalsIgnoreCase("/cancelorder") )
 			{
@@ -88,6 +101,18 @@ public class OrderDashboard extends HttpServlet {
             if( thisSession.getAttribute( "info" ) == null ) throw new IOException("Missing credentials");
             Credentials info = (Credentials)thisSession.getAttribute( "info" );
 			ObjectQuery queryObj = new ObjectQuery( "CCMenuOrder" );
+
+			// Filter out closed orders
+			queryObj.addProperty("status", "!= 6");
+
+			// Filter out closed orders more than 1 hour old
+			LocalDateTime currentTime = LocalDateTime.now(ZoneOffset.UTC);
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a");
+			String today = formatter.format(currentTime.minusDays(1));
+			queryObj.addProperty("modified", "> " + today);
+
+			// Set logical AND off
+			queryObj.setLogicalAnd(false);
 			QueryResponse qrMenuItems = m_objectBean.Query( info, queryObj );		
 			RepositoryObjects oMenuItems = qrMenuItems.getObjects( queryObj.getClassName() );
             JSONArray orders = new JSONArray();
@@ -118,6 +143,30 @@ public class OrderDashboard extends HttpServlet {
 		}
     }
 
+	public void Handle_Update( String id, HttpServletRequest request, HttpServletResponse response ) throws IOException, ServletException {
+		HttpSession thisSession = request.getSession();
+		if( thisSession.getAttribute( "info" ) == null ) throw new IOException("Missing credentials");
+		Credentials info = (Credentials)thisSession.getAttribute( "info" );
+
+		ObjectSubmit order = new ObjectSubmit("CCMenuOrder");
+		JsonNode node = ServletUtilities.extractJsonBody(request);
+		order.addProperty("status", convertLabelToStatus(node.get("status").asText()));
+		JsonNode inv = node.get("invoice");
+		if (inv != null) {
+			order.addProperty("invoice", inv.asText());
+		}
+		
+		try {
+			m_objectBean.Update(info, id, order);
+		}
+		catch(AuthenticationException ex) {
+			SystemServlet.g_logger.error( "AuthenticationException thrown - " + ex.getErrMsg() );
+		}
+		catch(RepositoryException ex) {
+			SystemServlet.g_logger.error( "Exception thrown updating order in {OrderDashboard::Handle_Update} - " + ex.getErrMsg() );
+		}
+	}
+
     /*
     	<value text="0 - open" code="0"/>
 		<value text="1 - payment_pending" code="1"/>
@@ -138,5 +187,18 @@ public class OrderDashboard extends HttpServlet {
             case 6: return "complete";
         }
         return "open";
+    }
+
+	int convertLabelToStatus(String label) {
+        switch(label) {
+            case "open": return 0;
+            case "paymentpending": return 1;
+            case "payment_failed": return 2;
+            case "inprogress": return 3;
+            case "readyforpickup": return 4;
+            case "outfordelivery": return 5;
+            case "complete": return 6;
+        }
+        return 0;
     }
 }

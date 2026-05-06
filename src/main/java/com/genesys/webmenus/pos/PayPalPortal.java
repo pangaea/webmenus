@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.genesys.api.RepositoryResource;
 import com.genesys.repository.AuthenticationException;
+import com.genesys.util.ServletUtilities;
 import com.genesys.webmenus.MenuOrderBean;
 import com.genesys.webmenus.OrderItem;
 
@@ -72,21 +73,23 @@ public class PayPalPortal extends HttpServlet
 			String resPath = request.getPathInfo();
 			if( resPath != null )
 			{
-                // Extract JSON from POST body
-                StringBuilder sb = new StringBuilder();
-                BufferedReader reader = request.getReader();
-                try {
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        sb.append(line).append('\n');
-                    }
-                } finally {
-                    reader.close();
-                }
+                // // Extract JSON from POST body
+                // StringBuilder sb = new StringBuilder();
+                // BufferedReader reader = request.getReader();
+                // try {
+                //     String line;
+                //     while ((line = reader.readLine()) != null) {
+                //         sb.append(line).append('\n');
+                //     }
+                // } finally {
+                //     reader.close();
+                // }
 
-                // Parse settings of payment config based on index from post
-                ObjectMapper mapper = new ObjectMapper();
-				JsonNode node = mapper.readTree(sb.toString());
+                // // Parse settings of payment config based on index from post
+                // ObjectMapper mapper = new ObjectMapper();
+				// JsonNode node = mapper.readTree(sb.toString());
+                JsonNode node = ServletUtilities.extractJsonBody(request);
+
 				int payment_index = node.get("payment_index").asInt();
                 clientId = menuOrderBean.queryPmConfig(payment_index, "CLIENT_ID");
 				clientSecret = menuOrderBean.queryPmConfig(payment_index, "CLIENT_SECRET");

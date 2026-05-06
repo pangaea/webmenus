@@ -20,6 +20,7 @@ function drop(ev) {
     
     // Optional: Save state to localStorage here
     console.log("order id = " + data + ", status=" + targetList.id.slice(0, -6))
+    updateOrder(data, targetList.id.slice(0, -6));
 }
 
 function select(ev) {
@@ -34,6 +35,18 @@ function loadOrders() {
 		dataType: "json",
 		success: function(json){
 			initKanban(json);
+		}
+	});
+}
+
+function updateOrder(id, status, invoice) {
+    $.ajax({
+		type: "POST",
+		url: "/webmenus/OrderDashboard/updateorder/" + id,
+		dataType: "json",
+        data: JSON.stringify({ status: status, invoice: invoice }),
+		success: function(json){
+			loadOrders();
 		}
 	});
 }
