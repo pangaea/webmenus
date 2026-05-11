@@ -37,35 +37,22 @@ All Rights Reserved
         <script type="text/javascript" src="<%=request.getContextPath()%>/xlibs/jquery/js/jquery-1.3.2.min.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/xlibs/jquery/js/jquery-ui-1.7.2.custom.min.js"></script>
         <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/app/styles/order_dashboard.css"></link>
-        <script type="text/javascript" src="<%=request.getContextPath()%>/app/scripts/order_dashboard.js"></script>
-        <script>
-            // var orders = [{
-            //     id: "123456",
-            //     status: "open",
-            //     label: "Sausage, egg, cheese",
-            //     invoice: "A-1231",
-            //     delivery: false
-            // },{
-            //     id: "4564567",
-            //     status: "complete",
-            //     label: "Ribeye Steak(2), baked potatoes(2), ceasar salad",
-            //     invoice: "A-4564",
-            //     delivery: true
-            // },{
-            //     id: "786876",
-            //     status: "inprogress",
-            //     label: "Grilled cheese, chickan soup",
-            //     invoice: "A-9806",
-            //     delivery: false
-            // },{
-            //     id: "13545",
-            //     status: "inprogress",
-            //     label: "Hamburger, french fries, chicken sandwich",
-            //     invoice: "A-4444",
-            //     delivery: true
-            // }];
+        <!-- Default theme includes -->
+        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/vanilla/styles/menu_view.css"></link>
+        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/vanilla/styles/curvey-2.css"></link>
+        <link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/xlibs/jquery/css/redmond/jquery-ui-1.7.2.custom.css" />
 
+        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/xlibs/jquery/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
+        <script type="text/javascript" src="<%=request.getContextPath()%>/xlibs/jquery/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+
+        <script type="text/javascript" src="<%=request.getContextPath()%>/includes/msgbox.js"></script>
+        <script type="text/javascript" src="<%=request.getContextPath()%>/app/scripts/order_dashboard.js"></script>
+        <script type="text/javascript">
+            currentLocationId = "<%=request.getParameter("loc")%>";
             window.addEventListener("load", () => {
+                loadOrders();
+            });
+            document.addEventListener('reLoadOrder', (e) => {
                 loadOrders();
             });
         </script>
@@ -103,7 +90,7 @@ All Rights Reserved
         </div>
 
         <div class="column" id="complete" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <h3>Complete</h3>
+            <h3>Complete (within last 8 hours)</h3>
             <div class="task-list" id="complete-tasks"></div>
         </div>
       </div>

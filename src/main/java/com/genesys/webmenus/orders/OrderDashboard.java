@@ -60,12 +60,7 @@ public class OrderDashboard extends HttpServlet {
 	                     throws IOException, ServletException {
 		// Extremely simple "REST" interface
 		String resPath = request.getPathInfo();
-		if( resPath == null )
-		{
-			Handle_Query( request, response );
-		}
-		else
-		{
+		if( resPath != null ) {
 			if( resPath.equalsIgnoreCase("/ping") )
 			{
 				request.getSession();	// Keep the session alive
@@ -73,9 +68,10 @@ public class OrderDashboard extends HttpServlet {
 				response.addHeader("Content-Type", "text/xml; charset=utf-8");
 				out.write(new ViewResponseWriter("ping", 0, "PONG").serialize());
 			}
-			else if( resPath.equalsIgnoreCase("/getorders") )
+			else if( resPath.startsWith("/getorders/") )
 			{
-				Handle_Query( request, response );
+				String id = resPath.substring(11);
+				Handle_Query( id, request, response );
 			}
 			else if( resPath.startsWith("/updateorder/") )
 			{
@@ -94,38 +90,55 @@ public class OrderDashboard extends HttpServlet {
 		}
     }
 
-    public void Handle_Query( HttpServletRequest request, HttpServletResponse response ) throws IOException, ServletException {
+    public void Handle_Query( String id, HttpServletRequest request, HttpServletResponse response ) throws IOException, ServletException {
 		try
 		{
             HttpSession thisSession = request.getSession();
             if( thisSession.getAttribute( "info" ) == null ) throw new IOException("Missing credentials");
             Credentials info = (Credentials)thisSession.getAttribute( "info" );
-			ObjectQuery queryObj = new ObjectQuery( "CCMenuOrder" );
+
+			JSONArray orders = new JSONArray();
 
 			// Filter out closed orders
+			ObjectQuery queryObj = new ObjectQuery( "CCMenuOrder" );
 			queryObj.addProperty("status", "!= 6");
+			queryObj.addProperty("location", id);
+			//queryObj.setLogicalAnd(false);
+			QueryResponse qrMenuItems = m_objectBean.Query( info, queryObj );		
+			addOrderNodes(qrMenuItems.getObjects(queryObj.getClassName()), orders);
+			// RepositoryObjects oMenuItems = qrMenuItems.getObjects( queryObj.getClassName() );
+			// for( int i = 0; i < oMenuItems.count(); i++ ) {
+            //     RepositoryObject obj = oMenuItems.get(i);
+            //     JSONObject jsonOrder = new JSONObject();
+            //     jsonOrder.put("id", obj.getPropertyValue("id"));
+            //     jsonOrder.put("status", convertStatusToLabel(obj.getPropertyValue_Int("status")));
+            //     jsonOrder.put("label", obj.getPropertyValue("email"));
+            //     jsonOrder.put("invoice", obj.getPropertyValue("subtotal"));
+            //     jsonOrder.put("delivery", obj.getPropertyValue_Boolean("delivery"));
+            //     orders.put(jsonOrder);
+            // }
 
-			// Filter out closed orders more than 1 hour old
+			// Query closed order within the 8 hours
+			ObjectQuery queryObj2 = new ObjectQuery( "CCMenuOrder" );
+			queryObj2.addProperty("status", "6");
+			queryObj2.addProperty("location", id);
 			LocalDateTime currentTime = LocalDateTime.now(ZoneOffset.UTC);
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a");
-			String today = formatter.format(currentTime.minusDays(1));
-			queryObj.addProperty("modified", "> " + today);
-
-			// Set logical AND off
-			queryObj.setLogicalAnd(false);
-			QueryResponse qrMenuItems = m_objectBean.Query( info, queryObj );		
-			RepositoryObjects oMenuItems = qrMenuItems.getObjects( queryObj.getClassName() );
-            JSONArray orders = new JSONArray();
-			for( int i = 0; i < oMenuItems.count(); i++ ) {
-                RepositoryObject obj = oMenuItems.get(i);
-                JSONObject jsonOrder = new JSONObject();
-                jsonOrder.put("id", obj.getPropertyValue("id"));
-                jsonOrder.put("status", convertStatusToLabel(obj.getPropertyValue_Int("status")));
-                jsonOrder.put("label", obj.getPropertyValue("email"));
-                jsonOrder.put("invoice", obj.getPropertyValue("subtotal"));
-                jsonOrder.put("delivery", obj.getPropertyValue_Boolean("delivery"));
-                orders.put(jsonOrder);
-            }
+			String today = formatter.format(currentTime.minusHours(8));
+			queryObj2.addProperty("modified", "> " + today);
+			QueryResponse qrMenuItems2 = m_objectBean.Query( info, queryObj2 );		
+			addOrderNodes(qrMenuItems2.getObjects(queryObj2.getClassName()), orders);
+			// RepositoryObjects oMenuItems2 = qrMenuItems2.getObjects( queryObj2.getClassName() );
+			// for( int i = 0; i < oMenuItems2.count(); i++ ) {
+            //     RepositoryObject obj = oMenuItems2.get(i);
+            //     JSONObject jsonOrder = new JSONObject();
+            //     jsonOrder.put("id", obj.getPropertyValue("id"));
+            //     jsonOrder.put("status", convertStatusToLabel(obj.getPropertyValue_Int("status")));
+            //     jsonOrder.put("label", obj.getPropertyValue("email"));
+            //     jsonOrder.put("invoice", obj.getPropertyValue("subtotal"));
+            //     jsonOrder.put("delivery", obj.getPropertyValue_Boolean("delivery"));
+            //     orders.put(jsonOrder);
+            // }
 
             response.setContentType("text/json");
             response.setCharacterEncoding("utf-8");
@@ -143,6 +156,19 @@ public class OrderDashboard extends HttpServlet {
 		}
     }
 
+	private void addOrderNodes(RepositoryObjects oMenuItems, JSONArray orders) {
+		for( int i = 0; i < oMenuItems.count(); i++ ) {
+			RepositoryObject obj = oMenuItems.get(i);
+			JSONObject jsonOrder = new JSONObject();
+			jsonOrder.put("id", obj.getPropertyValue("id"));
+			jsonOrder.put("status", OrderStatusUtil.convertStatusToLabel(obj.getPropertyValue_Int("status")));
+			jsonOrder.put("label", obj.getPropertyValue("email"));
+			jsonOrder.put("invoice", obj.getPropertyValue("subtotal"));
+			jsonOrder.put("delivery", obj.getPropertyValue_Boolean("delivery"));
+			orders.put(jsonOrder);
+		}
+	}
+
 	public void Handle_Update( String id, HttpServletRequest request, HttpServletResponse response ) throws IOException, ServletException {
 		HttpSession thisSession = request.getSession();
 		if( thisSession.getAttribute( "info" ) == null ) throw new IOException("Missing credentials");
@@ -150,7 +176,7 @@ public class OrderDashboard extends HttpServlet {
 
 		ObjectSubmit order = new ObjectSubmit("CCMenuOrder");
 		JsonNode node = ServletUtilities.extractJsonBody(request);
-		order.addProperty("status", convertLabelToStatus(node.get("status").asText()));
+		order.addProperty("status", OrderStatusUtil.convertLabelToStatus(node.get("status").asText()));
 		JsonNode inv = node.get("invoice");
 		if (inv != null) {
 			order.addProperty("invoice", inv.asText());
@@ -158,6 +184,10 @@ public class OrderDashboard extends HttpServlet {
 		
 		try {
 			m_objectBean.Update(info, id, order);
+			response.setContentType("text/json");
+            response.setCharacterEncoding("utf-8");
+            PrintWriter out = response.getWriter();
+            out.write("{\"id\":\"" + id + "\"}");
 		}
 		catch(AuthenticationException ex) {
 			SystemServlet.g_logger.error( "AuthenticationException thrown - " + ex.getErrMsg() );
@@ -176,29 +206,29 @@ public class OrderDashboard extends HttpServlet {
 		<value text="5 - read_for_pickup" code="5"/>
 		<value text="6 - processed" code="6"/>
         */
-    String convertStatusToLabel(int status) {
-        switch(status) {
-            case 0: return "open";
-            case 1: return "paymentpending";
-            case 2: return "payment_failed";
-            case 3: return "inprogress";
-            case 4: return "readyforpickup";
-            case 5: return "outfordelivery";
-            case 6: return "complete";
-        }
-        return "open";
-    }
+    // public static String convertStatusToLabel(int status) {
+    //     switch(status) {
+    //         case 0: return "open";
+    //         case 1: return "paymentpending";
+    //         case 2: return "payment_failed";
+    //         case 3: return "inprogress";
+    //         case 4: return "readyforpickup";
+    //         case 5: return "outfordelivery";
+    //         case 6: return "complete";
+    //     }
+    //     return "open";
+    // }
 
-	int convertLabelToStatus(String label) {
-        switch(label) {
-            case "open": return 0;
-            case "paymentpending": return 1;
-            case "payment_failed": return 2;
-            case "inprogress": return 3;
-            case "readyforpickup": return 4;
-            case "outfordelivery": return 5;
-            case "complete": return 6;
-        }
-        return 0;
-    }
+	// int convertLabelToStatus(String label) {
+    //     switch(label) {
+    //         case "open": return 0;
+    //         case "paymentpending": return 1;
+    //         case "payment_failed": return 2;
+    //         case "inprogress": return 3;
+    //         case "readyforpickup": return 4;
+    //         case "outfordelivery": return 5;
+    //         case "complete": return 6;
+    //     }
+    //     return 0;
+    // }
 }

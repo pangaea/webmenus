@@ -1,3 +1,5 @@
+var currentLocationId = null;
+
 // Allow elements to be dropped into this zone
 function allowDrop(ev) {
     ev.preventDefault();
@@ -20,18 +22,31 @@ function drop(ev) {
     
     // Optional: Save state to localStorage here
     console.log("order id = " + data + ", status=" + targetList.id.slice(0, -6))
-    updateOrder(data, targetList.id.slice(0, -6));
+    updateOrder(data, targetList.id.slice(0, -6), null, () => {
+        loadOrders();
+    });
 }
 
 function select(ev) {
     console.log("Selected id => " + ev);
-    window.location = "order.html?id=" + ev;
+    //showDialog("/webmenus/app/orders/order_details.jsp?id=" + ev, "Order Details", 1280);
+
+    if($("#order_detail_link-" + ev).size()==0)
+		$("<a id='order_detail_link-" + ev + "' href='/webmenus/app/orders/order_details.jsp?id=" + ev + "'/>").insertAfter( $("body") );
+	$("#order_detail_link-" + ev).fancybox({
+        'width' : '12',
+        'height' : '6',
+        'autoScale' : false,
+        'transitionIn' : 'none',
+        'transitionOut' : 'none',
+        'type' : 'iframe'
+    }).click();
 }
 
 function loadOrders() {
     $.ajax({
 		type: "GET",
-		url: "/webmenus/OrderDashboard/getorders",
+		url: "/webmenus/OrderDashboard/getorders/" + currentLocationId,
 		dataType: "json",
 		success: function(json){
 			initKanban(json);
@@ -39,24 +54,31 @@ function loadOrders() {
 	});
 }
 
-function updateOrder(id, status, invoice) {
+function updateOrder(id, status, invoice, callback) {
     $.ajax({
 		type: "POST",
 		url: "/webmenus/OrderDashboard/updateorder/" + id,
 		dataType: "json",
         data: JSON.stringify({ status: status, invoice: invoice }),
 		success: function(json){
-			loadOrders();
+			//loadOrders();
+            callback();
 		}
 	});
 }
 
+function getColumn(name) {
+    const div = document.getElementById(name);
+    div.replaceChildren();
+    return div;
+}
+
 function initKanban(orders) {
-    const openDiv = document.getElementById('open-tasks');
-    const inprogressDiv = document.getElementById('inprogress-tasks');
-    const readyforpickupDiv = document.getElementById('readyforpickup-tasks');
-    const outfordeliveryDiv = document.getElementById('outfordelivery-tasks');
-    const completeDiv = document.getElementById('complete-tasks');
+    const openDiv = getColumn('open-tasks');
+    const inprogressDiv = getColumn('inprogress-tasks');
+    const readyforpickupDiv = getColumn('readyforpickup-tasks');
+    const outfordeliveryDiv = getColumn('outfordelivery-tasks');
+    const completeDiv = getColumn('complete-tasks');
     var orderHTML = document.querySelector('#order-template').innerHTML;
     orders.forEach(o => {
         // Create order DIV
