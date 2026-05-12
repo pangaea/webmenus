@@ -692,7 +692,8 @@ public class StatementBuilder
 	
 			case TIME:
 			case DATETIME:
-				orderByStatment = "TIMESTAMP(" + query.getSortByPrefix() + "`" + sSortField + "`)";
+				//orderByStatment = "TIMESTAMP(" + query.getSortByPrefix() + "`" + sSortField + "`)";
+				orderByStatment = query.getSortByPrefix() + "`" + sSortField + "`";
 				break;
 				
 			default:

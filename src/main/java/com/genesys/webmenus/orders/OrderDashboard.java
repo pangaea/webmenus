@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -32,6 +33,7 @@ import com.genesys.repository.RepositoryException;
 import com.genesys.repository.RepositoryObject;
 import com.genesys.repository.RepositoryObjects;
 import com.genesys.util.ServletUtilities;
+import com.genesys.util.xml.XMLStreamHelper;
 import com.genesys.views.ViewResponseWriter;
 
 public class OrderDashboard extends HttpServlet {
@@ -103,9 +105,11 @@ public class OrderDashboard extends HttpServlet {
 			ObjectQuery queryObj = new ObjectQuery( "CCMenuOrder" );
 			queryObj.addProperty("status", "!= 6");
 			queryObj.addProperty("location", id);
+			queryObj.setSortBy("modified");
+			queryObj.setSortOrder("ASC");
 			//queryObj.setLogicalAnd(false);
 			QueryResponse qrMenuItems = m_objectBean.Query( info, queryObj );		
-			addOrderNodes(qrMenuItems.getObjects(queryObj.getClassName()), orders);
+			addOrderNodes(info, qrMenuItems.getObjects(queryObj.getClassName()), orders);
 			// RepositoryObjects oMenuItems = qrMenuItems.getObjects( queryObj.getClassName() );
 			// for( int i = 0; i < oMenuItems.count(); i++ ) {
             //     RepositoryObject obj = oMenuItems.get(i);
@@ -122,12 +126,14 @@ public class OrderDashboard extends HttpServlet {
 			ObjectQuery queryObj2 = new ObjectQuery( "CCMenuOrder" );
 			queryObj2.addProperty("status", "6");
 			queryObj2.addProperty("location", id);
+			queryObj2.setSortBy("modified");
+			queryObj2.setSortOrder("ASC");
 			LocalDateTime currentTime = LocalDateTime.now(ZoneOffset.UTC);
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a");
 			String today = formatter.format(currentTime.minusHours(8));
 			queryObj2.addProperty("modified", "> " + today);
 			QueryResponse qrMenuItems2 = m_objectBean.Query( info, queryObj2 );		
-			addOrderNodes(qrMenuItems2.getObjects(queryObj2.getClassName()), orders);
+			addOrderNodes(info, qrMenuItems2.getObjects(queryObj2.getClassName()), orders);
 			// RepositoryObjects oMenuItems2 = qrMenuItems2.getObjects( queryObj2.getClassName() );
 			// for( int i = 0; i < oMenuItems2.count(); i++ ) {
             //     RepositoryObject obj = oMenuItems2.get(i);
@@ -156,14 +162,34 @@ public class OrderDashboard extends HttpServlet {
 		}
     }
 
-	private void addOrderNodes(RepositoryObjects oMenuItems, JSONArray orders) {
+	private String generateDescription(Credentials info, String orderId) throws AuthenticationException {
+		ObjectQuery queryOrderItem = new ObjectQuery( "CCMenuOrderItem" );
+		queryOrderItem.addProperty("menuorder", orderId);
+		QueryResponse qrOrderItem = m_objectBean.Query(info, queryOrderItem );
+		RepositoryObjects oOrderItems = qrOrderItem.getObjects( queryOrderItem.getClassName() );
+		StringBuffer desc = new StringBuffer();
+		for( int i = 0; i < oOrderItems.count(); i++ )
+		{
+			RepositoryObject oOrderItem = oOrderItems.get(i);
+
+			if (desc.isEmpty()) {
+				desc.append(oOrderItem.getPropertyValue("name"));
+			} else {
+				desc.append(", ");
+				desc.append(oOrderItem.getPropertyValue("name"));
+			}
+		}
+		return desc.toString();
+	}
+
+	private void addOrderNodes(Credentials info, RepositoryObjects oMenuItems, JSONArray orders) throws JSONException, AuthenticationException {
 		for( int i = 0; i < oMenuItems.count(); i++ ) {
 			RepositoryObject obj = oMenuItems.get(i);
 			JSONObject jsonOrder = new JSONObject();
 			jsonOrder.put("id", obj.getPropertyValue("id"));
 			jsonOrder.put("status", OrderStatusUtil.convertStatusToLabel(obj.getPropertyValue_Int("status")));
-			jsonOrder.put("label", obj.getPropertyValue("email"));
-			jsonOrder.put("invoice", obj.getPropertyValue("subtotal"));
+			jsonOrder.put("label", generateDescription(info, obj.getPropertyValue("id")));
+			jsonOrder.put("invoice", obj.getPropertyValue("invoice"));
 			jsonOrder.put("delivery", obj.getPropertyValue_Boolean("delivery"));
 			orders.put(jsonOrder);
 		}

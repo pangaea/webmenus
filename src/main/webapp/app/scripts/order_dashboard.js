@@ -59,7 +59,7 @@ function updateOrder(id, status, invoice, callback) {
 		type: "POST",
 		url: "/webmenus/OrderDashboard/updateorder/" + id,
 		dataType: "json",
-        data: JSON.stringify({ status: status, invoice: invoice }),
+        data: (invoice != null) ? JSON.stringify({ status: status, invoice: invoice }) : JSON.stringify({ status: status }),
 		success: function(json){
 			//loadOrders();
             callback();

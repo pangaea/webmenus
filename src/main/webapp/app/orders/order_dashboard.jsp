@@ -28,6 +28,13 @@ All Rights Reserved
 	}
 %>
 
+<jsp:useBean id="orderDashboardBean" class="com.genesys.webmenus.orders.OrderDashboardBean" scope="page"/>
+<jsp:setProperty name="orderDashboardBean" property="*"/> 
+<%
+orderDashboardBean.setRequest(request); // pass request object to bean
+orderDashboardBean.loadLocationDetails(request.getParameter("loc"));
+%>
+
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -58,6 +65,18 @@ All Rights Reserved
         </script>
     </head>
     <body>
+
+      <div style="height:60px;">
+        <h2 style="padding-top:10px;"><%=orderDashboardBean.getName()%></h2>
+        <div style="position:absolute;right:10px;top:10px;">
+          <div><%=orderDashboardBean.getAddress()%></div>
+          <div><%=orderDashboardBean.getCity()%>, <%=orderDashboardBean.getState()%> <%=orderDashboardBean.getZip()%></div>
+          <div><%=orderDashboardBean.getPhone()%></div>
+        </div>
+      </div>
+      
+      <hr/>
+
       <template id="order-template">
         <div class="task" id="{id}" draggable="true" ondragstart="drag(event)" onclick="select(id)">
           <table>
