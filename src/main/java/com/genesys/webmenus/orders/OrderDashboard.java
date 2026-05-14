@@ -82,7 +82,7 @@ public class OrderDashboard extends HttpServlet {
 			}
 			else if( resPath.equalsIgnoreCase("/cancelorder") )
 			{
-				//Handle_Submit( request, response );
+				//Handle_Cancel( request, response );
 			}
 			else
 			{
@@ -207,7 +207,10 @@ public class OrderDashboard extends HttpServlet {
 		if (inv != null) {
 			order.addProperty("invoice", inv.asText());
 		}
-		
+		JsonNode est = node.get("estimated_time");
+		if (est != null) {
+			order.addProperty("estimated_time", est.asText());
+		}
 		try {
 			m_objectBean.Update(info, id, order);
 			response.setContentType("text/json");

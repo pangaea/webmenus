@@ -22,7 +22,7 @@ function drop(ev) {
     
     // Optional: Save state to localStorage here
     console.log("order id = " + data + ", status=" + targetList.id.slice(0, -6))
-    updateOrder(data, targetList.id.slice(0, -6), null, () => {
+    updateOrderStatus(data, targetList.id.slice(0, -6), () => {
         loadOrders();
     });
 }
@@ -54,12 +54,25 @@ function loadOrders() {
 	});
 }
 
-function updateOrder(id, status, invoice, callback) {
+function updateOrderStatus(id, status, callback) {
     $.ajax({
 		type: "POST",
 		url: "/webmenus/OrderDashboard/updateorder/" + id,
 		dataType: "json",
-        data: (invoice != null) ? JSON.stringify({ status: status, invoice: invoice }) : JSON.stringify({ status: status }),
+        data: JSON.stringify({ status: status }),
+		success: function(json){
+			//loadOrders();
+            callback();
+		}
+	});
+}
+
+function updateOrder(id, status, invoice, estimated_time, callback) {
+    $.ajax({
+		type: "POST",
+		url: "/webmenus/OrderDashboard/updateorder/" + id,
+		dataType: "json",
+        data: JSON.stringify({ status: status, invoice: invoice, estimated_time: estimated_time }),
 		success: function(json){
 			//loadOrders();
             callback();

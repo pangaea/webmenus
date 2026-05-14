@@ -22,12 +22,12 @@ function getOrderStatus(id, context) {
                     statusLabel.innerText = "Being Prepared";
                     break;
                 case 4:
-                    statusImage.src = context + "/app/images/orderstatus/delivery-scooter.gif";
-                    statusLabel.innerText = "Out for Delivery";
-                    break;
-                case 5:
                     statusImage.src = context + "/app/images/orderstatus/food-pickup.gif";
                     statusLabel.innerText = "Ready for Pickup";
+                    break;
+                case 5:
+                    statusImage.src = context + "/app/images/orderstatus/delivery-scooter.gif";
+                    statusLabel.innerText = "Out for Delivery";
                     break;
                 case 6:
                     statusImage.src = context + "/app/images/orderstatus/verified.gif";
@@ -35,6 +35,10 @@ function getOrderStatus(id, context) {
                     break;
             }
 
+            if (json.estimated_time != null && json.estimated_time.length > 0) {
+                var estimated_time = document.getElementById("estimated_time");
+                estimated_time.innerText = "Estimated Time: " + json.estimated_time;
+            }
         },
         error: function(err){ /* Error */ }
     });

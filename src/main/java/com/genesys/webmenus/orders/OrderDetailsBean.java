@@ -6,7 +6,6 @@ import com.genesys.SystemServlet;
 import com.genesys.repository.AuthenticationException;
 import com.genesys.repository.Credentials;
 import com.genesys.repository.ObjectQuery;
-import com.genesys.repository.QueryResponse;
 import com.genesys.repository.RepositoryObject;
 import com.genesys.repository.RepositoryObjectIterator;
 
@@ -15,6 +14,7 @@ public class OrderDetailsBean {
     private String m_orderId = null;
     private String m_status = null;
     private String m_invoice = null;
+    private String m_estimatedTime = null;
 
     public OrderDetailsBean(){
 	}
@@ -30,6 +30,7 @@ public class OrderDetailsBean {
                     RepositoryObject oLoc = locIter.getObj();
                     m_status = OrderStatusUtil.convertStatusToLabel(oLoc.getPropertyValue_Int("status"));
                     m_invoice = oLoc.getPropertyValue("invoice");
+                    m_estimatedTime = oLoc.getPropertyValue("estimated_time");
                 }
 			}
 			catch(AuthenticationException e){
@@ -52,5 +53,9 @@ public class OrderDetailsBean {
 
     public String getInvoice() {
         return m_invoice;
+    }
+
+    public String getEstimatedTime() {
+        return m_estimatedTime;
     }
 }

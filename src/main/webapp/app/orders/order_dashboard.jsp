@@ -58,6 +58,7 @@ orderDashboardBean.loadLocationDetails(request.getParameter("loc"));
             currentLocationId = "<%=request.getParameter("loc")%>";
             window.addEventListener("load", () => {
                 loadOrders();
+                window.setInterval(() => { loadOrders() }, 30000);
             });
             document.addEventListener('reLoadOrder', (e) => {
                 loadOrders();

@@ -16,6 +16,9 @@ orderDetailsBean.loadOrderDetails();
         <link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/xlibs/jquery/css/redmond/jquery-ui-1.7.2.custom.css" />
         <script type="text/javascript" src="<%=request.getContextPath()%>/includes/msgbox.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/app/scripts/order_dashboard.js"></script>
+
+        <script type="text/javascript" src="<%=request.getContextPath()%>/xlibs/jquery/jquery-ui-timepicker-addon.js"></script>
+        <script type="text/javascript" src="<%=request.getContextPath()%>/xlibs/jquery/jquery-ui-sliderAccess.js"></script>
         <title>Order Details</title>
         <style>
             #main-console {
@@ -40,12 +43,16 @@ orderDetailsBean.loadOrderDetails();
             window.addEventListener("load", () => {
                 $("#orderviewpanel").load("/webmenus/app/OrderView?oid=<%=request.getParameter("id")%>", function(){});
                 $("#status").val("<%=orderDetailsBean.getStatus()%>")
+                $("input[datatype='datetime'], .datatype_datetime").datetimepicker({
+		            ampm: true
+	            });
             });
             function onSave() {
                 startAnimation();
                 var status = $("#status").val();
                 var invoice = $("#invoice").val();
-                updateOrder("<%=request.getParameter("id")%>", status, invoice, () => {
+                var estimated_time = $("#estimated_time").val();
+                updateOrder("<%=request.getParameter("id")%>", status, invoice, estimated_time, () => {
                     //loadOrders("<%=request.getParameter("id")%>");
                     const myEvent = new CustomEvent('reLoadOrder', {});
                     window.parent.document.dispatchEvent(myEvent);
@@ -81,6 +88,10 @@ orderDetailsBean.loadOrderDetails();
                         <tr>
                             <td>Invoice:</td>
                             <td><input id="invoice" type="text" value="<%=orderDetailsBean.getInvoice()%>"></input></td>
+                        </tr>
+                        <tr>
+                            <td>Estimated Time:</td>
+                            <td><input id="estimated_time" type="text" datatype="datetime" value="<%=orderDetailsBean.getEstimatedTime()%>"></input></td>
                         </tr>
                         <tr>
                             <td colspan="2" class="button-cell">
