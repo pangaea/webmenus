@@ -12,6 +12,8 @@
         Genesys
     </display-name>
 
+    <!--distributable/-->
+
     <context-param>
         <param-name>
             Webmaster

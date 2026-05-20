@@ -4,25 +4,12 @@
 ///////////////////////////////////////
 
 package com.genesys.views;
-/*
-import java.io.File;
-import java.util.StringTokenizer;
+import java.io.Serializable;
 
-import org.apache.xerces.parsers.DOMParser;
-import org.apache.xpath.XPath;
-import org.apache.xpath.XPathAPI;
-
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-*/
 import com.genesys.SystemServlet;
 
 
-public class ViewConfigBean
+public class ViewConfigBean implements Serializable
 {
 	InterfaceCfg m_interfaceCfg = null;
 	InterfaceCfg.View m_viewNode = null;
