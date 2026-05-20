@@ -53,6 +53,7 @@ orderDashboardBean.loadLocationDetails(request.getParameter("loc"));
         <script type="text/javascript" src="<%=request.getContextPath()%>/xlibs/jquery/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
 
         <script type="text/javascript" src="<%=request.getContextPath()%>/includes/msgbox.js"></script>
+        <script type="text/javascript" src="<%=request.getContextPath()%>/app/scripts/datetime_utils.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/app/scripts/order_dashboard.js"></script>
         <script type="text/javascript">
             currentLocationId = "<%=request.getParameter("loc")%>";
@@ -80,10 +81,11 @@ orderDashboardBean.loadLocationDetails(request.getParameter("loc"));
 
       <template id="order-template">
         <div class="task" id="{id}" draggable="true" ondragstart="drag(event)" onclick="select(id)">
-          <table>
+          <table class="order_card">
             <tr><td><b>Details:</b></td><td>{label}</td></tr>
-            <tr><td><b>Invoice:</b></td><td>{invoice}</td></tr>
-            <tr><td><b>Delivery:</b></td><td>{delivery}</td></tr>
+            <tr><td><b>Invoice:</b></td><td class="invoice">{invoice}</td></tr>
+            <tr><td><b>Delivery:</b></td><td><img class="delivery_image" src="{delivery}"></img></td></tr>
+            <tr><td><b>Due:</b></td><td class="estimated-time">{estimated_time_label}</td></tr>
           </table>
         </div>
       </template>
@@ -95,7 +97,7 @@ orderDashboardBean.loadLocationDetails(request.getParameter("loc"));
         </div>
 
         <div class="column" id="inprogress" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <h3>Fire</h3>
+            <h3>In the Kitchen</h3>
             <div class="task-list" id="inprogress-tasks"></div>
         </div>
 

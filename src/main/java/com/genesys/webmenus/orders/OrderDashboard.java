@@ -191,6 +191,7 @@ public class OrderDashboard extends HttpServlet {
 			jsonOrder.put("label", generateDescription(info, obj.getPropertyValue("id")));
 			jsonOrder.put("invoice", obj.getPropertyValue("invoice"));
 			jsonOrder.put("delivery", obj.getPropertyValue_Boolean("delivery"));
+			jsonOrder.put("estimated_time", obj.getPropertyValue("estimated_time"));
 			orders.put(jsonOrder);
 		}
 	}

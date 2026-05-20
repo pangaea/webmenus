@@ -95,11 +95,22 @@ function initKanban(orders) {
     var orderHTML = document.querySelector('#order-template').innerHTML;
     orders.forEach(o => {
         // Create order DIV
+        const time_diff = (o.estimated_time != null && o.estimated_time.length > 0) ? timeDiffInMinutes(o.estimated_time) : null;
         const order = document.createElement('div');
         order.innerHTML = orderHTML.replace("{id}", o.id)
                                     .replace("{label}", o.label)
                                     .replace("{invoice}", o.invoice)
-                                    .replace("{delivery}", o.delivery);
+                                    .replace("{delivery}", (o.delivery) ? "/webmenus/app/images/close.png" : "/webmenus/app/images/checkmark.png")
+                                    .replace("{estimated_time_label}", convertToLabel(time_diff));
+
+        if (time_diff != null) {
+            if (time_diff < 0) {
+                order.getElementsByClassName("estimated-time")[0].className = "late";
+            } else {
+                order.getElementsByClassName("estimated-time")[0].className = "early";
+            }
+        }
+
         switch(o.status) {
         case "open":
             openDiv.appendChild(order);

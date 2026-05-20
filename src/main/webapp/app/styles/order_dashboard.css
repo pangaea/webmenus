@@ -25,3 +25,27 @@
 .task:active {
     cursor: grabbing;
 }
+
+td {
+    vertical-align: top;
+}
+
+.order_card {
+    padding: 4px;
+}
+
+.late {
+    color: red;
+}
+
+.early {
+    color: green;
+}
+
+.invoice {
+    font-style: italic;
+}
+
+.delivery_image {
+    height: 12px;
+}
