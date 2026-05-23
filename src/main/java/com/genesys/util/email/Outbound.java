@@ -5,7 +5,6 @@
 
 package com.genesys.util.email;
 
-//import java.util.*;
 import java.io.*;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -15,17 +14,14 @@ import java.util.Vector;
 import java.util.Date;
 
 import javax.activation.DataHandler;
-//import javax.activation.*;
+
 import javax.mail.*;
-//import javax.mail.Message;
-//import javax.mail.MessagingException;
-//import javax.mail.Session;
-//import javax.mail.Transport;
+import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-//import javax.mail.PasswordAuthentication;
 import javax.mail.util.ByteArrayDataSource;
 
 import com.genesys.SystemServlet;

@@ -2,6 +2,7 @@ package com.genesys.feedback;
 
 import java.util.Vector;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.*;
 import org.apache.struts.action.*;
 
@@ -49,7 +50,13 @@ public class Feedback_Action extends Action
 					Outbound.postMail(toAddr, systemFromEmail, sEmailAddr, true, subject, body + "\n\n-- " + sEmailAddr, null);
 				}
 			}
-			catch( Exception e ){}
+			catch(AuthenticationException ex)
+			{
+				SystemServlet.g_logger.error( "AuthenticationException thrown - " + ex.getErrMsg() );
+			}
+			catch( MessagingException e ){
+				SystemServlet.g_logger.error( "sendEmail thrown - " + e.getMessage() );
+			}
 			finally
 			{
 				m_objectBean.Logout(info);
