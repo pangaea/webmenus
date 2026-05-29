@@ -19,7 +19,7 @@ public class SQLParam
 	public SQLParam( String name, String value, ParamType type )
 	{
 		m_sName = new String(name);
-		m_sValue = new String(value);
+		m_sValue = (value != null) ? new String(value) : null;
 		m_type = type;
 		m_passQry = "";
 	}

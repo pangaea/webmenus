@@ -26,12 +26,16 @@
     cursor: grabbing;
 }
 
-td {
+/* td {
     vertical-align: top;
-}
+} */
 
 .order_card {
     padding: 4px;
+}
+
+.order_card td {
+    vertical-align: top;
 }
 
 .late {

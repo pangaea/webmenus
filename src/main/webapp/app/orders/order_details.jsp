@@ -14,7 +14,9 @@ orderDetailsBean.loadOrderDetails();
         <script type="text/javascript" src="<%=request.getContextPath()%>/xlibs/jquery/js/jquery-1.3.2.min.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/xlibs/jquery/js/jquery-ui-1.7.2.custom.min.js"></script>
         <link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/xlibs/jquery/css/redmond/jquery-ui-1.7.2.custom.css" />
+        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/app/styles/order_dashboard.css"></link>
         <script type="text/javascript" src="<%=request.getContextPath()%>/includes/msgbox.js"></script>
+        <script type="text/javascript" src="<%=request.getContextPath()%>/app/scripts/datetime_utils.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/app/scripts/order_dashboard.js"></script>
 
         <script type="text/javascript" src="<%=request.getContextPath()%>/xlibs/jquery/jquery-ui-timepicker-addon.js"></script>
@@ -23,16 +25,26 @@ orderDetailsBean.loadOrderDetails();
         <style>
             #main-console {
                 width: 100%;
+                height: 100%;
             }
-            #main-console td {
+            /* #main-console td {
                 width: 50%;
-            }
+            } */
             .order-info tr td:first-child {
                 text-align: right;
+                vertical-align: top;
             }
             .button-cell {
                 text-align: center;
-                padding-top: 25px;
+                padding-top: 100px;
+            }
+            .estimated-title {
+                margin-top: 4px;
+                margin-bottom: 4px;
+                font-weight: 600;
+                border-style: groove;
+                text-align: center;
+                font-family:'Courier New', Courier, monospace
             }
             /* .save-btn {
                 float: right;
@@ -40,12 +52,51 @@ orderDetailsBean.loadOrderDetails();
             } */
         </style>
         <script type="text/javascript">
+            function updateEstDisplay() {
+                const mod = $("#estimated_time").val();
+                const time_diff = timeDiffInMinutes(mod);
+                $("#estimated_time_label").text(convertToLabel(time_diff));
+                if (time_diff != null) {
+                    if (time_diff < 0) {
+                        document.getElementById("estimated_time_label").className = "late";
+                    } else {
+                        document.getElementById("estimated_time_label").className = "early";
+                    }
+                } else {
+                    document.getElementById("estimated_time_label").className = "";
+                }
+            }
             window.addEventListener("load", () => {
                 $("#orderviewpanel").load("/webmenus/app/OrderView?oid=<%=request.getParameter("id")%>", function(){});
                 $("#status").val("<%=orderDetailsBean.getStatus()%>")
-                $("input[datatype='datetime'], .datatype_datetime").datetimepicker({
+                $("#estimated_time").datetimepicker({
 		            ampm: true
 	            });
+                
+                updateEstDisplay();
+                $("#estimated_time").change(function() {
+                    updateEstDisplay();
+                });
+
+                $("#minus").click(function() {
+                    $("#estimated_time").val(adjustDatetimeDown($("#estimated_time").val()));
+                    updateEstDisplay();
+                });
+                $("#now").click(function() {
+                    $("#estimated_time").val(convertDatetimeToString(new Date()));
+                    updateEstDisplay();
+                });
+                $("#plus").click(function() {
+                    $("#estimated_time").val(adjustDatetimeUp($("#estimated_time").val()));
+                    updateEstDisplay();
+                });
+                $("#clear").click(function() {
+                    $("#estimated_time").val("");
+                    updateEstDisplay();
+                });
+                $("#advanced").click(function() {
+                    $("#estimated_time").focus();
+                });
             });
             function onSave() {
                 startAnimation();
@@ -71,7 +122,7 @@ orderDetailsBean.loadOrderDetails();
 	                    <div id="orderviewpanel"></div>
                     </div>
                 </td>
-                <td>
+                <td class="ui-layout-center">
                     <table class="order-info">
                         <tr>
                             <td>Status:</td>
@@ -91,7 +142,17 @@ orderDetailsBean.loadOrderDetails();
                         </tr>
                         <tr>
                             <td>Estimated Time:</td>
-                            <td><input id="estimated_time" type="text" datatype="datetime" value="<%=orderDetailsBean.getEstimatedTime()%>"></input></td>
+                            <td>
+                                <input id="estimated_time" type="hidden" datatype="datetime"
+                                        value="<%=orderDetailsBean.getEstimatedTime()%>"></input>
+                                <div id="estimated_time_label"></div>
+                                <div class="estimated-title">Change Est. Time:</div>
+                                <button id="minus">-5</button>
+                                <button id="now">Now</button>
+                                <button id="plus">+5</button>
+                                <button id="clear">Clear</button>
+                                <button id="advanced">Adv.</button>
+                            </td>
                         </tr>
                         <tr>
                             <td colspan="2" class="button-cell">

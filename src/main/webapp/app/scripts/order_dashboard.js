@@ -109,6 +109,8 @@ function initKanban(orders) {
             } else {
                 order.getElementsByClassName("estimated-time")[0].className = "early";
             }
+        } else {
+            order.getElementsByClassName("estimated-time")[0].className = "";
         }
 
         switch(o.status) {
