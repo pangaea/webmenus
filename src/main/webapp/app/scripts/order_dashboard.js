@@ -100,7 +100,7 @@ function initKanban(orders) {
         order.innerHTML = orderHTML.replace("{id}", o.id)
                                     .replace("{label}", o.label)
                                     .replace("{invoice}", o.invoice)
-                                    .replace("{delivery}", (o.delivery) ? "/webmenus/app/images/close.png" : "/webmenus/app/images/checkmark.png")
+                                    .replace("{delivery}", (o.delivery) ? "/webmenus/app/images/checkmark.png" : "/webmenus/app/images/close.png")
                                     .replace("{estimated_time_label}", convertToLabel(time_diff));
 
         if (time_diff != null) {

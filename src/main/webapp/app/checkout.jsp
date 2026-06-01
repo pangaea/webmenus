@@ -345,10 +345,15 @@ dojo.addOnLoad( function()
 			case 1: // Paypal
 				String clientId = menuOrderBean.queryPmConfig(i, "CLIENT_ID");
 				String clientSecret = menuOrderBean.queryPmConfig(i, "CLIENT_SECRET");
+				Boolean venmoSupport = menuOrderBean.queryPmConfig_Boolean(i, "VENMO_SUPPORT");
+				String venmoParam = "";
+				if (venmoSupport) {
+					venmoParam = "&enable-funding=venmo";
+				}
 %>
 <!-- &enable-funding=venmo&buyer-country=US -->
 		<script 
-		src="https://www.paypal.com/sdk/js?client-id=<%=clientId%>&components=buttons">
+		src="https://www.paypal.com/sdk/js?client-id=<%=clientId%>&components=buttons<%=venmoParam%>">
 		</script>
 		<div id="paypal-container-<%=clientId%>"></div>
 		<script>

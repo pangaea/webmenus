@@ -564,6 +564,19 @@ public class MenuOrderBean
 		}
 		return "";
 	}
+
+	public Boolean queryPmConfig_Boolean(int index, String propName) {
+		if (index < m_paymentMethodList.size()) {
+			PaymentMethod pm = m_paymentMethodList.get(index);
+			try {
+				ObjectMapper mapper = new ObjectMapper();
+				JsonNode node = mapper.readTree(pm.config());
+				return node.get(propName).asBoolean();
+			}
+			catch (Exception e) {}
+		}
+		return false;
+	}
 	
 	public String getCurrentLocationId()
 	{

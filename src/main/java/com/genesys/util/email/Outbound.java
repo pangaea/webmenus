@@ -127,13 +127,6 @@ public class Outbound
 		    msg.setHeader("Content-Type", mimeType);
 		    msg.setSentDate(new Date());
 		    Transport.send(msg);
-		    //////////////////////////////////////////////////////////
-	
-		    // Setting the Subject and Content Type
-		    msg.setSubject(subject);
-		    //msg.setContent(htmlbody, "text/html");
-		    msg.setText(textbody);
-		    Transport.send(msg);
 		}
 		catch(MessagingException e)
 		{

@@ -209,10 +209,12 @@ public class OrderDashboard extends HttpServlet {
 			order.addProperty("invoice", inv.asText());
 		}
 		JsonNode est = node.get("estimated_time");
-		if (est != null && !est.asText().isBlank()) {
-			order.addProperty("estimated_time", est.asText());
-		} else {
-			order.addProperty("estimated_time", null);
+		if (est != null) {
+			if (!est.asText().isBlank()) {
+				order.addProperty("estimated_time", est.asText());
+			} else {
+				order.addProperty("estimated_time", null);
+			}
 		}
 		try {
 			m_objectBean.Update(info, id, order);
