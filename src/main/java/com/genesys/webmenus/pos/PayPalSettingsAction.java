@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.*;
+import org.json.JSONObject;
 
 import com.genesys.SystemServlet;
 import com.genesys.repository.AuthenticationException;
@@ -27,9 +28,13 @@ public class PayPalSettingsAction extends Action {
 			try{
 				ObjectManager objectBean = SystemServlet.getObjectManager();
 				ObjectSubmit paymentMethod = new ObjectSubmit("CCPaymentMethod");
-                String config = "{\n\t\"CLIENT_ID\":\"" + rForm.getClientId() +
-					"\",\n\t\"CLIENT_SECRET\":\"" + rForm.getClientSecret() +
-					"\",\n\t\"VENMO_SUPPORT\":" + ((rForm.isVenmoSupport()) ? "true" : "false") + "\n}";
+
+
+				JSONObject value = new JSONObject();
+				value.put("CLIENT_ID", rForm.getClientId());
+				value.put("CLIENT_SECRET", rForm.getClientSecret());
+				value.put("VENMO_SUPPORT", ((rForm.isVenmoSupport()) ? true : false));
+				String config = value.toString(1);
 				paymentMethod.addProperty("config", config);
 				if(rForm.getId() != null && rForm.getId().length() > 0){
 					objectBean.Update(info, rForm.getId(), paymentMethod);
