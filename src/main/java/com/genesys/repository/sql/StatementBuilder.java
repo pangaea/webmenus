@@ -400,7 +400,12 @@ public class StatementBuilder
 						if( searchEntry != null )
 						{
 							// Append AND if not first
-							if( stmtParam.Search.length() > 0 ) stmtParam.Search.append(" AND \n");
+							if( stmtParam.Search.length() > 0 ) {
+								if (query.getLogicalAnd())
+									stmtParam.Search.append(" AND \n");
+								else
+									stmtParam.Search.append(" OR \n");
+							}
 							
 							// Append left side of expression
 							stmtParam.Search.append(sName + "." + property.getColumn());
@@ -640,7 +645,9 @@ public class StatementBuilder
 		
 		//if( stmtParams.Search.length() > 0 ) sQuery.append("\n\nWHERE \n\n" + stmtParams.Search.toString());
 		StringBuilder whereClause = new StringBuilder();
-		whereClause.append(stmtParams.Search.toString());
+		if (stmtParams.Search.length() > 0) {
+			whereClause.append("(" + stmtParams.Search.toString() + ")");
+		}
 		
 		if( info.m_bSystemUser == false )
 		{
@@ -685,7 +692,8 @@ public class StatementBuilder
 	
 			case TIME:
 			case DATETIME:
-				orderByStatment = "TIMESTAMP(" + query.getSortByPrefix() + "`" + sSortField + "`)";
+				//orderByStatment = "TIMESTAMP(" + query.getSortByPrefix() + "`" + sSortField + "`)";
+				orderByStatment = query.getSortByPrefix() + "`" + sSortField + "`";
 				break;
 				
 			default:

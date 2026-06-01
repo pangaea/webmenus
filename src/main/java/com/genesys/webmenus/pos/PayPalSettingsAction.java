@@ -27,7 +27,9 @@ public class PayPalSettingsAction extends Action {
 			try{
 				ObjectManager objectBean = SystemServlet.getObjectManager();
 				ObjectSubmit paymentMethod = new ObjectSubmit("CCPaymentMethod");
-                String config = "{\n\t\"CLIENT_ID\":\"" + rForm.getClientId() + "\",\n\t\"CLIENT_SECRET\":\"" + rForm.getClientSecret() + "\"\n}";
+                String config = "{\n\t\"CLIENT_ID\":\"" + rForm.getClientId() +
+					"\",\n\t\"CLIENT_SECRET\":\"" + rForm.getClientSecret() +
+					"\",\n\t\"VENMO_SUPPORT\":" + ((rForm.isVenmoSupport()) ? "true" : "false") + "\n}";
 				paymentMethod.addProperty("config", config);
 				if(rForm.getId() != null && rForm.getId().length() > 0){
 					objectBean.Update(info, rForm.getId(), paymentMethod);

@@ -59,6 +59,7 @@ All Rights Reserved
             }
             .centered {
                 text-align:center;
+                margin: auto;
             }
         </style>
 
@@ -67,25 +68,28 @@ All Rights Reserved
             dojo.require("dijit.form.Button");
 
             dojo.addOnLoad( function() {
+                getOrderStatus("<%=order_id%>", "<%=request.getContextPath()%>");
                 window.setInterval(() => {
                     getOrderStatus("<%=order_id%>", "<%=request.getContextPath()%>");
-                }, 10000);
+                }, 30000);
             });
         </script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
 	<body class="tundra container">
-        <div>
-            <div class="menuTitle"><%=menuOrderBean.getLocationName()%></div>
-            <span class="menuItemTitle"><%=menuOrderBean.getLocationAddress()%></span>
-            <div class="menuItemDesc"><%=menuOrderBean.getPhoneNumber()%></div>
+        <div class="centered">
+            <div class="menuTitle centered centered"><%=menuOrderBean.getLocationName()%></div>
+            <span class="menuItemTitle" style="text-align:left;"><%=menuOrderBean.getLocationAddress()%></span>
+            <div class="menuItemDesc centered"><%=menuOrderBean.getPhoneNumber()%></div>
             <table class="pageSeperator"><tr>
                 <td width="100%"><hr/></td>
             </tr></table>
             <div class="menuItemTitle centered">My Order Status</div>
             <div id="status_display" class="centered">
-                <img id="status_image" style="width:200px;""/>
+                <img id="status_image" style="width:200px;"/>
                 <div id="status_label" class="menuTitle centered"/>
             </div>
+            <div id="estimated_time" class="centered"></div>
         </div>
     </body>
 </html>

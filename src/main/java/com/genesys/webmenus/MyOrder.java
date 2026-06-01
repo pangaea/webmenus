@@ -3,6 +3,7 @@ package com.genesys.webmenus;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -56,8 +57,8 @@ public class MyOrder extends HttpServlet {
                 PrintWriter out = response.getWriter();
 				if( resPath.equalsIgnoreCase("/getstatus") ) {
                     String orderId = (String)request.getParameter("id");
-                    Integer res = menuOrderBean.getOrderStatus(orderId.toString());
-                    out.write("{\"status\":\"" + res + "\"}");
+                    Map<String, Object> res = menuOrderBean.getOrderStatus(orderId.toString());
+                    out.write("{\"status\":\"" + res.get("status") + "\",\"estimated_time\":\"" + res.get("estimated_time") + "\"}");
 				}
 				else {
                     out.write("{\"status\":\"-1\"}");

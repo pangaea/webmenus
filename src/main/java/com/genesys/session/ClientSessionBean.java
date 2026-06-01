@@ -7,22 +7,9 @@ package com.genesys.session;
 
 import com.genesys.SystemServlet;
 import com.genesys.repository.*;
+import java.io.Serializable;
 
-//import java.io.File;
-//import java.util.StringTokenizer;
-
-//import org.apache.xerces.parsers.DOMParser;
-//import org.apache.xpath.XPath;
-//import org.apache.xpath.XPathAPI;
-
-/*import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;*/
-
-public class ClientSessionBean
+public class ClientSessionBean implements Serializable
 {
 	// Public properties
 	//public ObjectManager m_glbObjMan = null;

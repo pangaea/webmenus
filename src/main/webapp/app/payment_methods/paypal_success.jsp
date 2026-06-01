@@ -18,12 +18,15 @@
 PAYPAL SETTINGS SUCCESSFULLY SAVED
 <hr/>
 
-<div style="float:right;">
+<div style="float:right;visibility:hidden;">
 <button onclick="parent.$.fancybox.close();">Close</button>
 </div>
 
 <script type="text/javascript">
 parent.refreshView();
+setTimeout(() => {
+    parent.$.fancybox.close();
+}, 1000);
 </script>
 
 </body>

@@ -593,6 +593,7 @@ CREATE TABLE `webmenus_menu_order` (
   `status` int NOT NULL DEFAULT '0',
   `payment_type` int NOT NULL DEFAULT '0',
   `payment_info` varchar(255) DEFAULT NULL,
+  `invoice` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_webmenus_menu_order__location` (`location_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -738,4 +739,4 @@ CREATE TABLE `webmenus_schedule_menu_list` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-04-22 17:50:51
+-- Dump completed on 2026-05-12  1:34:19

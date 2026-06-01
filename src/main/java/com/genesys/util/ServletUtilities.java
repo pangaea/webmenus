@@ -1,8 +1,13 @@
 package com.genesys.util;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.net.URLDecoder;
 import javax.servlet.*;
 import javax.servlet.http.*;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ServletUtilities
 {
@@ -41,4 +46,28 @@ public class ServletUtilities
 					request.getHeader("user-agent").indexOf("Android") >= 0
 				);
 	}
+
+	public static JsonNode extractJsonBody(HttpServletRequest request) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            // Extract JSON from POST body
+            StringBuilder sb = new StringBuilder();
+            BufferedReader reader = request.getReader();
+            try {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line).append('\n');
+                }
+            } finally {
+                reader.close();
+            }
+
+            // Parse settings of payment config based on index from post
+            return mapper.readTree(sb.toString());
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+        }
+        return mapper.nullNode();
+    }
 }

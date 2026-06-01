@@ -192,7 +192,8 @@ public class MenuOrderBean
 		return false;
 	}
 
-	public Integer getOrderStatus(String orderId) {
+	public Map<String, Object> getOrderStatus(String orderId) {
+		Map<String, Object> order = new HashMap<>();
 		if( verifyObjManCreds() ) {
 			try {
 				ObjectQuery queryObj = new ObjectQuery( "CCMenuOrder" );
@@ -201,14 +202,15 @@ public class MenuOrderBean
 				RepositoryObjects oObjs = qrObj.getObjects( queryObj.getClassName() );
 				if (oObjs.count() > 0) {
 					RepositoryObject obj = oObjs.get(0);
-					return obj.getPropertyValue_Int("status");
+					order.put("status", obj.getPropertyValue_Int("status"));
+					order.put("estimated_time", obj.getPropertyValue("estimated_time"));
 				}
 			}
 			catch(AuthenticationException ex) {
 				SystemServlet.g_logger.error( "AuthenticationException thrown - " + ex.getErrMsg() );
 			}
 		}
-		return null;
+		return order;
 	}
 	
 	public String loginPatron( String email )
@@ -561,6 +563,19 @@ public class MenuOrderBean
 			catch (Exception e) {}
 		}
 		return "";
+	}
+
+	public Boolean queryPmConfig_Boolean(int index, String propName) {
+		if (index < m_paymentMethodList.size()) {
+			PaymentMethod pm = m_paymentMethodList.get(index);
+			try {
+				ObjectMapper mapper = new ObjectMapper();
+				JsonNode node = mapper.readTree(pm.config());
+				return node.get(propName).asBoolean();
+			}
+			catch (Exception e) {}
+		}
+		return false;
 	}
 	
 	public String getCurrentLocationId()

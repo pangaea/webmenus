@@ -11,6 +11,7 @@ public class ObjectQuery
 	String 	m_sRequestLevel;
 	ObjectProperties m_Properties;
 	boolean m_bCountOnly;
+	boolean m_bLogicalAnd;
 	
 	public ObjectQuery( String sClass )
 	{
@@ -23,6 +24,7 @@ public class ObjectQuery
 		m_sRequestLevel = new String("0");
 		m_Properties = new ObjectProperties();
 		m_bCountOnly = false;
+		m_bLogicalAnd = true;
 	}
 	
 	// Public
@@ -47,4 +49,6 @@ public class ObjectQuery
 	{
 		m_Properties.add(new ObjectProperty(name,value));
 	};
+	public void setLogicalAnd( boolean bLogicalAnd ){ m_bLogicalAnd = bLogicalAnd; };
+	public boolean getLogicalAnd(){ return m_bLogicalAnd; };
 }

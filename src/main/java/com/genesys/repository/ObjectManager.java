@@ -1403,10 +1403,14 @@ public class ObjectManager
 			}
 			case DATE:
 			{
-				SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-				java.util.Date utilDate = dateFormat.parse(param.getText());
-				java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-				pStmt.setDate(index+1, sqlDate);
+				if (param.getText() != null) {
+					SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+					java.util.Date utilDate = dateFormat.parse(param.getText());
+					java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+					pStmt.setDate(index+1, sqlDate);
+				} else {
+					pStmt.setTimestamp(index+1, null);
+				}
 				
 				if( SystemServlet.g_debugSQLQueries )
 					SystemServlet.g_logger.debug(param.getName() + "=" + param.getText());
@@ -1417,12 +1421,15 @@ public class ObjectManager
 			{
 				//java.util.Date gmtDate = convertToGMT(param.getText(),true);
 				//java.sql.Time sqlTime = new java.sql.Time(gmtDate.getTime());
-				
-				SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
-				java.util.Date utilDate = dateFormat.parse(param.getText());
-				java.sql.Time sqlTime = new java.sql.Time(utilDate.getTime());
-				pStmt.setTime(index+1, sqlTime);
-				
+				if (param.getText() != null) {
+					SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+					java.util.Date utilDate = dateFormat.parse(param.getText());
+					java.sql.Time sqlTime = new java.sql.Time(utilDate.getTime());
+					pStmt.setTime(index+1, sqlTime);
+				} else {
+					pStmt.setTimestamp(index+1, null);
+				}
+
 				if( SystemServlet.g_debugSQLQueries )
 					SystemServlet.g_logger.debug(param.getName() + "=" + param.getText());
 				
@@ -1432,11 +1439,15 @@ public class ObjectManager
 			{
 				//java.util.Date gmtDate = convertToGMT(param.getText(),false);
 				//java.sql.Timestamp sqlTimedate = new java.sql.Timestamp(gmtDate.getTime());
-				SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
-				java.util.Date utilDate = dateFormat.parse(param.getText());
-				java.sql.Timestamp sqlTimedate = new java.sql.Timestamp(utilDate.getTime());
-				pStmt.setTimestamp(index+1, sqlTimedate);
-				//pStmt.setDate(index+1, utilDate.valueOf());
+				if (param.getText() != null) {
+					SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+					java.util.Date utilDate = dateFormat.parse(param.getText());
+					java.sql.Timestamp sqlTimedate = new java.sql.Timestamp(utilDate.getTime());
+					pStmt.setTimestamp(index+1, sqlTimedate);
+					//pStmt.setDate(index+1, utilDate.valueOf());
+				} else {
+					pStmt.setTimestamp(index+1, null);
+				}
 				
 				if( SystemServlet.g_debugSQLQueries )
 					SystemServlet.g_logger.debug(param.getName() + "=" + param.getText());

@@ -23,6 +23,7 @@ public class PayPalSettingsForm extends ActionForm {
     private String _id = null;
 	private String _clientId = null;
 	private String _clientSecret = null;
+	private boolean _venmoSupport = false;
 
     public PayPalSettingsForm() {
     }
@@ -35,6 +36,9 @@ public class PayPalSettingsForm extends ActionForm {
 
 	public String getClientSecret(){ return _clientSecret; }
 	public void setClientSecret(String clientSecret){ _clientSecret = clientSecret; }
+
+	public boolean isVenmoSupport(){ return _venmoSupport; }
+	public void setVenmoSupport(boolean venmoSupport){ _venmoSupport = venmoSupport; }
 
     public void reset(ActionMapping mapping, HttpServletRequest request) {
         _id = (String)request.getParameter("id");
@@ -57,6 +61,11 @@ public class PayPalSettingsForm extends ActionForm {
                             JsonNode node = mapper.readTree(config);
                             setClientId(node.get("CLIENT_ID").asText());
                             setClientSecret(node.get("CLIENT_SECRET").asText());
+							if (request.getParameterMap().size() > 1 && request.getParameter("venmoSupport") == null) {
+								setVenmoSupport(false);
+							} else {
+								setVenmoSupport(node.get("VENMO_SUPPORT").asBoolean());
+							}
                         }
                         catch (Exception e) {}
 					}

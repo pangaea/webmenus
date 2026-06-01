@@ -184,6 +184,7 @@ public class AccountGenerator{
 					location.addProperty("theme", theme_id);
 					location.addProperty("exit_url", "");
 					location.addProperty("delivery_avail", false);
+					location.addProperty("pay_on_pickup", false);
 					//location.addProperty("role", role_id);
 					//location.setOverrideRole(role_id);
 					//location.addProperty("role", role_id);

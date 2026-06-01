@@ -66,7 +66,7 @@ public class ObjectProperty
 		catch(Exception e)
 		{
 			//return dateFormat.format(new java.util.Date());
-			return "01/01/2000";
+			return null;
 		}
 	};
 	public String getTime()
@@ -83,7 +83,7 @@ public class ObjectProperty
 		catch(Exception e)
 		{
 			//return dateFormat.format(new java.util.Date());
-			return "12:00 AM";
+			return null;
 		}
 	};
 	public String getDateTime()
@@ -100,7 +100,7 @@ public class ObjectProperty
 		catch(Exception e)
 		{
 			//return dateFormat.format(new java.util.Date());
-			return "01/01/2000 12:00 AM";
+			return null;
 		}
 	};
 	public int getInt()
