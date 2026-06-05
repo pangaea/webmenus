@@ -70,8 +70,8 @@ All Rights Reserved
 						
 
 						<label style="width:100%;white-space:nowrap;font-size:12pt;">
-						<a class="live-menu-link" href="javascript:OpenMenuWindow('<%=locationId%>')">view live menus</a>
-						Menus Link (add this code to your site)
+							Menus Link (add this code to your site)
+							<a class="live-menu-link" href="javascript:OpenMenuWindow('<%=locationId%>')">view live menus</a>
 						</label>
 						<textarea readonly style="resize:none;width:100%;height:40px;background-color:#dddddd;" id="menuLink-<%=locationId%>" class="wm-link-display"></textarea>
 						<script type="text/javascript">

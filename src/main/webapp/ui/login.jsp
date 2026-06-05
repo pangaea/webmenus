@@ -99,10 +99,10 @@
 			if( backUrl != null ){ %>
 				<input type="hidden" id="backurl" name="backurl" value="<%=backUrl%>"/>
 		<%	} %>
-			<table cellpadding="2" align="center">
+			<table cellpadding="2" align="center" style="width:100%;">
 			<tr>
 				<td valign="top">
-					<table cellspacing="0" cellpadding="2">
+					<table cellspacing="0" cellpadding="2" align="center">
 					<tr>
 						<td align="center"><img class="logo" src="<%=request.getContextPath() + SystemServlet.getloginPageImage()%>"/></td>
 					</tr>
@@ -148,7 +148,8 @@
 			</tr>
 			<tr>
 				<td align="center">
-					<a href="<%=request.getContextPath()%>/ui/security/forgot_password.jsp">Forgot Password</a>
+					<a style="float:left;" href="<%=request.getContextPath()%>/ui/security/forgot_password.jsp">Forgot Password</a>
+					<a style="float:right;" href="<%=request.getContextPath()%>/app/account/create_account.jsp">Create Account</a>
 				</td>
 			</tr>
 			</table>

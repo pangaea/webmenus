@@ -48,7 +48,9 @@ function goNav(page)
 		<h1 style="margin-top: 28px;">
 			<a href="/">
 				<!--img src="<%//=request.getContextPath()%>/w3/images/cooltext1734059047.png"/-->
-				chow<span style="color:#1B99E8">MAGIC</span>
+				<span class="logo">
+					<span>Sound</span><span>Menus</span>
+				</span>
 			</a>
 		</h1>
 		<ul id="page_links">

@@ -59,8 +59,7 @@
 	border-radius: 4px;
 }
 
-.wm-dashboard-page .wm-wrapper .widget a.manage-link,
-.wm-dashboard-page .wm-wrapper .widget a.live-menu-link{
+.wm-dashboard-page .wm-wrapper .widget a.manage-link{
 	float: right;
 	font-size: 12px;
     line-height: 24px;
@@ -68,6 +67,15 @@
     font-weight: 600;
     letter-spacing: 2px;
     text-transform: uppercase;
+}
+.wm-dashboard-page .wm-wrapper .widget a.live-menu-link{
+	font-size: 12px;
+    line-height: 24px;
+    vertical-align: middle;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+	margin-left: 20px;
 }
 
 .wm-dashboard-page .wm-wrapper .widget > div{
