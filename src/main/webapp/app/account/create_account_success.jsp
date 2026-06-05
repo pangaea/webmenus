@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
 <html:html>
 <head>
-<title>chowMagic - Account Created Successfully</title>
+<title>SoundMenus - Account Created Successfully</title>
 <link rel="icon" href="<%=request.getContextPath()%>/favicon.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/favicon.ico" type="image/x-icon" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/app/styles/account_styles.css"></link>

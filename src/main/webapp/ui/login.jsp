@@ -10,7 +10,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
-		<title>chowMagic - Login</title>
+		<title>SoundMenus - Login</title>
 		<style>
 		html, body {
 			text-align: center;
@@ -44,6 +44,9 @@
 			border-left-color: lightgrey;
 			border-bottom-color: #A7ABFB;
 			border-right-color: #A7ABFB;
+		}
+		.logo {
+			width: 300px;
 		}
 		</style>
 		<link rel="icon" href="<%=request.getContextPath()%>/favicon.ico" type="image/x-icon" />
@@ -101,7 +104,7 @@
 				<td valign="top">
 					<table cellspacing="0" cellpadding="2">
 					<tr>
-						<td align="center"><img src="<%=request.getContextPath() + SystemServlet.getloginPageImage()%>"/></td>
+						<td align="center"><img class="logo" src="<%=request.getContextPath() + SystemServlet.getloginPageImage()%>"/></td>
 					</tr>
 					<tr>
 						<td class="screen_title">Please Login:</td>

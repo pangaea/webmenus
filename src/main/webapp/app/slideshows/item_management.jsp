@@ -20,7 +20,7 @@
       <p>You can edit an items' properties and save the changes.</p>
 	</li>
 	<li data-text="Done" data-options="width:400px;">
-      <h2>Enjoy chowMagic</h2>
+      <h2>Enjoy SoundMenus</h2>
       <p>Hope you've got the basic understanding of item management now. You can start this tour again from the menu above.</p>
 	</li>
 </ol>

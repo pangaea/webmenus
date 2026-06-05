@@ -29,7 +29,7 @@ $(function() {
 <div class="error"><html:errors property="errors"/></div>
 </div>
 
-<h2>Tell us what you think of chowMagic.</h2>
+<h2>Tell us what you think of SoundMenus.</h2>
 <hr/>
 <html:form action="feedback.do">
 Subject:

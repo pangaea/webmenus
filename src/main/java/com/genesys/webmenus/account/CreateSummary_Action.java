@@ -300,7 +300,7 @@ public class CreateSummary_Action extends Action
 										SystemServlet.getGenesysFromEmail(),
 										null,
 										true,
-										"Welcome Aboard from chowMagic",
+										"Welcome Aboard from SoundMenus",
 							 			outText.toString(),
 							 			outHtml.toString()
 							 		);

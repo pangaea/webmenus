@@ -3,15 +3,15 @@
 <xsl:template match="/">
 	<html>
 	<head>
-		<title>Welcome to chowMagic</title>
+		<title>Welcome to SoundMenus</title>
 	</head>
 	<body>
-	<h2>Thank you, for making a new account with chowMagic</h2>
+	<h2>Thank you, for making a new account with SoundMenus</h2>
 	<subscript>(Please verify that the information below is correct)</subscript>
 	<hr/>
 	<xsl:apply-templates select="//account"/>
 	<p>
-	Click <a href="http://www.chowmagic.com/webmenus/ui/login.jsp">here</a> to login to the chowMagic administration console or visit <a href="http://www.chowmagic.com">chowMagic</a>.
+	Click <a href="http://www.soundmenus.com/webmenus/ui/login.jsp">here</a> to login to the SoundMenus administration console or visit <a href="http://www.soundmenus.com">SoundMenus</a>.
 	</p>
 	</body>
 	</html>

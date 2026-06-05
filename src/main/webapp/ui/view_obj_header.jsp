@@ -32,7 +32,7 @@
 	<a id="imageLibrary" style="white-space:nowrap;" href="#" onclick="loadImageLibrary();">Image Library</a>
 	<a style="white-space:nowrap;" href="#" onclick="showLocalTour();">Take a Tour</a>
 	<a style="white-space:nowrap;" href="#" onclick="loadFeedbackPage();">Support &amp; Feedback</a>
-	<span style="position:absolute;right:120px;color:#aaaaaa;">Hello <%=info.m_UserName%>, welcome to chowMagic.</span>
+	<span style="position:absolute;right:120px;color:#aaaaaa;">Hello <%=info.m_UserName%>, welcome to SoundMenus.</span>
 	<a style="white-space:nowrap;" href="<%=request.getContextPath()%>/ViewCmd?call=logout">Logout</a>
 </div>
 

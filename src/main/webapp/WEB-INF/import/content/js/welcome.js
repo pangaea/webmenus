@@ -33,7 +33,7 @@ function drawWelcomeButton(){
 
 $(function(){
   $("#page_links")
-    //.append("<li>Welcome to chowMagic</li>")
+    //.append("<li>Welcome to SoundMenus</li>")
     //.append("<li><div id='optout'></div></li>")
     .append("<li><button onclick='parent.$.fancybox.close();'>Close</button></li>")
     .append("<li><div id='optout'></div></li>")

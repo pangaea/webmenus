@@ -1,5 +1,5 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>chowMagic - Management Console</title>
+<title>SoundMenus - Management Console</title>
 
 <!-- Core Stylesheet -->
 <link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/styles/main.css"></link>

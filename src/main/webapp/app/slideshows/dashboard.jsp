@@ -1,6 +1,6 @@
 <ol id="help_slideshow" style="display:none;">
     <li data-text="Next" data-options="width:400px;">
-      <h2>Welcome to chowMagic</h2>
+      <h2>Welcome to SoundMenus</h2>
       <em><strong>Here's the basics, to get you up and running quickly...</strong></em>
       <ol style="font-weight:400;">
       	<li>Open the <b>Menu Designer</b> from the sample restaurant location and edit it to match your own menus (you can do this any time you want to make a change).</li>
@@ -48,7 +48,7 @@
       <p>Upload and manage custom images using the image library tool.</p>
 	</li>
 	<li data-text="Done" data-options="width:400px;">
-      <h2>Enjoy chowMagic</h2>
+      <h2>Enjoy SoundMenus</h2>
       <p>Hope you've got the basic understanding now. You can start this tour again from the menu above.</p>
 	</li>
 </ol>

@@ -289,7 +289,7 @@ public class AccountGenerator{
 										SystemServlet.getGenesysFromEmail(),
 										null,
 										bBcc,
-										"Welcome Aboard from chowMagic",
+										"Welcome Aboard from SoundMenus",
 							 			outText.toString(),
 							 			outHtml.toString()
 							 		);

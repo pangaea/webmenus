@@ -51,7 +51,7 @@ All Rights Reserved
 <div class="wm-summary-page">
 
 <div class="wm-heading">
-Hello <%=info.m_UserName%>, welcome to chowMagic.
+Hello <%=info.m_UserName%>, welcome to SoundMenus.
 </div>
 
 <div class="wm-help wm-location-help" style="display:none;">
