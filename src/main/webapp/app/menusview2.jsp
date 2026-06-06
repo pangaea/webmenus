@@ -74,7 +74,7 @@ dojo.require("dojo.parser");
 <%
 	if (!menuOrderBean.isReadyForCheckout()) {
 %>
-		<span style="color:red">WARNING: This menu has neither <b>Pay at Pickup</b> enabled or <b>Payment Methods</b> assigned so, checkout will be blocked</span>
+		<span style="color:red">WARNING: This menu has neither <b>Pay On Pickup</b> enabled or <b>Payment Methods</b> assigned so, checkout will be blocked</span>
 <%
 	}
 %>
