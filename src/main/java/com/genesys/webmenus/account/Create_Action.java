@@ -44,7 +44,7 @@ public class Create_Action extends Action
 			accountParams.put("restaurant_phoneNum", 		"(212) 111-2222");
 			accountParams.put("restaurant_sample_menus",	rForm.getSample_menus());
 			accountParams.put("allow_email",				"N");
-			accountParams.put("restaurant_logo",			"/public/soundmenus-logo-flat.png");
+			accountParams.put("restaurant_logo",			"/public/soundmenus-logo-small.png");
 
 			AccountGenerator account = new AccountGenerator(accountParams);
 			if( account.generateAccount() == 0 ){

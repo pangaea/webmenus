@@ -71,6 +71,14 @@ dojo.require("dojo.parser");
 <webmenusCfg:GuestUser>
 <div id="frame">
 
+<%
+	if (!menuOrderBean.isReadyForCheckout()) {
+%>
+		<span style="color:red">WARNING: This menu has neither <b>Pay at Pickup</b> enabled or <b>Payment Methods</b> assigned so, checkout will be blocked</span>
+<%
+	}
+%>
+
 	<div id="menuHeader">
 	<% if( menuOrderBean.getLogo().length() > 0 ){ %>
 	<img src="<%=request.getContextPath()%>/ImageViewer<%=menuOrderBean.getLogo()%>"/>

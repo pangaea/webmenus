@@ -552,6 +552,10 @@ public class MenuOrderBean
 		return -1;
 	}
 
+	public boolean isReadyForCheckout() {
+		return (m_payOnPickup || getPaymentMethodCount() > 0);
+	}
+
 	public String queryPmConfig(int index, String propName) {
 		if (index < m_paymentMethodList.size()) {
 			PaymentMethod pm = m_paymentMethodList.get(index);
