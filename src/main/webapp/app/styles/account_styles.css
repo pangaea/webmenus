@@ -169,7 +169,7 @@ div.outer
 	/*background: #e9e0a4;*/
 	background: #ffffff;
 	padding: 16px;
-	width: 560px;
+	/* width: 560px; */
 	/*border-right: 2px solid black;*/
 	/*border: 8px solid #C52D54;*/
 }

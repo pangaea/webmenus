@@ -21,11 +21,11 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/xlibs/jquery/jquery.corner-1.7.js"></script>
 
 <script type="text/javascript">
-$(function() {
-	var msg = $.trim($("#syserr").text());
-	if( msg.length > 0 )
-		messageBoxEx($("#syserr").html(), "Errors", {"Ok": function(){$(this).dialog("close");}});
-});
+// $(function() {
+// 	var msg = $.trim($("#syserr").text());
+// 	if( msg.length > 0 )
+// 		messageBoxEx($("#syserr").html(), "Errors", {"Ok": function(){$(this).dialog("close");}});
+// });
 function goNav(page)
 {
 	//document.location.href = "<%=request.getContextPath()%>/app/account/" + page;
@@ -65,7 +65,8 @@ function goNav(page)
 
 
 	<div id="mainx">
-	<div id="syserr" style="display:none;">
+
+	<div id="syserr" style>
 		<div class="error"><html:errors property="firstName"/></div>
 		<div class="error"><html:errors property="lastName"/></div>
 		<div class="error"><html:errors property="email-missing"/></div>
@@ -80,6 +81,7 @@ function goNav(page)
 	<center>
 
 		<div id="frame">
+
 			<html:form action="create_account.do">
 
 				<div class="outer">
@@ -114,7 +116,7 @@ function goNav(page)
 					</div>
 				</div>
 
-				<table style="width:600px;">
+				<table style="width:100%;">
 					<tr><td colspan="2" style="text-align:right;">
 						<html:button property="backButton" onclick="goNav('/');">Cancel</html:button>
 						<html:submit>Sign Up Now</html:submit>

@@ -67,5 +67,5 @@
 
     </action-mappings>
 
-	<message-resources parameter="Application"/>
+	<message-resources parameter="com.gensys.resources.Application"/>
 </struts-config>
