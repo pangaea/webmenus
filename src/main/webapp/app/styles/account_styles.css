@@ -192,3 +192,7 @@ div.outer
     top: 0;          /* <---------- */
     left: 0;         /* <---------- */
 }
+
+#input_params input {
+	width: 400px;
+}
