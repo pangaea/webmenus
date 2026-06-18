@@ -92,10 +92,12 @@ menuDesignerBean.Process();
 
 <script type="text/javascript" src="<%=request.getContextPath()%>/app/scripts/menus.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/app/scripts/menudesigner.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/app/scripts/menudesigner_helper.js"></script>
 <script type="text/javascript">
 var contextPath = "<%=request.getContextPath()%>";
 var locationId = "<%=menuDesignerBean.getLoc()%>";
 var selectedMenuId = "<%= menuDesignerBean.getMenu() != null ? menuDesignerBean.getMenu() : "" %>";
+var gIndex = 0;
 $(function () {
 	$("#menu_edit_mode").toggle( selectedMenuId != null && selectedMenuId.length > 0 );
 	$("#viewpanel").load(noCache("welcome.jsp"));

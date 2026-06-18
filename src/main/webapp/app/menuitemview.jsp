@@ -153,33 +153,44 @@ All Rights Reserved
 				<th valign="top"><%=obj.getPropertyValue("name")%></th>
 				<td>
 <%
+			ObjectQuery queryChoices = new ObjectQuery("CCMenuItemOptionChoice");
+			queryChoices.setSortBy("choice_index");		// TODO: Fix this - it should reference the property, not the column
+			queryChoices.setSortOrder("ASC");
+			queryChoices.addProperty("menuitemoption", sOptionId);
+			QueryResponse qrChoices = objectBean.Query( menuOrderBean.getCredentials(), queryChoices );
+			RepositoryObjects oChoices = qrChoices.getObjects( queryChoices.getClassName() );
+
 			String sOptionType = obj.getPropertyValue("type");
-			if( sOptionType.equalsIgnoreCase("select") == true )
-			{
-				String sData = obj.getPropertyValue("data");
-				String results[] = sData.trim().split("\n");
-				for(int ii =0; ii < results.length; ii++)
-				{
-					String sOptionTxt = results[ii].trim();
-					if( sOptionTxt.length() == 0 ) continue;
+			if( sOptionType.equalsIgnoreCase("select") == true ) {
+				for( int ii = 0; ii < oChoices.count(); ii++ ) {
+					RepositoryObject choice = oChoices.get(ii);
+					String sChoicePrice = choice.getPropertyValue("price");
+					if( sChoicePrice.length() > 0 ) {
+						BigDecimal bdChoicePrice = new BigDecimal(sChoicePrice);
+						if( bdChoicePrice.doubleValue() > 0.00 ) {
+							NumberFormat n = NumberFormat.getCurrencyInstance(Locale.US); 
+							sChoicePrice = "<em> (add " + n.format(bdChoicePrice) + ")</em>";
+						}
+					}
 %>
-					<input dojoType="dijit.form.CheckBox" type="checkbox" name="<%=obj.getPropertyValue("name")+ii%>"><%=sOptionTxt%><%=sOptionPrice%></input><br/>
+					<input dojoType="dijit.form.CheckBox" type="checkbox" name="<%=obj.getPropertyValue("name")+ii%>"><%=choice.getPropertyValue("name")%><%=sChoicePrice%></input><br/>
 <%
 				}
 			}
 			else if( sOptionType.equalsIgnoreCase("select-one") == true )
 			{
+				for( int ii = 0; ii < oChoices.count(); ii++ ) {
+					RepositoryObject choice = oChoices.get(ii);
+					String sChoicePrice = choice.getPropertyValue("price");
+					if( sChoicePrice.length() > 0 ) {
+						BigDecimal bdChoicePrice = new BigDecimal(sChoicePrice);
+						if( bdChoicePrice.doubleValue() > 0.00 ) {
+							NumberFormat n = NumberFormat.getCurrencyInstance(Locale.US); 
+							sChoicePrice = "<em> (add " + n.format(bdChoicePrice) + ")</em>";
+						}
+					}
 %>
-				<input dojoType="dijit.form.RadioButton" type="radio" checked name="<%=obj.getPropertyValue("name")%>" value="_none_">No Thanks</input><br/>
-<%
-				String sData = obj.getPropertyValue("data");
-				String results[] = sData.split("\n");
-				for(int ii =0; ii < results.length; ii++)
-				{
-					//String extra = new String("");
-					//if( ii == 0 ) extra = "checked";
-%>
-					<input dojoType="dijit.form.RadioButton" type="radio" name="<%=obj.getPropertyValue("name")%>" value="<%=results[ii].trim()%>"><%=results[ii].trim()%><%=sOptionPrice%></input><br/>
+					<input dojoType="dijit.form.RadioButton" <%=(ii == 0) ? "checked" : ""%> type="radio" name="<%=obj.getPropertyValue("name")%>" value="<%=choice.getPropertyValue("name")%>"><%=choice.getPropertyValue("name")%><%=sChoicePrice%></input><br/>
 <%
 				}
 			}

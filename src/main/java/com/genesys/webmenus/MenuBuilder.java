@@ -47,13 +47,13 @@ public class MenuBuilder
 		
 		ObjectSubmit itemOption = new ObjectSubmit("CCMenuItemOption");
 		itemOption.addProperty("name", optionNode.getAttribute("name"));
-		try{
-			BigDecimal bdPrice = new BigDecimal(optionNode.getAttribute("price"));
-			itemOption.addProperty("price", bdPrice.doubleValue());
-		}
-		catch(Exception e){
-			itemOption.addProperty("price", 0.00);
-		}
+		// try{
+		// 	BigDecimal bdPrice = new BigDecimal(optionNode.getAttribute("price"));
+		// 	itemOption.addProperty("price", bdPrice.doubleValue());
+		// }
+		// catch(Exception e){
+		// 	itemOption.addProperty("price", 0.00);
+		// }
 		//BigDecimal bdPrice = new BigDecimal(optionNode.getAttribute("price"));
 		//itemOption.addProperty("price", bdPrice.doubleValue());
 		itemOption.addProperty("type", optionNode.getAttribute("type"));
@@ -63,23 +63,27 @@ public class MenuBuilder
 		catch(Exception e){
 			itemOption.addProperty("option_index", 0);
 		}
-		
-		// Import option data body by first cleaning it up
-		String adjData = new String("");
-		String optionData = optionNode.getValue();
-		String results[] = optionData.trim().split("\n");
-		for(int ii =0; ii < results.length; ii++)
-		{
-			String sOptionTxt = results[ii].trim();
-			if( sOptionTxt.length() == 0 ) continue;
-			if( adjData.length() > 0 ) adjData += "\n";
-			adjData += sOptionTxt;
-		}
-		itemOption.addProperty("data", adjData);
+
 		itemOption.addProperty("menuitem", itemId);
 		try
 		{
-			return m_objectBean.Insert(info, itemOption);
+			String optionId = m_objectBean.Insert(info, itemOption);
+			
+			XMLNodeList xChoices = optionNode.getNodeList("choices/choice");
+			for( int iSize = 0; iSize < xChoices.getCount(); iSize++ )
+			{
+				XMLNode xChoice = xChoices.getNodeByIndex(iSize);
+				ObjectSubmit itemChoice = new ObjectSubmit("CCMenuItemOptionChoice");
+				BigDecimal bdPrice = new BigDecimal(xChoice.getAttribute("price"));
+				int size_index = Integer.parseInt(xChoice.getAttribute("index"));
+				itemChoice.addProperty("price", bdPrice.doubleValue());
+				itemChoice.addProperty("name", xChoice.getValue());
+				itemChoice.addProperty("choice_index", size_index);
+				itemChoice.addProperty("menuitemoption", optionId);
+				m_objectBean.Insert(info, itemChoice);
+			}
+
+			return optionId;
 		}
 		catch(AuthenticationException ex)
 		{

@@ -270,15 +270,52 @@ public class MenuDesigner extends HttpServlet
 							String sOptionId = item_option.getId();
 							String sOptionName = item_option.getPropertyValue("name");
 							String sOptionType = item_option.getPropertyValue("type");
-							String sOptionPriceF = NumberFormat.getNumberInstance().format(item_option.getPropertyValue_Real("price"));
+							//String sOptionPriceF = NumberFormat.getNumberInstance().format(item_option.getPropertyValue_Real("price"));
 							//String sOptionPriceF = NumberFormat.getCurrencyInstance(Locale.US).format(item_option.getPropertyValue_Real("price"));
-							String sOptionData = item_option.getPropertyValue("data");
+							//String sOptionData = item_option.getPropertyValue("data");
 							xmlStreamWriter.writeStartElement("option");			// <option>
 							xmlStreamWriter.writeAttribute("id",sOptionId);
 							xmlStreamWriter.writeAttribute("name",sOptionName);
 							xmlStreamWriter.writeAttribute("type",sOptionType);
-							xmlStreamWriter.writeAttribute("price",sOptionPriceF);
-							xmlStreamWriter.writeCharacters(sOptionData);
+							//xmlStreamWriter.writeAttribute("price",sOptionPriceF);
+							//xmlStreamWriter.writeCharacters(sOptionData);
+
+
+
+
+							// C H O I C E S
+							xmlStreamWriter.writeStartElement("choices");		// <choices>
+							ObjectQuery queryItemChoices = new ObjectQuery( "CCMenuItemOptionChoice" );
+							queryItemChoices.setSortBy("choice_index");	// TODO: Fix this - it should reference the property, not the column
+							queryItemChoices.setSortOrder("ASC");
+							queryItemChoices.addProperty("menuitemoption",sOptionId);
+							QueryResponse qrItemChoices = m_objectBean.Query( info, queryItemChoices );
+							RepositoryObjects oItemChoices = qrItemChoices.getObjects( queryItemChoices.getClassName() );
+							if( oItemChoices.count() > 0 )
+							{
+								for( int iii = 0; iii < oItemChoices.count(); iii++ )
+								{
+									RepositoryObject item = oItemChoices.get( iii );
+									String sId = item.getId();
+									String sName = item.getPropertyValue("name");
+									String sChoiceIndex = obj.getPropertyValue("choice_index");
+									String sChoicePriceF = NumberFormat.getNumberInstance().format(item.getPropertyValue_Real("price"));
+									xmlStreamWriter.writeStartElement("choice");			// <choice>
+									xmlStreamWriter.writeAttribute("id",sId);
+									xmlStreamWriter.writeAttribute("price",sChoicePriceF);
+									xmlStreamWriter.writeAttribute("index",sChoiceIndex);
+									xmlStreamWriter.writeCharacters(sName);
+									xmlStreamWriter.writeEndElement();					// </choice>
+								}
+							}
+							xmlStreamWriter.writeEndElement();	// </choices>
+
+
+
+
+
+
+
 							xmlStreamWriter.writeEndElement();					// </option>
 						}
 					}
@@ -508,11 +545,11 @@ public class MenuDesigner extends HttpServlet
 					
 					// Check for changes
 					String name = xOption.getAttribute("name");
-					String prc = xOption.getAttribute("price");
-					if(prc.length()==0) prc = "0";
-					double price = Double.parseDouble(prc);
+					//String prc = xOption.getAttribute("price");
+					//if(prc.length()==0) prc = "0";
+					//double price = Double.parseDouble(prc);
 					String type = xOption.getAttribute("type");
-					String data = xOption.getValue();
+					//String data = xOption.getValue();
 					boolean hidden = (xOption.getAttribute("hidden").equalsIgnoreCase("Y"))?true:false;
 					
 					// Compile regular expression
@@ -530,35 +567,49 @@ public class MenuDesigner extends HttpServlet
 					String menuitem = getParentNodeId(xOption);
 					
 					if( oMenuOption.getPropertyValue("name").compareTo(name) != 0 ||
-						oMenuOption.getPropertyValue_Real("price") != price ||
 						oMenuOption.getPropertyValue("type").compareTo(type) != 0 ||
-						oMenuOption.getPropertyValue("data").compareTo(data) != 0 ||
 						oMenuOption.getPropertyValue("menuitem").compareTo(menuitem) != 0 ||
 						oMenuOption.getPropertyValue_Boolean("hidden") != hidden ||
 						oMenuOption.getPropertyValue_Int("option_index") != index )
 					{
 						ObjectSubmit subObj = new ObjectSubmit("CCMenuItemOption");
 						subObj.addProperty("name", name);
-						subObj.addProperty("price", price);
 						subObj.addProperty("type", type);
 						subObj.addProperty("hidden", hidden);
-						
-						// Import option data body by first cleaning it up
-						String adjData = new String("");
-						//String optionData = optionNode.getValue();
-						String results[] = data.trim().split("\n");
-						for(int ii =0; ii < results.length; ii++)
-						{
-							String sOptionTxt = results[ii].trim();
-							if( sOptionTxt.length() == 0 ) continue;
-							if( adjData.length() > 0 ) adjData += "\n";
-							adjData += sOptionTxt;
-						}
-						
-						subObj.addProperty("data", adjData);
 						subObj.addProperty("menucategory", menuitem);
 						subObj.addProperty("option_index", index);
 						m_objectBean.Update(info, sOptionId, subObj);
+					}
+
+					try {
+						// Delete all choices of this item
+						XMLNodeList xChoices = xOption.getNodeList("choices/choice");
+						ObjectQuery queryChoiceItems = new ObjectQuery("CCMenuItemOptionChoice");
+						queryChoiceItems.addProperty("menuitemoption", sOptionId);
+						QueryResponse qrChoiceItems = m_objectBean.Query( info, queryChoiceItems );		
+						RepositoryObjects oChoiceItems = qrChoiceItems.getObjects( queryChoiceItems.getClassName() );
+						for( int iChoices = 0; iChoices < oChoiceItems.count(); iChoices++ )
+						{
+							RepositoryObject oChoiceItem = oChoiceItems.get(iChoices);
+							String sChoiceId = oChoiceItem.getId();
+							if( sChoiceId.compareTo(sOptionId) != 0 )
+								m_objectBean.Delete(info, "CCMenuItemOptionChoice", sChoiceId);
+						}
+						
+						for( int iSize = 0; iSize < xChoices.getCount(); iSize++ )
+						{
+							XMLNode xChoice = xChoices.getNodeByIndex(iSize);
+							ObjectSubmit itemChoice = new ObjectSubmit("CCMenuItemOptionChoice");
+							BigDecimal bdPrice = new BigDecimal(xChoice.getAttribute("price"));
+							int size_index = Integer.parseInt(xChoice.getAttribute("index"));
+							itemChoice.addProperty("price", bdPrice.doubleValue());
+							itemChoice.addProperty("name", xChoice.getValue());
+							itemChoice.addProperty("choice_index", size_index);
+							itemChoice.addProperty("menuitemoption", sOptionId);
+							m_objectBean.Insert(info, itemChoice);
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
 					
 					
