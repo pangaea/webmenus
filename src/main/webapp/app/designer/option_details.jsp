@@ -77,7 +77,7 @@ function addChoice(size, price)
 			<select style="border:1px groove;" ID="type" NAME="type">
 				<option value="select">Select as many as you want</option>
 				<option value="select-one">Select only one</option>
-				<option value="text">Comment</option>
+				<!--option value="text">Comment</option-->
 			</select>
 	
 		</div>
