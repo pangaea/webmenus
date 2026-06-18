@@ -36,10 +36,11 @@ All Rights Reserved
 			<td>
 				<select name="sample_menu">
 					<!--option value="">-- Please Select --</option-->
-					<option value="sample.xml">Basic Sample Menu</option>
+					<!--option value="sample.xml">Basic Sample Menu</option-->
 					<option value="american.xml">American Cuisine</option>
-					<option value="italian.xml">Pizzeria &amp; Restaurant</option>
 					<option value="chinese.xml">Chinese Restaurant</option>
+					<option value="indian.xml">Indian Restaurant</option>
+					<option value="italian.xml">Pizzeria &amp; Restaurant</option>
 				</select>
 			</td>
 		</tr><tr>
