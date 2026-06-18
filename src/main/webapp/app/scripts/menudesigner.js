@@ -281,7 +281,7 @@ function initPage(sel)
 	loadLocationMenus();
 	
 	// Prevent session timeout while in designer
-	g_pingThread = window.setInterval("pingServer();", 5000);
+	g_pingThread = window.setInterval("pingServer();", 60000);
 }
 
 function previewMenu(menu_id)
@@ -364,6 +364,7 @@ function showDetails(id, type)
 		$("#viewpanel").load(noCache("item_details.jsp?id=" + id));
 		break;
 	case "option":
+		gIndex = 0;
 		$("#viewpanel").load(noCache("option_details.jsp?id=" + id), function(){fillFields(id);});
 		break;
 	}
@@ -428,11 +429,27 @@ function fillFields(id)
 		$("#name").val(obj["name"]);
 		$("#type").val(obj["option_type"]);
 		$("#type").trigger("change");
-		$("#price").val(obj["price"]);
-		$("#price").blur();
-		$("#option_data").val(obj["option_data"]);
 		if( obj["hidden"] == "Y") $("#hidden").attr("checked", true);
 		else $("#hidden").attr("checked", false);
+		var choices = obj["choices"];
+		if( choices.length > 0 )
+		{
+			for( var i = 0; i < choices.length; i++ )
+			{
+				if( i == 0 )
+				{
+					addChoice(choices[i]["size"], choices[i]["price"]);
+				}
+				else
+				{
+					addChoice(choices[i]["size"], choices[i]["price"]);
+				}
+			}
+		}
+		else
+		{
+			addChoice("","");
+		}
 	}
 	//adjustFrames();
 }
@@ -508,7 +525,7 @@ function createOption(id, node)
 
 	var id = getNewID();
 	var data = { title : newName, icon: contextPath + "/app/images/" + option_image, attributes : { id : id, type : "option" } };
-	addOptionToRepo(id, newName, "select", "", "", 0, "N");
+	addOptionToRepo(id, newName, "select", "", "", 0, "", "N");
 	if( node != null )
 		$.tree.focused().select_branch($.tree.focused().create({ data : data }, $(node)));
 	else
@@ -958,12 +975,24 @@ function compileOption(menuTree, node, xmlbld, index)
 	//xmlbld.writeAttributeString("id", (nodeId.indexOf("NEW:")==0)?"0":nodeId);
 	xmlbld.writeAttributeString("id", nodeId);
 	xmlbld.writeAttributeString("name", obj.name);
-	xmlbld.writeAttributeString("price", obj.price);
+	//xmlbld.writeAttributeString("price", obj.price);
 	xmlbld.writeAttributeString("type", obj.option_type);
 	xmlbld.writeAttributeString("index", index);
 	xmlbld.writeAttributeString("hidden", obj.hidden);
+
+	xmlbld.writeTextNode("name", obj.name);
 	//showArray(obj.option_data);
-	xmlbld.writeCharacters(obj.option_data);
+	//xmlbld.writeCharacters(obj.option_data);
+	xmlbld.writeStartElement("choices");
+	for (var i = 0; i < obj.choices.length; ++i)
+	{
+		xmlbld.writeStartElement("choice");
+		xmlbld.writeAttributeString("price", obj.choices[i].price);
+		xmlbld.writeAttributeString("index", i);
+		xmlbld.writeCharacters(obj.choices[i].size);
+		xmlbld.writeEndElement();	// size
+	}
+	xmlbld.writeEndElement();	// choices
 	xmlbld.writeEndElement();	// option
 }
 
@@ -1045,13 +1074,18 @@ function commitOptionChanges(id, feedback)
 	var obj = g_localRepos[id];
 	obj["name"] = $("#name").val();
 	obj["option_type"] = $("#type").val();
-	if( obj["option_type"] == "text" ){
-		obj["price"] = "0";
+	var choices = new Array();
+	var sizes = $('#sortable_choices').sortable('toArray');//buildSizeArray();
+	for(var i = 0; i < sizes.length; i++)
+	{
+		var size = sizes[i];
+		var a = size.split("-");
+		var itemSize = $("#size_desc" + a[1]).val();
+		var itemPrice = $("#price" + a[1]).val();
+		choices.push({size: itemSize, price: itemPrice});
 	}
-	else{
-		obj["price"] = $("#price").val();
-	}
-	obj["option_data"] = convertFromCrLf($("#option_data").val());
+	obj["choices"] = choices;
+
 	if($("#hidden:checked").is(':checked')) obj["hidden"] = "Y";
 	else obj["hidden"] = "N";
 	renameSelectedNode($("#name").val(), feedback);
@@ -1119,17 +1153,16 @@ function addItemToRepo(id, name, description, image, portions, index, hidden)
 	};
 	g_localRepos[id] = obj;
 }
-function addOptionToRepo(id, name, type, price, data, index, hidden)
+function addOptionToRepo(id, name, type, index, choices, hidden)
 {
 	var obj = {
 			type:			"option",
 			id:				id,
 			name:			name,
 			option_type:	type,
-			price:			price,
-			option_data:	data,
-			hidden:			hidden
-			//index:			index
+			hidden:			hidden,
+			choices:		choices,
+			index:			index
 	};
 	g_localRepos[id] = obj;
 }
@@ -1174,7 +1207,13 @@ function addToLocalRepository(node, type)
 		break;
 		
 	case "option":
-		addOptionToRepo(id, node.attr("name"), node.attr("type"), node.attr("price"), node.text(), 0, "N");
+		var choices = new Array();
+		node.children("choices").children("choice").each( function(){
+			var itemSize = $(this).text();
+			var itemPrice = $(this).attr("price");
+			choices.push({size: itemSize, price: itemPrice});
+		});
+		addOptionToRepo(id, node.attr("name"), node.attr("type"), 0, choices, "N");
 		break;
 		
 	default:

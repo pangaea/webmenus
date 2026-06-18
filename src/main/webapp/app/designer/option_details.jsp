@@ -6,6 +6,10 @@
 
 <script type="text/javascript">
 $(function () {
+
+	$("#sortable_choices").sortable();
+	$("#sortable_choices").disableSelection();
+
 	$("input[datatype='real']").numeric({ 
 		decimal : ".",
 		negative : false
@@ -13,6 +17,7 @@ $(function () {
 	$("#type").change(function(){
 		showhideNotForText();
 	});
+	//fillFields('<%=request.getParameter("id")%>');
 });
 
 function showhideNotForText(){
@@ -28,18 +33,37 @@ function buttonCallback( item, param )
 			break;
 	}
 }
+
+function deleteItem(portionId)
+{
+	messageBox("Do you want to delete the selected choice?", "Confirm Delete",
+	{
+		"No": function(){$(this).dialog("close");},
+		"Yes": function(){$('#'+portionId).remove(); $(this).dialog("close");}
+	});
+	//$('#'+portionId).remove();
+}
+
+function addChoice(size, price)
+{
+	$('#sortable_choices').append(renderListItem(size, price, gIndex));
+	gIndex++;
+	//attachToFields();
+	$("input[datatype='real']").numeric({ 
+		decimal : ".",
+		negative : false
+	});
+}
 //$("#toolbar_panel").html(buttonDraw( 0, '', 'Apply Changes', 'buttonCallback', 'Button_Commit' ));
 </script>
 <hr/>
-<form id="data">
+<!--form id="data"-->
 	<table>
 	<tr><td nowrap valign="top" align="right" class="property_text">
 		Name:
 		</td><td width="100%">
 			<div id="DIV_name">
-	
-			<input WMrequired="false" title="Name" type="text" ID="name" NAME="name" maxlength="" style="width:400px;"/>
-	
+				<input WMrequired="false" title="Name" type="text" ID="name" NAME="name" maxlength="" style="width:400px;"/>
 			</div>
 		</td>
 	</tr>
@@ -50,15 +74,11 @@ function buttonCallback( item, param )
 		</td><td width="100%">
 		<div id="DIV_type">
 	
-		<select style="border:1px groove;" ID="type" NAME="type">
-
+			<select style="border:1px groove;" ID="type" NAME="type">
 				<option value="select">Select as many as you want</option>
-			
 				<option value="select-one">Select only one</option>
-			
 				<option value="text">Comment</option>
-			
-		</select>
+			</select>
 	
 		</div>
 		</td>
@@ -74,7 +94,18 @@ function buttonCallback( item, param )
 					</div>
 		</td>
 	</tr>
+
+	<tr>
+		<td nowrap valign="top" align="right" class="property_text" width="60px">&nbsp;
+			Choices:
+		</td>
+		<td colspan="3">
+			<ul id="sortable_choices" class="sort_list"></ul>
+			<button onclick="addChoice('','');">Add Choice</button>
+		</td>
+	</tr>
 	
+	<!--
 	<tr class="not_for_text"><td nowrap valign="top" align="right" class="property_text">
 		Price($):
 		</td><td width="100%">
@@ -88,18 +119,20 @@ function buttonCallback( item, param )
 					</div>
 		</td>
 	</tr>
+	-->
 
+	<!-- AdvancedOption
 	<tr class="not_for_text"><td nowrap valign="top" align="right" class="property_text">
 		Selections:
 		</td><td width="100%">
 					<div id="DIV_data">
-					
 					<textarea style="height:200px;width:400px;" ID="option_data" NAME="option_data"></textarea><br/>
 					<strong>NOTE: Enter multiple selections one per line</strong>
-					
 					</div>
 		</td>
+	</tr>
+	-->
 	</table>
 
-</form>
+<!--/form-->
 </div>

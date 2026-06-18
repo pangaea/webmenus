@@ -1,0 +1,396 @@
+<location>
+
+  <menu name="Lunch Specials">
+
+    <category name="Vegetarian Lunch Specials">
+
+      <item index="1">
+        <name>Chana Masala</name>
+        <description>Chickpeas cooked with onions, tomatoes, and traditional Indian spices.</description>
+        <portions>
+          <size index="1" price="10.99">Lunch Portion</size>
+          <size index="2" price="13.99">Dinner Portion</size>
+        </portions>
+        <options>
+          <option index="1" name="Spice Level" type="select-one">
+            <choices>
+                <choice price="0.00" index="0"><![CDATA[Mild]]></choice>
+                <choice price="0.00" index="1"><![CDATA[Medium]]></choice>
+                <choice price="0.00" index="2"><![CDATA[Hot]]></choice>
+                <choice price="0.00" index="3"><![CDATA[Indian Hot]]></choice>
+            </choices>
+          </option>
+          <option index="2" name="Bread Add-On" type="select">
+            <choices>
+                <choice price="2.99" index="0"><![CDATA[Butter Naan]]></choice>
+                <choice price="2.99" index="1"><![CDATA[Garlic Naan]]></choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="2">
+        <name>Palak Paneer</name>
+        <description>Fresh spinach puree cooked with homemade cottage cheese.</description>
+        <portions>
+          <size index="1" price="11.99">Lunch Portion</size>
+          <size index="2" price="14.99">Dinner Portion</size>
+        </portions>
+        <options>
+          <option index="1" name="Spice Level" type="select-one">
+            <choices>
+                <choice price="0.00" index="0"><![CDATA[Mild]]></choice>
+                <choice price="0.00" index="1"><![CDATA[Medium]]></choice>
+                <choice price="0.00" index="2"><![CDATA[Hot]]></choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+    </category>
+
+    <category name="Chicken Lunch Specials">
+
+      <item index="1">
+        <name>Chicken Tikka Masala</name>
+        <description>Tandoori chicken simmered in a creamy tomato sauce.</description>
+        <portions>
+          <size index="1" price="12.99">Lunch Portion</size>
+          <size index="2" price="16.99">Dinner Portion</size>
+        </portions>
+        <options>
+          <option index="1" name="Spice Level" type="select-one">
+            <choices>
+                <choice price="0.00" index="0"><![CDATA[Mild]]></choice>
+                <choice price="0.00" index="1"><![CDATA[Medium]]></choice>
+                <choice price="0.00" index="2"><![CDATA[Hot]]></choice>
+                <choice price="0.00" index="3"><![CDATA[Indian Hot]]></choice>
+            </choices>
+          </option>
+          <option index="2" name="Protein Add-On" price="3.99" type="select">Extra Chicken</option>
+        </options>
+      </item>
+
+      <item index="2">
+        <name>Butter Chicken</name>
+        <description>Chicken cooked in a rich butter and tomato cream sauce.</description>
+        <portions>
+          <size index="1" price="12.99">Lunch Portion</size>
+          <size index="2" price="16.99">Dinner Portion</size>
+        </portions>
+        <options>
+          <option index="1" name="Spice Level" type="select-one">
+            <choices>
+                <choice price="0.00" index="0"><![CDATA[Mild]]></choice>
+                <choice price="0.00" index="1"><![CDATA[Medium]]></choice>
+                <choice price="0.00" index="2"><![CDATA[Hot]]></choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+    </category>
+
+  </menu>
+
+  <menu name="Main Menu">
+
+    <category name="Appetizers">
+
+      <item index="1">
+        <name>Vegetable Samosa</name>
+        <description>Crispy pastries stuffed with potatoes, peas, and spices.</description>
+        <portions>
+          <size index="1" price="5.99">2 Pieces</size>
+          <size index="2" price="10.99">4 Pieces</size>
+        </portions>
+        <options>
+          <option index="1" name="Extra Chutneys" type="select">
+            <choices>
+                <choice price="0.50" index="0"><![CDATA[Mint Chutney]]></choice>
+                <choice price="0.50" index="1"><![CDATA[Tamarind Chutney]]></choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="2">
+        <name>Paneer Pakora</name>
+        <description>Homemade cottage cheese fritters served with chutneys.</description>
+        <portions>
+          <size index="1" price="7.99">Regular</size>
+          <size index="2" price="11.99">Large</size>
+        </portions>
+        <options />
+      </item>
+
+      <item index="3">
+        <name>Chicken 65</name>
+        <description>Spicy South Indian fried chicken appetizer.</description>
+        <portions>
+          <size index="1" price="9.99">Regular</size>
+          <size index="2" price="14.99">Large</size>
+        </portions>
+        <options>
+          <option index="1" name="Spice Level" type="select-one">
+            <choices>
+                <choice price="0.00" index="0"><![CDATA[Medium]]></choice>
+                <choice price="0.00" index="1"><![CDATA[Hot]]></choice>
+                <choice price="0.00" index="2"><![CDATA[Indian Hot]]></choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+    </category>
+
+    <category name="Vegetarian Entrees">
+
+      <item index="1">
+        <name>Paneer Tikka Masala</name>
+        <description>Grilled paneer cubes cooked in a creamy tomato gravy.</description>
+        <portions>
+          <size index="1" price="15.99">Regular</size>
+          <size index="2" price="21.99">Family Size</size>
+        </portions>
+        <options>
+          <option index="1" name="Spice Level" type="select-one">
+            <choices>
+                <choice price="0.00" index="0"><![CDATA[Mild]]></choice>
+                <choice price="0.00" index="1"><![CDATA[Medium]]></choice>
+                <choice price="0.00" index="2"><![CDATA[Hot]]></choice>
+                <choice price="0.00" index="3"><![CDATA[Indian Hot]]></choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="2">
+        <name>Dal Makhani</name>
+        <description>Slow-cooked black lentils finished with cream and butter.</description>
+        <portions>
+          <size index="1" price="14.99">Regular</size>
+          <size index="2" price="19.99">Family Size</size>
+        </portions>
+        <options>
+          <option index="1" name="Spice Level" type="select-one">
+            <choices>
+                <choice price="0.00" index="0"><![CDATA[Mild]]></choice>
+                <choice price="0.00" index="1"><![CDATA[Medium]]></choice>
+                <choice price="0.00" index="2"><![CDATA[Hot]]></choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="3">
+        <name>Baingan Bharta</name>
+        <description>Roasted eggplant mashed and cooked with onions and tomatoes.</description>
+        <portions>
+          <size index="1" price="14.99">Regular</size>
+          <size index="2" price="19.99">Family Size</size>
+        </portions>
+        <options />
+      </item>
+
+    </category>
+
+    <category name="Chicken Entrees">
+
+      <item index="1">
+        <name>Chicken Curry</name>
+        <description>Traditional North Indian chicken curry.</description>
+        <portions>
+          <size index="1" price="16.99">Regular</size>
+          <size index="2" price="23.99">Family Size</size>
+        </portions>
+        <options>
+          <option index="1" name="Spice Level" type="select-one">
+            <choices>
+                <choice price="0.00" index="0"><![CDATA[Mild]]></choice>
+                <choice price="0.00" index="1"><![CDATA[Medium]]></choice>
+                <choice price="0.00" index="2"><![CDATA[Hot]]></choice>
+                <choice price="0.00" index="3"><![CDATA[Indian Hot]]></choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="2">
+        <name>Chicken Vindaloo</name>
+        <description>Goan-style spicy curry with vinegar and potatoes.</description>
+        <portions>
+          <size index="1" price="17.99">Regular</size>
+          <size index="2" price="24.99">Family Size</size>
+        </portions>
+        <options>
+          <option index="1" name="Spice Level" type="select-one">
+            <choices>
+                <choice price="0.00" index="0"><![CDATA[Mild]]></choice>
+                <choice price="0.00" index="1"><![CDATA[Medium]]></choice>
+                <choice price="0.00" index="2"><![CDATA[Hot]]></choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+    </category>
+
+    <category name="Lamb Entrees">
+
+      <item index="1">
+        <name>Lamb Rogan Josh</name>
+        <description>Tender lamb cooked in a rich Kashmiri-style curry.</description>
+        <portions>
+          <size index="1" price="19.99">Regular</size>
+          <size index="2" price="27.99">Family Size</size>
+        </portions>
+        <options>
+          <option index="1" name="Spice Level" type="select-one">
+            <choices>
+                <choice price="0.00" index="0"><![CDATA[Mild]]></choice>
+                <choice price="0.00" index="1"><![CDATA[Medium]]></choice>
+                <choice price="0.00" index="2"><![CDATA[Hot]]></choice>
+                <choice price="0.00" index="3"><![CDATA[Indian Hot]]></choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+    </category>
+
+    <category name="Seafood Entrees">
+
+      <item index="1">
+        <name>Shrimp Curry</name>
+        <description>Shrimp cooked in a flavorful onion and tomato curry.</description>
+        <portions>
+          <size index="1" price="20.99">Regular</size>
+          <size index="2" price="28.99">Family Size</size>
+        </portions>
+        <options>
+          <option index="1" name="Spice Level" type="select-one">
+            <choices>
+                <choice price="0.00" index="0"><![CDATA[Mild]]></choice>
+                <choice price="0.00" index="1"><![CDATA[Medium]]></choice>
+                <choice price="0.00" index="2"><![CDATA[Hot]]></choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+    </category>
+
+    <category name="Biryani">
+
+      <item index="1">
+        <name>Vegetable Biryani</name>
+        <description>Fragrant basmati rice cooked with vegetables and spices.</description>
+        <portions>
+          <size index="1" price="14.99">Regular</size>
+          <size index="2" price="20.99">Family Size</size>
+        </portions>
+        <options>
+          <option index="1" name="Extras" price="2.99" type="select">
+            <choices>
+                <choice price="2.99" index="0"><![CDATA[Extra Raita]]></choice>
+                <choice price="2.99" index="1"><![CDATA[Extra Biryani Gravy]]></choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="2">
+        <name>Chicken Biryani</name>
+        <description>Traditional dum-cooked basmati rice with marinated chicken.</description>
+        <portions>
+          <size index="1" price="16.99">Regular</size>
+          <size index="2" price="23.99">Family Size</size>
+        </portions>
+        <options>
+          <option index="1" name="Extras" type="select">
+            <choices>
+                <choice price="2.99" index="0"><![CDATA[Extra Raita]]></choice>
+                <choice price="2.99" index="1"><![CDATA[Extra Biryani Gravy]]></choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+    </category>
+
+    <category name="Indian Breads">
+
+      <item index="1">
+        <name>Naan</name>
+        <description>Traditional tandoor-baked flatbread.</description>
+        <portions>
+          <size index="1" price="2.99">Plain Naan</size>
+          <size index="2" price="3.99">Butter Naan</size>
+          <size index="3" price="4.99">Garlic Naan</size>
+        </portions>
+        <options />
+      </item>
+
+      <item index="2">
+        <name>Stuffed Kulcha</name>
+        <description>Leavened bread stuffed with seasoned potatoes.</description>
+        <portions>
+          <size index="1" price="5.99">Single Piece</size>
+        </portions>
+        <options />
+      </item>
+
+    </category>
+
+    <category name="Desserts">
+
+      <item index="1">
+        <name>Gulab Jamun</name>
+        <description>Milk dumplings soaked in cardamom sugar syrup.</description>
+        <portions>
+          <size index="1" price="4.99">2 Pieces</size>
+          <size index="2" price="8.99">4 Pieces</size>
+        </portions>
+        <options />
+      </item>
+
+      <item index="2">
+        <name>Kheer</name>
+        <description>Traditional Indian rice pudding with cardamom and nuts.</description>
+        <portions>
+          <size index="1" price="4.99">Cup</size>
+          <size index="2" price="7.99">Bowl</size>
+        </portions>
+        <options />
+      </item>
+
+    </category>
+
+    <category name="Beverages">
+
+      <item index="1">
+        <name>Mango Lassi</name>
+        <description>Sweet yogurt drink blended with mango pulp.</description>
+        <portions>
+          <size index="1" price="4.99">Regular</size>
+          <size index="2" price="6.99">Large</size>
+        </portions>
+        <options />
+      </item>
+
+      <item index="2">
+        <name>Masala Chai</name>
+        <description>Indian tea brewed with milk and aromatic spices.</description>
+        <portions>
+          <size index="1" price="2.99">Cup</size>
+          <size index="2" price="5.99">Pot</size>
+        </portions>
+        <options />
+      </item>
+
+    </category>
+
+  </menu>
+
+</location>

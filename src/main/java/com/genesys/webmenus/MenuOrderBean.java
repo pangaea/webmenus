@@ -9,7 +9,9 @@ import java.util.*;
 //import java.io.PrintWriter;
 //import java.io.StringWriter;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.net.URLDecoder;
 import java.text.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -701,6 +703,8 @@ public class MenuOrderBean
 		{
 			try
 			{
+				request.setCharacterEncoding("UTF-8");
+
 				// Query for Item size
 				ObjectQuery queryMenuItemSize = new ObjectQuery( "CCMenuItemSize" );
 				queryMenuItemSize.addProperty("id",sizeId);
@@ -758,46 +762,77 @@ public class MenuOrderBean
 						RepositoryObject obj = oOptions.get( i );
 						String sOptionName = obj.getPropertyValue("name");
 						String sOptionType = obj.getPropertyValue("type");
-						BigDecimal bdOptionPrice = new BigDecimal(obj.getPropertyValue("price"));
-						if( sOptionType.equalsIgnoreCase("select") == true )
-						{
+						if( sOptionType.equalsIgnoreCase("select") == true) {
 							String sSelections = new String("");
-							String sData = obj.getPropertyValue("data");
-							String results[] = sData.trim().split("\n");
-							for(int ii =0; ii < results.length; ii++)
-							{
-								String sOptionTxt = results[ii].trim();
-								if( sOptionTxt.length() == 0 ) continue;
-								if( request.getParameter(sOptionName+ii) != null )
-								{
+							String optionId = obj.getPropertyValue("id");
+							ObjectQuery queryChoices = new ObjectQuery("CCMenuItemOptionChoice");
+							queryChoices.setSortBy("choice_index");		// TODO: Fix this - it should reference the property, not the column
+							queryChoices.setSortOrder("ASC");
+							queryChoices.addProperty("menuitemoption", optionId);
+							QueryResponse qrChoices = m_objectBean.Query( m_creds, queryChoices );
+							RepositoryObjects oChoices = qrChoices.getObjects( queryChoices.getClassName() );
+							for( int ii = 0; ii < oChoices.count(); ii++ ) {
+								RepositoryObject choice = oChoices.get(ii);
+								BigDecimal bdOptionPrice = new BigDecimal(choice.getPropertyValue("price"));
+								if( request.getParameter(sOptionName+ii) != null ) {
 									bdPrice = bdPrice.add(bdOptionPrice);
-									String opt = sOptionTxt;
+									String opt = choice.getPropertyValue("name");
 									if( sSelections.length() > 0 )
 										sSelections += ", " + opt;
 									else
 										sSelections += opt;
 								}
 							}
-							if( sSelections.length() > 0 )
-							{
+
+							if( sSelections.length() > 0 ) {
 								if( sOptions.length() > 0 ) sOptions += "\r\n";
 								//sOptions += "<strong>";
 								sOptions += sOptionName + ": ";
 								sOptions += sSelections;
 							}
 						}
-						else
-						{
-							String sOptionTxt = (String)request.getParameter(sOptionName);
-							if( sOptionTxt != null && sOptionTxt.length() > 0 && sOptionTxt.equalsIgnoreCase("_none_") == false )
-							{
-								bdPrice = bdPrice.add(bdOptionPrice);
+						else if(sOptionType.equalsIgnoreCase("select-one") == true) {
+							String sSelections = new String("");
+							String optionId = obj.getPropertyValue("id");
+							ObjectQuery queryChoices = new ObjectQuery("CCMenuItemOptionChoice");
+							queryChoices.setSortBy("choice_index");		// TODO: Fix this - it should reference the property, not the column
+							queryChoices.setSortOrder("ASC");
+							queryChoices.addProperty("menuitemoption", optionId);
+							QueryResponse qrChoices = m_objectBean.Query( m_creds, queryChoices );
+							RepositoryObjects oChoices = qrChoices.getObjects( queryChoices.getClassName() );
+							for( int ii = 0; ii < oChoices.count(); ii++ ) {
+								RepositoryObject choice = oChoices.get(ii);
+								String opt = choice.getPropertyValue("name");
+								String param = new String(request.getParameter(sOptionName).getBytes("ISO8859_1"), "UTF-8");
+								if( opt.equals(param) ) {
+									BigDecimal bdOptionPrice = new BigDecimal(choice.getPropertyValue("price"));
+									bdPrice = bdPrice.add(bdOptionPrice);
+									if( sSelections.length() > 0 )
+										sSelections += ", " + opt;
+									else
+										sSelections += opt;
+								}
+							}
+
+							if( sSelections.length() > 0 ) {
 								if( sOptions.length() > 0 ) sOptions += "\r\n";
 								//sOptions += "<strong>";
 								sOptions += sOptionName + ": ";
-								sOptions += sOptionTxt;// + "</em>";
+								sOptions += sSelections;
 							}
 						}
+						// else
+						// {
+						// 	String sOptionTxt = (String)request.getParameter(sOptionName);
+						// 	if( sOptionTxt != null && sOptionTxt.length() > 0 && sOptionTxt.equalsIgnoreCase("_none_") == false )
+						// 	{
+						// 		bdPrice = bdPrice.add(bdOptionPrice);
+						// 		if( sOptions.length() > 0 ) sOptions += "\r\n";
+						// 		//sOptions += "<strong>";
+						// 		sOptions += sOptionName + ": ";
+						// 		sOptions += sOptionTxt;// + "</em>";
+						// 	}
+						// }
 					}
 					///////////////////////////////////////////
 					
@@ -833,6 +868,9 @@ public class MenuOrderBean
 			catch(AuthenticationException ex)
 			{
 				SystemServlet.g_logger.error( "AuthenticationException thrown - " + ex.getErrMsg() );
+			}
+			catch(UnsupportedEncodingException ex) {
+				SystemServlet.g_logger.error( "UnsupportedEncodingException thrown - " + ex.getMessage() );
 			}
 		}
 		return true;
