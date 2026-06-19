@@ -507,6 +507,7 @@ CREATE TABLE `webmenus_menu_item` (
   `name` varchar(64) NOT NULL,
   `description` varchar(255) NOT NULL,
   `hidden` varchar(1) NOT NULL,
+  `special_instructions` varchar(1) NOT NULL,
   `image` varchar(255) NOT NULL,
   `item_index` int NOT NULL,
   `menu_cat_id` varchar(36) NOT NULL,
@@ -531,13 +532,35 @@ CREATE TABLE `webmenus_menu_item_option` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   `name` varchar(64) NOT NULL,
-  `price` double NOT NULL,
   `type` varchar(32) NOT NULL,
-  `data` varchar(255) NOT NULL,
   `option_index` int NOT NULL,
   `menuitem_id` varchar(36) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_webmenus_menu_item_option__menu` (`menuitem_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `webmenus_menu_item_option_choice`
+--
+
+DROP TABLE IF EXISTS `webmenus_menu_item_option_choice`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `webmenus_menu_item_option_choice` (
+  `id` varchar(36) NOT NULL,
+  `owner` varchar(36) DEFAULT NULL,
+  `role` varchar(36) DEFAULT NULL,
+  `author` varchar(36) DEFAULT NULL,
+  `publisher` varchar(36) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  `name` varchar(64) NOT NULL,
+  `price` double NOT NULL,
+  `choice_index` int NOT NULL,
+  `menuitem_option_id` varchar(36) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_webmenus_menu_item_option_choice__menu` (`menuitem_option_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -594,6 +617,7 @@ CREATE TABLE `webmenus_menu_order` (
   `payment_type` int NOT NULL DEFAULT '0',
   `payment_info` varchar(255) DEFAULT NULL,
   `invoice` varchar(64) DEFAULT NULL,
+  `estimated_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_webmenus_menu_order__location` (`location_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -739,4 +763,4 @@ CREATE TABLE `webmenus_schedule_menu_list` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-05-12  1:34:19
+-- Dump completed on 2026-06-19 16:51:48

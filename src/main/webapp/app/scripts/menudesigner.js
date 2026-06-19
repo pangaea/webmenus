@@ -424,6 +424,8 @@ function fillFields(id)
 		
 		if( obj["hidden"] == "Y") $("#hidden").attr("checked", true);
 		else $("#hidden").attr("checked", false);
+		if( obj["special_instructions"] == "Y") $("#special_instructions").attr("checked", true);
+		else $("#special_instructions").attr("checked", false);
 		break;
 	case "option":
 		$("#name").val(obj["name"]);
@@ -539,7 +541,7 @@ function createItem(id, node)
 
 	var id = getNewID();
 	var data = { title : newName, icon: contextPath + "/app/images/" + item_image, attributes : { id : id, type : "item" } };
-	addItemToRepo(id, newName, "Item Description", "", "", "", 0, "N");
+	addItemToRepo(id, newName, "Item Description", "", "", "", 0, "N", "N");
 	if( node != null )
 		$.tree.focused().select_branch($.tree.focused().create({ data : data }, $(node)));
 	else
@@ -935,6 +937,7 @@ function compileItem(menuTree, node, xmlbld, index)
 	
 	var obj = g_localRepos[nodeId];
 	xmlbld.writeAttributeString("hidden", obj.hidden);
+	xmlbld.writeAttributeString("special_instructions", obj.special_instructions);
 	xmlbld.writeTextNode("name", obj.name);
 	xmlbld.writeTextNode("description", obj.description);
 	var a = obj.image.split(contextPath + "/ImageViewer/");
@@ -1066,6 +1069,8 @@ function commitItemChanges(id, feedback)
 
 	if($("#hidden:checked").is(':checked')) obj["hidden"] = "Y";
 	else obj["hidden"] = "N";
+	if($("#special_instructions:checked").is(':checked')) obj["special_instructions"] = "Y";
+	else obj["special_instructions"] = "N";
 	renameSelectedNode($("#name").val(), feedback);
 }
 
@@ -1139,7 +1144,7 @@ function addCategoryToRepo(id, name, hidden)
 	};
 	g_localRepos[id] = obj;
 }
-function addItemToRepo(id, name, description, image, portions, index, hidden)
+function addItemToRepo(id, name, description, image, portions, index, hidden, special_instructions)
 {
 	var obj = {
 			type:			"item",
@@ -1148,7 +1153,8 @@ function addItemToRepo(id, name, description, image, portions, index, hidden)
 			description:	description,
 			image:			"../../ImageViewer" + image,
 			portions:		portions,
-			hidden:			hidden
+			hidden:			hidden,
+			special_instructions: special_instructions
 			//index:			index
 	};
 	g_localRepos[id] = obj;
@@ -1189,6 +1195,7 @@ function addToLocalRepository(node, type)
 		var image = node.children("image").text();
 		var index = node.children("index").text();
 		var hidden = node.children("hidden").text();
+		var special_instructions = node.children("special_instructions").text();
 		var portions = new Array();
 		//var first_size = node.children("portions").children("size:first");
 		//var itemSize = first_size.text();
@@ -1203,7 +1210,7 @@ function addToLocalRepository(node, type)
 			portions.push({size: itemSize, price: itemPrice});
 		});
 		
-		addItemToRepo(id, name, description, image, portions, index, hidden);
+		addItemToRepo(id, name, description, image, portions, index, hidden, special_instructions);
 		break;
 		
 	case "option":

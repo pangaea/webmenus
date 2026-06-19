@@ -850,6 +850,13 @@ public class MenuOrderBean
 							iQuantity = 1;
 						}
 					}
+
+					if (oMenuItem.getPropertyValue_Boolean("special_instructions")) {
+						String specialInstructions = (String)request.getParameter("special_instructions");
+						if( sOptions.length() > 0 ) sOptions += "\r\n";
+						sOptions += "Special Instructions:\r\n";
+						sOptions += specialInstructions;
+					}
 	
 					// Get size value of this item
 					//String sSize = oMenuItem.getPropertyValue("size_desc");

@@ -100,6 +100,16 @@ $("#toolbar_panel").html(btn_html);
 		</td>
 	</tr>
 	<tr><td nowrap valign="top" align="right" class="property_text">
+		Special Instructions:
+		</td><td width="100%">
+			<div id="DIV_hidden">
+	
+			<input type="checkbox" ID="special_instructions" NAME="special_instructions"/>
+	
+			</div>
+		</td>
+	</tr>
+	<tr><td nowrap valign="top" align="right" class="property_text">
 		Image:
 		</td><td width="100%">
 			<div id="DIV_image_designer">

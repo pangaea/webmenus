@@ -192,6 +192,7 @@ public class MenuDesigner extends HttpServlet
 					String sItemDesc = obj.getPropertyValue("description");
 					String sItemImage = obj.getPropertyValue("image");
 					String sItemHidden = obj.getPropertyValue("hidden");
+					String sItemSpecialInstructions = obj.getPropertyValue("special_instructions");
 					String sItemIndex = obj.getPropertyValue("item_index");
 					String sItemSize = obj.getPropertyValue("size_desc");
 					String sItemPriceF = NumberFormat.getNumberInstance().format(obj.getPropertyValue_Real("price"));
@@ -211,6 +212,9 @@ public class MenuDesigner extends HttpServlet
 					xmlStreamWriter.writeStartElement("hidden");		// <hidden>
 					xmlStreamWriter.writeCharacters(sItemHidden);
 					xmlStreamWriter.writeEndElement();					// </hidden>
+					xmlStreamWriter.writeStartElement("special_instructions");		// <special_instructions>
+					xmlStreamWriter.writeCharacters(sItemSpecialInstructions);
+					xmlStreamWriter.writeEndElement();					// </special_instructions>
 					xmlStreamWriter.writeStartElement("index");			// <index>
 					xmlStreamWriter.writeCharacters(sItemIndex);
 					xmlStreamWriter.writeEndElement();					// </index>
@@ -675,6 +679,7 @@ public class MenuDesigner extends HttpServlet
 					String image = xItem.getChildNodeValue("image");
 					//String hidden = xItem.getChildNodeValue("hidden");
 					boolean hidden = (xItem.getAttribute("hidden").equalsIgnoreCase("Y"))?true:false;
+					boolean special_instructions = (xItem.getAttribute("special_instructions").equalsIgnoreCase("Y"))?true:false;
 					int index = Integer.parseInt(xItem.getAttribute("index"));
 					String menucategory = getParentNodeId(xItem);
 					double price = 0.00;
@@ -691,6 +696,7 @@ public class MenuDesigner extends HttpServlet
 						oMenuItem.getPropertyValue("description").compareTo(description) != 0 ||
 						oMenuItem.getPropertyValue("image").compareTo(image) != 0 ||
 						oMenuItem.getPropertyValue_Boolean("hidden") != hidden ||
+						oMenuItem.getPropertyValue_Boolean("special_instructions") != special_instructions ||
 						oMenuItem.getPropertyValue("menucategory").compareTo(menucategory) != 0 ||
 						oMenuItem.getPropertyValue_Real("price") != price ||
 						oMenuItem.getPropertyValue("size").compareTo(size) != 0 ||
@@ -701,6 +707,7 @@ public class MenuDesigner extends HttpServlet
 						subObj.addProperty("description", description);
 						subObj.addProperty("image", image);
 						subObj.addProperty("hidden", hidden);
+						subObj.addProperty("special_instructions", special_instructions);
 						subObj.addProperty("menucategory", menucategory);
 						subObj.addProperty("price", price);
 						subObj.addProperty("size_desc", size);

@@ -91,27 +91,28 @@ All Rights Reserved
 		queryMenuItem.addProperty("id",sMenuItemId);
 		QueryResponse qrMenuItems = objectBean.Query( menuOrderBean.getCredentials(), queryMenuItem );
 		RepositoryObjects oMenuItems = qrMenuItems.getObjects( queryMenuItem.getClassName() );
-		if( oMenuItems.count() > 0 )
-		{
-			RepositoryObject oMenuItem = oMenuItems.get(0);
-			String sMenuItemName = oMenuItem.getPropertyValue("name");
-			if( sMenuItemSizeDesc.length() > 0 )
-				sMenuItemName = sMenuItemName + " (" + sMenuItemSizeDesc + ")";
+		//if( oMenuItems.count() <= 0 )
+	//		throw new Exception("Invalid Menu Item");
 
-			String sMenuItemImg = oMenuItem.getPropertyValue("image");
-			String sMenuItemDesc = oMenuItem.getPropertyValue("description");
-			//String sMenuItemPrice = oMenuItem.getPropertyValue("price");
+		RepositoryObject oMenuItem = oMenuItems.get(0);
+		String sMenuItemName = oMenuItem.getPropertyValue("name");
+		if( sMenuItemSizeDesc.length() > 0 )
+			sMenuItemName = sMenuItemName + " (" + sMenuItemSizeDesc + ")";
+
+		String sMenuItemImg = oMenuItem.getPropertyValue("image");
+		String sMenuItemDesc = oMenuItem.getPropertyValue("description");
+		//String sMenuItemPrice = oMenuItem.getPropertyValue("price");
 %>
 			<table cellspacing='4'><tr><td>
 <%
-			if( sMenuItemImg.length() > 0 &&
-				( sMenuItemImg.indexOf(".gif") >= 0 ||
-				  sMenuItemImg.indexOf(".jpeg") >= 0 ||
-				  sMenuItemImg.indexOf(".jpg") >= 0 ||
-				  sMenuItemImg.indexOf(".png") >= 0 ) ){
+		if( sMenuItemImg.length() > 0 &&
+			( sMenuItemImg.indexOf(".gif") >= 0 ||
+				sMenuItemImg.indexOf(".jpeg") >= 0 ||
+				sMenuItemImg.indexOf(".jpg") >= 0 ||
+				sMenuItemImg.indexOf(".png") >= 0 ) ){
 %>
 				<img src='../../ImageViewer<%=sMenuItemImg%>'/>
-			<% } %>
+	<% 	} %>
 			</td><td valign='top'>
 			
 			<div class="menuItemTitle"><%=sMenuItemName%></div>
@@ -119,9 +120,7 @@ All Rights Reserved
 			<div><%=menuOrderBean.getCurrencyString(sMenuItemPrice)%></div>
 			</td></tr></table>
 			<hr>
-<%
-		}
-%>
+
 		<table id="itemOptionsTable" cellpadding="2" align="center">
 			<tr>
 				<th colspan="2" valign="top" class="OptionsTitle">Select from options...</th>
@@ -194,18 +193,27 @@ All Rights Reserved
 <%
 				}
 			}
-			else if( sOptionType.equalsIgnoreCase("text") == true )
-			{
+			//else if( sOptionType.equalsIgnoreCase("text") == true )
+			//{
 %>
-					<textarea name="<%=obj.getPropertyValue("name")%>" style="width:100%;height:80px"></textarea><br/>
+					<!--textarea name="<-%=obj.getPropertyValue("name")%->" style="width:100%;height:80px"></textarea><br/-->
 <%
-			}
+			//}
 %>
 				</td>
 			</tr>
 <%
 		}
 		//objectBean.Logout(info);
+		if( oMenuItem.getPropertyValue_Boolean("special_instructions") ) { %>
+			<tr>
+				<th valign="top">Special Instructions</th>
+				<td>
+					<textarea name="special_instructions" style="width:100%;height:80px"></textarea>
+				</td>
+			</tr>
+<%
+		}
 	}
 %>
 			<tr>
