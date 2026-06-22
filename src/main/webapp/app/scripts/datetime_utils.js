@@ -25,6 +25,9 @@ function convertDatetimeToString(datetime) {
     } else if (datetime.getHours() > 12) {
         hh = datetime.getHours() - 12;
         ampm = "PM";
+    } else if (datetime.getHours() == 12) {
+        hh = "12";
+        ampm = "PM";
     } else {
         hh = datetime.getHours();
     }
