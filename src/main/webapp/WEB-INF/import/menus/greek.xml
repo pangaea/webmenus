@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<location name="Aegean Table Greek Restaurant" city="Chicago" state="IL">
+  <menu name="All Day Menu" index="1">
+    <category name="Mezze" index="1">
+      <item index="1">
+        <name>Tzatziki</name>
+        <description>Greek yogurt with cucumber, garlic, dill, and olive oil, served with warm pita.</description>
+        <portions>
+          <size index="1" price="7.95">Small</size>
+          <size index="2" price="11.95">Large</size>
+        </portions>
+        <options>
+          <option index="1" name="Add Extra Pita" type="select">
+            <choices>
+              <choice price="2.00">Extra pita</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="2">
+        <name>Spanakopita</name>
+        <description>Flaky phyllo pastry filled with spinach, feta, herbs, and scallions.</description>
+        <portions>
+          <size index="1" price="8.95">Two pieces</size>
+          <size index="2" price="14.95">Four pieces</size>
+        </portions>
+        <options>
+          <option index="1" name="Sauce Choice" type="select-one">
+            <choices>
+              <choice price="0.00">Tzatziki</choice>
+              <choice price="0.00">Skordalia</choice>
+              <choice price="0.50">Spicy feta dip</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="3">
+        <name>Dolmades</name>
+        <description>Grape leaves stuffed with seasoned rice, herbs, lemon, and olive oil.</description>
+        <portions>
+          <size index="1" price="9.95">Six pieces</size>
+          <size index="2" price="15.95">Ten pieces</size>
+        </portions>
+        <options>
+          <option index="1" name="Served With" type="select-one">
+            <choices>
+              <choice price="0.00">Lemon sauce</choice>
+              <choice price="0.00">Tzatziki</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+    </category>
+
+    <category name="Salads" index="2">
+      <item index="1">
+        <name>Horiatiki Greek Salad</name>
+        <description>Tomatoes, cucumbers, red onion, green peppers, Kalamata olives, feta, oregano, and olive oil.</description>
+        <portions>
+          <size index="1" price="10.95">Regular</size>
+          <size index="2" price="15.95">Large</size>
+        </portions>
+        <options>
+          <option index="1" name="Add Protein" type="select-one">
+            <choices>
+              <choice price="0.00">No protein</choice>
+              <choice price="5.00">Grilled chicken</choice>
+              <choice price="7.00">Gyro meat</choice>
+              <choice price="8.00">Grilled shrimp</choice>
+            </choices>
+          </option>
+          <option index="2" name="Extras" type="select">
+            <choices>
+              <choice price="1.50">Extra feta</choice>
+              <choice price="1.00">Extra olives</choice>
+              <choice price="2.00">Pita on the side</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="2">
+        <name>Village Chicken Salad</name>
+        <description>Mixed greens with grilled chicken, tomatoes, cucumbers, feta, olives, and lemon oregano dressing.</description>
+        <portions>
+          <size index="1" price="14.95">Regular</size>
+          <size index="2" price="18.95">Large</size>
+        </portions>
+        <options>
+          <option index="1" name="Dressing" type="select-one">
+            <choices>
+              <choice price="0.00">Lemon oregano</choice>
+              <choice price="0.00">Greek vinaigrette</choice>
+              <choice price="0.00">Dressing on the side</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+    </category>
+
+    <category name="Pita Sandwiches" index="3">
+      <item index="1">
+        <name>Traditional Gyro Pita</name>
+        <description>Lamb and beef gyro with tomato, onion, and tzatziki wrapped in warm pita.</description>
+        <portions>
+          <size index="1" price="10.95">Sandwich only</size>
+          <size index="2" price="14.95">Combo with fries</size>
+        </portions>
+        <options>
+          <option index="1" name="Side Choice" type="select-one">
+            <choices>
+              <choice price="0.00">Fries</choice>
+              <choice price="1.50">Greek salad</choice>
+              <choice price="1.50">Lemon potatoes</choice>
+              <choice price="2.00">Rice pilaf</choice>
+            </choices>
+          </option>
+          <option index="2" name="Extras" type="select">
+            <choices>
+              <choice price="1.00">Extra tzatziki</choice>
+              <choice price="1.50">Extra feta</choice>
+              <choice price="3.00">Extra gyro meat</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="2">
+        <name>Chicken Souvlaki Pita</name>
+        <description>Marinated grilled chicken skewers with lettuce, tomato, onion, and tzatziki.</description>
+        <portions>
+          <size index="1" price="10.95">Sandwich only</size>
+          <size index="2" price="14.95">Combo with fries</size>
+        </portions>
+        <options>
+          <option index="1" name="Sauce" type="select-one">
+            <choices>
+              <choice price="0.00">Tzatziki</choice>
+              <choice price="0.00">Garlic sauce</choice>
+              <choice price="0.50">Spicy feta sauce</choice>
+            </choices>
+          </option>
+          <option index="2" name="Extras" type="select">
+            <choices>
+              <choice price="1.50">Extra feta</choice>
+              <choice price="2.50">Extra chicken</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="3">
+        <name>Falafel Pita</name>
+        <description>Crispy chickpea falafel with lettuce, tomato, cucumber, onion, and tahini sauce.</description>
+        <portions>
+          <size index="1" price="9.95">Sandwich only</size>
+          <size index="2" price="13.95">Combo with fries</size>
+        </portions>
+        <options>
+          <option index="1" name="Sauce" type="select-one">
+            <choices>
+              <choice price="0.00">Tahini</choice>
+              <choice price="0.00">Tzatziki</choice>
+              <choice price="0.50">Harissa yogurt</choice>
+            </choices>
+          </option>
+          <option index="2" name="Extras" type="select">
+            <choices>
+              <choice price="1.00">Pickled vegetables</choice>
+              <choice price="1.50">Extra falafel</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+    </category>
+
+    <category name="Entrees" index="4">
+      <item index="1">
+        <name>Moussaka</name>
+        <description>Layered eggplant, seasoned ground beef, potatoes, tomato sauce, and creamy bechamel.</description>
+        <portions>
+          <size index="1" price="18.95">Single serving</size>
+          <size index="2" price="32.95">Shareable platter</size>
+        </portions>
+        <options>
+          <option index="1" name="Side Choice" type="select-one">
+            <choices>
+              <choice price="0.00">Greek salad</choice>
+              <choice price="0.00">Rice pilaf</choice>
+              <choice price="1.50">Lemon potatoes</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="2">
+        <name>Chicken Souvlaki Plate</name>
+        <description>Grilled marinated chicken skewers served with rice, pita, tzatziki, and a small Greek salad.</description>
+        <portions>
+          <size index="1" price="17.95">Two skewers</size>
+          <size index="2" price="22.95">Three skewers</size>
+        </portions>
+        <options>
+          <option index="1" name="Side Choice" type="select-one">
+            <choices>
+              <choice price="0.00">Rice pilaf</choice>
+              <choice price="0.00">Fries</choice>
+              <choice price="1.50">Lemon potatoes</choice>
+              <choice price="2.00">Greek salad upgrade</choice>
+            </choices>
+          </option>
+          <option index="2" name="Extras" type="select">
+            <choices>
+              <choice price="2.00">Extra pita</choice>
+              <choice price="1.00">Extra tzatziki</choice>
+              <choice price="4.00">Extra chicken skewer</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="3">
+        <name>Lamb Chops</name>
+        <description>Chargrilled lamb chops with oregano, lemon, olive oil, and rosemary.</description>
+        <portions>
+          <size index="1" price="28.95">Three chops</size>
+          <size index="2" price="36.95">Four chops</size>
+        </portions>
+        <options>
+          <option index="1" name="Temperature" type="select-one">
+            <choices>
+              <choice price="0.00">Medium rare</choice>
+              <choice price="0.00">Medium</choice>
+              <choice price="0.00">Medium well</choice>
+              <choice price="0.00">Well done</choice>
+            </choices>
+          </option>
+          <option index="2" name="Side Choice" type="select-one">
+            <choices>
+              <choice price="0.00">Lemon potatoes</choice>
+              <choice price="0.00">Rice pilaf</choice>
+              <choice price="2.00">Grilled vegetables</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="4">
+        <name>Grilled Branzino</name>
+        <description>Whole Mediterranean sea bass grilled with lemon, herbs, olive oil, and capers.</description>
+        <portions>
+          <size index="1" price="27.95">Whole fish</size>
+        </portions>
+        <options>
+          <option index="1" name="Preparation" type="select-one">
+            <choices>
+              <choice price="0.00">Whole</choice>
+              <choice price="0.00">Deboned</choice>
+            </choices>
+          </option>
+          <option index="2" name="Side Choice" type="select-one">
+            <choices>
+              <choice price="0.00">Horta greens</choice>
+              <choice price="0.00">Rice pilaf</choice>
+              <choice price="1.50">Lemon potatoes</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+    </category>
+  </menu>
+
+  <menu name="Desserts and Drinks" index="2">
+    <category name="Desserts" index="1">
+      <item index="1">
+        <name>Baklava</name>
+        <description>Layers of phyllo pastry with walnuts, cinnamon, honey syrup, and pistachio dust.</description>
+        <portions>
+          <size index="1" price="5.95">One piece</size>
+          <size index="2" price="10.95">Two pieces</size>
+        </portions>
+        <options>
+          <option index="1" name="Add On" type="select">
+            <choices>
+              <choice price="2.00">Vanilla ice cream</choice>
+              <choice price="1.00">Extra honey syrup</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="2">
+        <name>Loukoumades</name>
+        <description>Warm Greek doughnuts drizzled with honey and sprinkled with cinnamon.</description>
+        <portions>
+          <size index="1" price="7.95">Half dozen</size>
+          <size index="2" price="12.95">Dozen</size>
+        </portions>
+        <options>
+          <option index="1" name="Topping" type="select-one">
+            <choices>
+              <choice price="0.00">Honey cinnamon</choice>
+              <choice price="1.00">Chocolate drizzle</choice>
+              <choice price="1.00">Crushed pistachio</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="3">
+        <name>Galaktoboureko</name>
+        <description>Semolina custard baked in crisp phyllo and finished with citrus syrup.</description>
+        <portions>
+          <size index="1" price="6.95">Single serving</size>
+        </portions>
+        <options>
+          <option index="1" name="Add On" type="select">
+            <choices>
+              <choice price="2.00">Vanilla ice cream</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+    </category>
+
+    <category name="Beverages" index="2">
+      <item index="1">
+        <name>Greek Coffee</name>
+        <description>Traditional finely ground coffee served hot in a small cup.</description>
+        <portions>
+          <size index="1" price="3.95">Single</size>
+          <size index="2" price="5.95">Double</size>
+        </portions>
+        <options>
+          <option index="1" name="Sweetness" type="select-one">
+            <choices>
+              <choice price="0.00">Sketos unsweetened</choice>
+              <choice price="0.00">Metrios medium sweet</choice>
+              <choice price="0.00">Glykos sweet</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="2">
+        <name>Frappe</name>
+        <description>Iced whipped Greek coffee served over ice.</description>
+        <portions>
+          <size index="1" price="4.95">Regular</size>
+          <size index="2" price="5.95">Large</size>
+        </portions>
+        <options>
+          <option index="1" name="Milk" type="select-one">
+            <choices>
+              <choice price="0.00">No milk</choice>
+              <choice price="0.00">Whole milk</choice>
+              <choice price="0.50">Oat milk</choice>
+            </choices>
+          </option>
+          <option index="2" name="Sweetness" type="select-one">
+            <choices>
+              <choice price="0.00">Unsweetened</choice>
+              <choice price="0.00">Lightly sweet</choice>
+              <choice price="0.00">Sweet</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="3">
+        <name>Fresh Lemonade</name>
+        <description>House-made lemonade with fresh lemon juice and simple syrup.</description>
+        <portions>
+          <size index="1" price="3.95">Regular</size>
+          <size index="2" price="5.95">Large</size>
+        </portions>
+        <options>
+          <option index="1" name="Flavor" type="select-one">
+            <choices>
+              <choice price="0.00">Classic</choice>
+              <choice price="0.75">Mint</choice>
+              <choice price="0.75">Strawberry</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+    </category>
+  </menu>
+</location>

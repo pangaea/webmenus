@@ -169,6 +169,8 @@ All Rights Reserved
 						if( bdChoicePrice.doubleValue() > 0.00 ) {
 							NumberFormat n = NumberFormat.getCurrencyInstance(Locale.US); 
 							sChoicePrice = "<em> (add " + n.format(bdChoicePrice) + ")</em>";
+						} else {
+							sChoicePrice = "";
 						}
 					}
 %>
@@ -186,6 +188,8 @@ All Rights Reserved
 						if( bdChoicePrice.doubleValue() > 0.00 ) {
 							NumberFormat n = NumberFormat.getCurrencyInstance(Locale.US); 
 							sChoicePrice = "<em> (add " + n.format(bdChoicePrice) + ")</em>";
+						} else {
+							sChoicePrice = "";
 						}
 					}
 %>

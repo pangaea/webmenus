@@ -39,6 +39,7 @@ All Rights Reserved
 					<!--option value="sample.xml">Basic Sample Menu</option-->
 					<option value="american.xml">American Cuisine</option>
 					<option value="chinese.xml">Chinese Restaurant</option>
+					<option value="greek.xml">Greek Restaurant</option>
 					<option value="indian.xml">Indian Restaurant</option>
 					<option value="italian.xml">Pizzeria &amp; Restaurant</option>
 				</select>

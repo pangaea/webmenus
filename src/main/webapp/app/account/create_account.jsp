@@ -105,6 +105,7 @@ function goNav(page)
 								<!--html:option value="sample">Basic Sample Menus</html:option-->
 								<html:option value="american">American Cuisine</html:option>
 								<html:option value="chinese">Chinese Restaurant</html:option>
+								<html:option value="greek">Greek Restaurant</html:option>
 								<html:option value="indian">Indian Restaurant</html:option>
 								<html:option value="italian">Pizzeria &amp; Restaurant</html:option>
 							</html:select>

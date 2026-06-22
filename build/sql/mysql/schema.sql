@@ -507,7 +507,7 @@ CREATE TABLE `webmenus_menu_item` (
   `name` varchar(64) NOT NULL,
   `description` varchar(255) NOT NULL,
   `hidden` varchar(1) NOT NULL,
-  `special_instructions` varchar(1) NOT NULL,
+  `special_instructions` varchar(1) NOT NULL DEFAULT 'N',
   `image` varchar(255) NOT NULL,
   `item_index` int NOT NULL,
   `menu_cat_id` varchar(36) NOT NULL,
@@ -763,4 +763,4 @@ CREATE TABLE `webmenus_schedule_menu_list` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-19 16:51:48
+-- Dump completed on 2026-06-22  1:07:11
