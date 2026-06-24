@@ -107,6 +107,8 @@
 			<div class='menuItemTitle'><xsl:value-of select="name/text()"/><xsl:if test="string-length(size/text())&gt;0"> : <xsl:value-of select="size/text()"/></xsl:if></div>
 			<!--div class='menuItemDesc'><xsl:value-of select="description/text()"/></div-->
 			<xsl:apply-templates select="options"/>
+			<div class="optionName"><b>Special Instructions</b></div>
+			<div class="choicesBlock"><pre><xsl:value-of select="special_instructions/text()"/></pre></div>
 		</td>
 		<td valign="top" class="usd"><xsl:value-of select="price/text()"/></td>
 		<td valign="top" class="quantity"><xsl:value-of select="quantity/text()"/></td>

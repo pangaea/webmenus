@@ -756,12 +756,8 @@ public class MenuOrderBean
 					JSONObject optionsJson = new JSONObject();
 					JSONArray optionsArrJson = new JSONArray();
 					optionsJson.put("options", optionsArrJson);
-					//optionsJson.put("CLIENT_SECRET", rForm.getClientSecret());
-					//optionsJson.put("VENMO_SUPPORT", ((rForm.isVenmoSupport()) ? true : false));
-					//String config = value.toString(1);
 					
 					// Build options list
-					//String sOptions = new String("");
 					ObjectQuery queryOptions = new ObjectQuery( "CCMenuItemOption" );
 					queryOptions.addProperty("menuitem",sMenuItemId);
 					QueryResponse qrOptions = m_objectBean.Query( m_creds, queryOptions );
@@ -775,7 +771,6 @@ public class MenuOrderBean
 						optionJson.put("name", sOptionName);
 						JSONArray choicesArrJson = new JSONArray();
 						if( sOptionType.equalsIgnoreCase("select") == true) {
-							//String sSelections = new String("");
 							String optionId = obj.getPropertyValue("id");
 							ObjectQuery queryChoices = new ObjectQuery("CCMenuItemOptionChoice");
 							queryChoices.setSortBy("choice_index");		// TODO: Fix this - it should reference the property, not the column
@@ -793,23 +788,10 @@ public class MenuOrderBean
 									choiceJson.put("name", opt);
 									choiceJson.put("price", bdChoicePrice);
 									choicesArrJson.put(choiceJson);
-
-									// if( sSelections.length() > 0 )
-									// 	sSelections += ", " + opt;
-									// else
-									// 	sSelections += opt;
 								}
 							}
-
-							// if( sSelections.length() > 0 ) {
-							// 	if( sOptions.length() > 0 ) sOptions += "\r\n";
-							// 	//sOptions += "<strong>";
-							// 	sOptions += sOptionName + ": ";
-							// 	sOptions += sSelections;
-							// }
 						}
 						else if(sOptionType.equalsIgnoreCase("select-one") == true) {
-							String sSelections = new String("");
 							String optionId = obj.getPropertyValue("id");
 							ObjectQuery queryChoices = new ObjectQuery("CCMenuItemOptionChoice");
 							queryChoices.setSortBy("choice_index");		// TODO: Fix this - it should reference the property, not the column
@@ -828,36 +810,12 @@ public class MenuOrderBean
 									choiceJson.put("name", opt);
 									choiceJson.put("price", bdChoicePrice);
 									choicesArrJson.put(choiceJson);
-
-									// if( sSelections.length() > 0 )
-									// 	sSelections += ", " + opt;
-									// else
-									// 	sSelections += opt;
 								}
 							}
-
-							// if( sSelections.length() > 0 ) {
-							// 	if( sOptions.length() > 0 ) sOptions += "\r\n";
-							// 	//sOptions += "<strong>";
-							// 	sOptions += sOptionName + ": ";
-							// 	sOptions += sSelections;
-							// }
 						}
 
 						optionJson.put("selected_choices", choicesArrJson);
 						optionsArrJson.put(optionJson);
-						// else
-						// {
-						// 	String sOptionTxt = (String)request.getParameter(sOptionName);
-						// 	if( sOptionTxt != null && sOptionTxt.length() > 0 && sOptionTxt.equalsIgnoreCase("_none_") == false )
-						// 	{
-						// 		bdPrice = bdPrice.add(bdOptionPrice);
-						// 		if( sOptions.length() > 0 ) sOptions += "\r\n";
-						// 		//sOptions += "<strong>";
-						// 		sOptions += sOptionName + ": ";
-						// 		sOptions += sOptionTxt;// + "</em>";
-						// 	}
-						// }
 					}
 
 					///////////////////////////////////////////
@@ -877,19 +835,22 @@ public class MenuOrderBean
 						}
 					}
 
+					String specialInstructions = null;
 					if (oMenuItem.getPropertyValue_Boolean("special_instructions")) {
-						String specialInstructions = (String)request.getParameter("special_instructions");
+						specialInstructions = (String)request.getParameter("special_instructions");
 						// if( sOptions.length() > 0 ) sOptions += "\r\n";
 						// sOptions += "Special Instructions:\r\n";
 						// sOptions += specialInstructions;
-						optionsJson.put("special_instructions", specialInstructions);
+						//optionsJson.put("special_instructions", specialInstructions);
 					}
 	
 					// Get size value of this item
 					//String sSize = oMenuItem.getPropertyValue("size_desc");
 					
 					RandomGUID guid = new RandomGUID();
-					OrderItem item = new OrderItem(guid.toString(), sMenuItemName, sMenuItemDesc, sMenuItemSizeDesc, bdPrice, iQuantity, optionsJson.toString(1));
+					OrderItem item = new OrderItem(guid.toString(), sMenuItemName, sMenuItemDesc, sMenuItemSizeDesc,
+													bdPrice, iQuantity, optionsJson.toString(1),
+													specialInstructions);
 	
 					// Add new order item to order
 					m_orderItemMap.put( guid.toString(), item );
@@ -1165,6 +1126,7 @@ public class MenuOrderBean
 					order_item.addProperty("price", item.getPrice());
 					order_item.addProperty("quantity", item.getQuantity());
 					order_item.addProperty("menuorder", order_id);
+					order_item.addProperty("special_instructions", item.getSpecialInstructions());
 					
 					try
 					{

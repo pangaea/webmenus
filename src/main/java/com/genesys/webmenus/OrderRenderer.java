@@ -198,30 +198,12 @@ class OrderRenderer
 		// Send email
 		try
 		{
-//			Credentials info = new Credentials();
-//			if( m_objectBean.SystemLogin("guest", info ) == true )
-//			{
-//				// Sync up roles with location
-//				info.m_RoleId = m_RoleId;
-				
-				//StringWriter stringWriter = new StringWriter();
 				OutputStream outXML = new ByteArrayOutputStream();
 				XMLStreamWriter xmlStreamWriter = XMLOutputFactory.newInstance().createXMLStreamWriter(outXML, "UTF-8");
 				xmlStreamWriter.writeStartDocument("UTF-8", "1.0");
 				xmlStreamWriter.writeStartElement("transaction");	// <transaction>
 				xmlStreamWriter.writeStartElement("order");	// <order>
 
-				// Query order object
-//				ObjectQuery queryOrder = new ObjectQuery( "CCMenuOrder" );
-//				queryOrder.addProperty("id", m_orderId);
-//				QueryResponse qrOrder = m_objectBean.Query( info, queryOrder );
-//				RepositoryObjects oOrders = qrOrder.getObjects( queryOrder.getClassName());
-//				if( oOrders.count() == 0 )
-//				{
-//					SystemServlet.g_logger.error( "Id not found while processing order [" + m_orderId + "]" );
-//					return;
-//				}
-//				m_oOrder = oOrders.get(0);
 				String orderId = m_oOrder.getPropertyValue("id");
 				
 				// Add order information to order node
@@ -232,10 +214,7 @@ class OrderRenderer
 				
 				
 				insertPatron(xmlStreamWriter, m_oOrder.getPropertyValue("email"));
-				
-				
-				//addTextNode(xmlStreamWriter,"email", oOrder.getPropertyValue("email"));
-				//addTextNode(xmlStreamWriter,"phone", "(123)456-7890");
+
 				xmlStreamWriter.writeEndElement();				// </customer>
 				
 				XMLStreamHelper.addTextNode(xmlStreamWriter,"subtotal", getCurrencyString(m_oOrder.getPropertyValue("subtotal")));
@@ -245,7 +224,6 @@ class OrderRenderer
 				XMLStreamHelper.addTextNode(xmlStreamWriter,"delivery", m_oOrder.getPropertyValue("delivery"));
 				XMLStreamHelper.addTextNode(xmlStreamWriter,"delivery_info", m_oOrder.getPropertyValue("delivery_info"));
 				
-				//addTextNode(xmlStreamWriter,"customer", oOrder.getPropertyValue("location.email_addr"));
 				XMLStreamHelper.addTextNode(xmlStreamWriter,"location", m_oOrder.getPropertyValue("location.name"));
 				xmlStreamWriter.writeStartElement("items");	// <items>
 				
@@ -262,6 +240,7 @@ class OrderRenderer
 					XMLStreamHelper.addTextNode(xmlStreamWriter,"id", oOrderItem.getPropertyValue("id"));
 					XMLStreamHelper.addTextNode(xmlStreamWriter,"name", oOrderItem.getPropertyValue("name"));
 					XMLStreamHelper.addTextNode(xmlStreamWriter,"description", oOrderItem.getPropertyValue("description"));
+					XMLStreamHelper.addTextNode(xmlStreamWriter,"special_instructions", oOrderItem.getPropertyValue("special_instructions"));
 					//XMLStreamHelper.addTextNode(xmlStreamWriter,"options", oOrderItem.getPropertyValue("options"));
 
 					xmlStreamWriter.writeStartElement("options");	// <options>
@@ -320,19 +299,15 @@ class OrderRenderer
 
 				// Run order XML through XSL transform
 				XSLParser xslParser = new XSLParser();
-				String rootPath = SystemServlet.getGenesysHome();//System.getProperty("GENESYS_HOME");
+				String rootPath = SystemServlet.getGenesysHome();
 
 				// Generate text email body through XSL
-				//StringWriter outText = new StringWriter();
 				String xslTextUri = rootPath + "templates/webmenus/reciept_text.xsl";
 				xslParser.transform( outXML.toString(), xslTextUri, m_outText );
 				
 				// Generate html email body through XSL
-				//StringWriter outHtml = new StringWriter();
 				String xslHtmlUri = rootPath + "templates/webmenus/reciept_html.xsl";
 				xslParser.transform( outXML.toString(), xslHtmlUri, m_outHtml );
-
-				//m_objectBean.Logout(info);
 				
 				// Exit successfully
 				return;

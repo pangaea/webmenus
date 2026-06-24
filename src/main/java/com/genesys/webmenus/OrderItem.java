@@ -19,8 +19,9 @@ public class OrderItem
 	private BigDecimal price;
 	private String options;
 	private int quantity;
+	private String special_instructions;
 
-	public OrderItem( String id, String name, String description, String size, BigDecimal price, int quantity, String options )
+	public OrderItem( String id, String name, String description, String size, BigDecimal price, int quantity, String options, String special_instructions )
 	{
 		this.id = id;
 		setName( name );
@@ -29,6 +30,7 @@ public class OrderItem
 		setPrice( price );
 		setQuantity( quantity );
 		setOptions( options );
+		setSpecialInstructions( special_instructions );
 	}
 	public String getId()
 	{
@@ -91,5 +93,13 @@ public class OrderItem
 	public String getOptions()
 	{
 		return this.options;
+	}
+	public void setSpecialInstructions( String special_instructions )
+	{
+		this.special_instructions = special_instructions;
+	}
+	public String getSpecialInstructions()
+	{
+		return this.special_instructions;
 	}
 }

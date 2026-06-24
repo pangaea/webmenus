@@ -644,6 +644,7 @@ CREATE TABLE `webmenus_menu_order_item` (
   `size_desc` varchar(32) NOT NULL,
   `price` double NOT NULL,
   `quantity` int NOT NULL,
+  `special_instructions` varchar(1024) DEFAULT NULL,
   `menuorder_id` varchar(36) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_webmenus_menu_order_item__menu` (`menuorder_id`)
@@ -763,4 +764,4 @@ CREATE TABLE `webmenus_schedule_menu_list` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-23 13:47:17
+-- Dump completed on 2026-06-24 18:01:20

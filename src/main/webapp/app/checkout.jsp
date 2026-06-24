@@ -141,11 +141,11 @@ dojo.addOnLoad( function()
 				JsonNode options = node.get("options");
 				if (options.isArray()) {
 					for (JsonNode option : options) {
-						%><%=option.get("name").asText()%><br/><%
+						%><b><%=option.get("name").asText()%></b><br/><%
 						JsonNode choices = option.get("selected_choices");
 						if (choices.isArray()) {
 							for (JsonNode choice : choices) {
-								%>- <%=choice.get("name").asText()%><%
+								%>&nbsp;&nbsp;<%=choice.get("name").asText()%><%
 								if (choice.get("price").asDouble() > 0) {
 									%> (<%=menuOrderBean.getCurrencyString(choice.get("price").asText())%>)<%
 								}
@@ -155,6 +155,11 @@ dojo.addOnLoad( function()
 					}
 				}
 			} catch (Exception e){}
+		}
+
+		String si = item.getSpecialInstructions();
+		if (si != null && !si.isEmpty()) {
+			%><br/><b>Special Instructions</b><pre><%=si%></pre><%
 		}
 %>
 						</div>

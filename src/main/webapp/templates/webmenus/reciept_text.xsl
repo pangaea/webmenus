@@ -27,8 +27,11 @@ Order Details
 -----------------------------------------------------
 <xsl:for-each select="item">
 <xsl:value-of select="name/text()"/><xsl:if test="string-length(size/text())&gt;0"> : <xsl:value-of select="size/text()"/></xsl:if><xsl:text>
-</xsl:text><xsl:apply-templates select="options"/><xsl:text>
-</xsl:text><xsl:value-of select="price/text()"/> X <xsl:value-of select="quantity/text()"/>
+</xsl:text><xsl:apply-templates select="options"/>
+<xsl:if test="string-length(special_instructions/text())&gt;0">
+Special Instructions:<xsl:text>
+</xsl:text><xsl:value-of select="special_instructions/text()"/></xsl:if>
+<xsl:value-of select="price/text()"/> X <xsl:value-of select="quantity/text()"/>
 <xsl:text>&#9;</xsl:text><xsl:text>&#9;</xsl:text><xsl:text>&#9;</xsl:text><xsl:text>&#9;</xsl:text><xsl:text>&#9;</xsl:text>
 <xsl:value-of select="itemtotal/text()"/>
 -----------------------------------------------------
