@@ -5,6 +5,8 @@ All Rights Reserved
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="ISO-8859-1" %>
 <%@ page import="com.genesys.webmenus.*"%>
 <%@ page import="java.math.BigDecimal"%>
+<%@ page import="com.fasterxml.jackson.databind.JsonNode"%>
+<%@ page import="com.fasterxml.jackson.databind.ObjectMapper"%>
 
 <jsp:useBean id="menuOrderBean" scope="session" class="com.genesys.webmenus.MenuOrderBean"/>
 <%
@@ -124,9 +126,32 @@ function checkoutOrder()
 						<%=item.getDesc()%>
 						</div>
 						<div class='menuOptions'>
-<pre>
-<%=item.getOptions()%>
-</pre>
+<%
+		String optionsJson = item.getOptions();
+		if (optionsJson != null && !optionsJson.isBlank()) {
+			ObjectMapper mapper = new ObjectMapper();
+			try {
+				JsonNode node = mapper.readTree(optionsJson);
+				JsonNode options = node.get("options");
+				if (options.isArray()) {
+					for (JsonNode option : options) {
+						%><%=option.get("name").asText()%><br/><%
+						JsonNode choices = option.get("selected_choices");
+						if (choices.isArray()) {
+							for (JsonNode choice : choices) {
+								%>- <%=choice.get("name").asText()%><%
+								if (choice.get("price").asDouble() > 0) {
+									%> (<%=menuOrderBean.getCurrencyString(choice.get("price").asText())%>)<%
+								}
+								%><br/><%
+							}
+						}
+					}
+				}
+			} catch (Exception e){}
+		}
+%>
+
 						</div>
 
 				</td>

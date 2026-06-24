@@ -14,6 +14,7 @@ import java.text.NumberFormat;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Vector;
 import java.util.Date;
@@ -34,6 +35,9 @@ import javax.xml.stream.XMLStreamWriter;
 
 import org.w3c.dom.Document;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.genesys.SystemServlet;
 import com.genesys.repository.AuthenticationException;
 import com.genesys.repository.Credentials;
@@ -48,6 +52,7 @@ import com.genesys.util.xml.XMLNodeList;
 import com.genesys.util.xsl.XSLParser;
 import com.genesys.util.email.Outbound;
 import com.genesys.views.InterfaceCfg;
+import com.mysql.cj.xdevapi.JsonArray;
 import com.genesys.util.xml.XMLStreamHelper;
 
 class OrderRenderer
@@ -186,6 +191,8 @@ class OrderRenderer
 			SystemServlet.g_logger.error( "AuthenticationException thrown - " + ex.getErrMsg() );
 		}
 	}
+
+	@SuppressWarnings("unchecked")
 	public void renderOrder()
 	{
 		// Send email
@@ -255,7 +262,42 @@ class OrderRenderer
 					XMLStreamHelper.addTextNode(xmlStreamWriter,"id", oOrderItem.getPropertyValue("id"));
 					XMLStreamHelper.addTextNode(xmlStreamWriter,"name", oOrderItem.getPropertyValue("name"));
 					XMLStreamHelper.addTextNode(xmlStreamWriter,"description", oOrderItem.getPropertyValue("description"));
-					XMLStreamHelper.addTextNode(xmlStreamWriter,"options", oOrderItem.getPropertyValue("options"));
+					//XMLStreamHelper.addTextNode(xmlStreamWriter,"options", oOrderItem.getPropertyValue("options"));
+
+					xmlStreamWriter.writeStartElement("options");	// <options>
+					String optionsJson = oOrderItem.getPropertyValue("options");
+					if (optionsJson != null && !optionsJson.isBlank()) {
+						ObjectMapper mapper = new ObjectMapper();
+						try {
+							JsonNode node = mapper.readTree(optionsJson);
+							JsonNode options = node.get("options");
+							if (options.isArray()) {
+								for (JsonNode option : options) {
+									xmlStreamWriter.writeStartElement("option");
+									String optName = option.get("name").asText();
+									XMLStreamHelper.addTextNode(xmlStreamWriter,"name", optName);
+									xmlStreamWriter.writeStartElement("choices");	// <choices>
+									JsonNode choices = option.get("selected_choices");
+									if (choices.isArray()) {
+										for (JsonNode choice : choices) {
+											xmlStreamWriter.writeStartElement("choice");
+											XMLStreamHelper.addTextNode(xmlStreamWriter,"name", choice.get("name").asText());
+											if (choice.get("price").asDouble() > 0) {
+												XMLStreamHelper.addTextNode(xmlStreamWriter,"price", getCurrencyString(choice.get("price").asText()));
+											}
+											xmlStreamWriter.writeEndElement();	// </choice>
+										}
+									}
+									xmlStreamWriter.writeEndElement();	// </choices>
+									xmlStreamWriter.writeEndElement();	// </option>
+								}
+							}
+						} catch (Exception e){
+							SystemServlet.g_logger.error( "MessagingException caught trying to read option json - " + e.getMessage() );
+						}
+					}
+					xmlStreamWriter.writeEndElement();	// </options>
+
 					XMLStreamHelper.addTextNode(xmlStreamWriter,"size", oOrderItem.getPropertyValue("size"));
 					//String sFormattedPrice = NumberFormat.getCurrencyInstance(Locale.US).format(oOrderItem.getPropertyValue_Real("price"));
 					String sFormattedPrice = getCurrencyString(oOrderItem.getPropertyValue_Real("price"));

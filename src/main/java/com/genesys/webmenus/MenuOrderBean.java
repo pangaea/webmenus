@@ -18,9 +18,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.xml.stream.FactoryConfigurationError;
 
 import org.apache.xerces.parsers.DOMParser;
+import org.json.JSONArray;
 //import javax.xml.stream.XMLOutputFactory;
 //import javax.xml.stream.XMLStreamException;
 //import javax.xml.stream.XMLStreamWriter;
+import org.json.JSONObject;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -750,20 +752,30 @@ public class MenuOrderBean
 					{
 						return false;
 					}
+
+					JSONObject optionsJson = new JSONObject();
+					JSONArray optionsArrJson = new JSONArray();
+					optionsJson.put("options", optionsArrJson);
+					//optionsJson.put("CLIENT_SECRET", rForm.getClientSecret());
+					//optionsJson.put("VENMO_SUPPORT", ((rForm.isVenmoSupport()) ? true : false));
+					//String config = value.toString(1);
 					
 					// Build options list
-					String sOptions = new String("");
+					//String sOptions = new String("");
 					ObjectQuery queryOptions = new ObjectQuery( "CCMenuItemOption" );
 					queryOptions.addProperty("menuitem",sMenuItemId);
 					QueryResponse qrOptions = m_objectBean.Query( m_creds, queryOptions );
 					RepositoryObjects oOptions = qrOptions.getObjects( queryOptions.getClassName() );
 					for( int i = 0; i < oOptions.count(); i++ )
 					{
+						JSONObject optionJson = new JSONObject();
 						RepositoryObject obj = oOptions.get( i );
 						String sOptionName = obj.getPropertyValue("name");
 						String sOptionType = obj.getPropertyValue("type");
+						optionJson.put("name", sOptionName);
+						JSONArray choicesArrJson = new JSONArray();
 						if( sOptionType.equalsIgnoreCase("select") == true) {
-							String sSelections = new String("");
+							//String sSelections = new String("");
 							String optionId = obj.getPropertyValue("id");
 							ObjectQuery queryChoices = new ObjectQuery("CCMenuItemOptionChoice");
 							queryChoices.setSortBy("choice_index");		// TODO: Fix this - it should reference the property, not the column
@@ -773,23 +785,28 @@ public class MenuOrderBean
 							RepositoryObjects oChoices = qrChoices.getObjects( queryChoices.getClassName() );
 							for( int ii = 0; ii < oChoices.count(); ii++ ) {
 								RepositoryObject choice = oChoices.get(ii);
-								BigDecimal bdOptionPrice = new BigDecimal(choice.getPropertyValue("price"));
+								BigDecimal bdChoicePrice = new BigDecimal(choice.getPropertyValue("price"));
 								if( request.getParameter(sOptionName+ii) != null ) {
-									bdPrice = bdPrice.add(bdOptionPrice);
+									bdPrice = bdPrice.add(bdChoicePrice);
 									String opt = choice.getPropertyValue("name");
-									if( sSelections.length() > 0 )
-										sSelections += ", " + opt;
-									else
-										sSelections += opt;
+									JSONObject choiceJson = new JSONObject();
+									choiceJson.put("name", opt);
+									choiceJson.put("price", bdChoicePrice);
+									choicesArrJson.put(choiceJson);
+
+									// if( sSelections.length() > 0 )
+									// 	sSelections += ", " + opt;
+									// else
+									// 	sSelections += opt;
 								}
 							}
 
-							if( sSelections.length() > 0 ) {
-								if( sOptions.length() > 0 ) sOptions += "\r\n";
-								//sOptions += "<strong>";
-								sOptions += sOptionName + ": ";
-								sOptions += sSelections;
-							}
+							// if( sSelections.length() > 0 ) {
+							// 	if( sOptions.length() > 0 ) sOptions += "\r\n";
+							// 	//sOptions += "<strong>";
+							// 	sOptions += sOptionName + ": ";
+							// 	sOptions += sSelections;
+							// }
 						}
 						else if(sOptionType.equalsIgnoreCase("select-one") == true) {
 							String sSelections = new String("");
@@ -805,22 +822,30 @@ public class MenuOrderBean
 								String opt = choice.getPropertyValue("name");
 								String param = new String(request.getParameter(sOptionName).getBytes("ISO8859_1"), "UTF-8");
 								if( opt.equals(param) ) {
-									BigDecimal bdOptionPrice = new BigDecimal(choice.getPropertyValue("price"));
-									bdPrice = bdPrice.add(bdOptionPrice);
-									if( sSelections.length() > 0 )
-										sSelections += ", " + opt;
-									else
-										sSelections += opt;
+									BigDecimal bdChoicePrice = new BigDecimal(choice.getPropertyValue("price"));
+									bdPrice = bdPrice.add(bdChoicePrice);
+									JSONObject choiceJson = new JSONObject();
+									choiceJson.put("name", opt);
+									choiceJson.put("price", bdChoicePrice);
+									choicesArrJson.put(choiceJson);
+
+									// if( sSelections.length() > 0 )
+									// 	sSelections += ", " + opt;
+									// else
+									// 	sSelections += opt;
 								}
 							}
 
-							if( sSelections.length() > 0 ) {
-								if( sOptions.length() > 0 ) sOptions += "\r\n";
-								//sOptions += "<strong>";
-								sOptions += sOptionName + ": ";
-								sOptions += sSelections;
-							}
+							// if( sSelections.length() > 0 ) {
+							// 	if( sOptions.length() > 0 ) sOptions += "\r\n";
+							// 	//sOptions += "<strong>";
+							// 	sOptions += sOptionName + ": ";
+							// 	sOptions += sSelections;
+							// }
 						}
+
+						optionJson.put("selected_choices", choicesArrJson);
+						optionsArrJson.put(optionJson);
 						// else
 						// {
 						// 	String sOptionTxt = (String)request.getParameter(sOptionName);
@@ -834,6 +859,7 @@ public class MenuOrderBean
 						// 	}
 						// }
 					}
+
 					///////////////////////////////////////////
 					
 					// Add new item to order
@@ -853,16 +879,17 @@ public class MenuOrderBean
 
 					if (oMenuItem.getPropertyValue_Boolean("special_instructions")) {
 						String specialInstructions = (String)request.getParameter("special_instructions");
-						if( sOptions.length() > 0 ) sOptions += "\r\n";
-						sOptions += "Special Instructions:\r\n";
-						sOptions += specialInstructions;
+						// if( sOptions.length() > 0 ) sOptions += "\r\n";
+						// sOptions += "Special Instructions:\r\n";
+						// sOptions += specialInstructions;
+						optionsJson.put("special_instructions", specialInstructions);
 					}
 	
 					// Get size value of this item
 					//String sSize = oMenuItem.getPropertyValue("size_desc");
 					
 					RandomGUID guid = new RandomGUID();
-					OrderItem item = new OrderItem(guid.toString(), sMenuItemName, sMenuItemDesc, sMenuItemSizeDesc, bdPrice, iQuantity, sOptions);
+					OrderItem item = new OrderItem(guid.toString(), sMenuItemName, sMenuItemDesc, sMenuItemSizeDesc, bdPrice, iQuantity, optionsJson.toString(1));
 	
 					// Add new order item to order
 					m_orderItemMap.put( guid.toString(), item );

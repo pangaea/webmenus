@@ -640,7 +640,7 @@ CREATE TABLE `webmenus_menu_order_item` (
   `modified` datetime DEFAULT NULL,
   `name` varchar(64) NOT NULL,
   `description` varchar(255) NOT NULL,
-  `options` varchar(255) NOT NULL,
+  `options` varchar(2048) NOT NULL,
   `size_desc` varchar(32) NOT NULL,
   `price` double NOT NULL,
   `quantity` int NOT NULL,
@@ -763,4 +763,4 @@ CREATE TABLE `webmenus_schedule_menu_list` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-22  1:07:11
+-- Dump completed on 2026-06-23 13:47:17

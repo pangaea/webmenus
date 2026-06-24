@@ -47,7 +47,12 @@
 			/*border:1px solid #000000;*/
 			text-align:left;
 		}
-
+		.optionName {
+			margin-top: 10px;
+		}
+		.choicesBlock {
+			margin-left: 10px;
+		}
 		</style>
 	</head>
 	<body>
@@ -97,18 +102,29 @@
 
 <xsl:template match="items">
 	<xsl:for-each select="item">
-	<tr>
-	<td valign="top">
-		<div class='menuItemTitle'><xsl:value-of select="name/text()"/><xsl:if test="string-length(size/text())&gt;0"> : <xsl:value-of select="size/text()"/></xsl:if></div>
-		<!--div class='menuItemDesc'><xsl:value-of select="description/text()"/></div-->
-<pre>
-<xsl:value-of select="options/text()"/>
-</pre>
-	</td>
-	<td valign="top" class="usd"><xsl:value-of select="price/text()"/></td>
-	<td valign="top" class="quantity"><xsl:value-of select="quantity/text()"/></td>
-	<td valign="top" class="usd"><xsl:value-of select="itemtotal/text()"/></td>
-	</tr>
+		<tr>
+		<td valign="top">
+			<div class='menuItemTitle'><xsl:value-of select="name/text()"/><xsl:if test="string-length(size/text())&gt;0"> : <xsl:value-of select="size/text()"/></xsl:if></div>
+			<!--div class='menuItemDesc'><xsl:value-of select="description/text()"/></div-->
+			<xsl:apply-templates select="options"/>
+		</td>
+		<td valign="top" class="usd"><xsl:value-of select="price/text()"/></td>
+		<td valign="top" class="quantity"><xsl:value-of select="quantity/text()"/></td>
+		<td valign="top" class="usd"><xsl:value-of select="itemtotal/text()"/></td>
+		</tr>
+	</xsl:for-each>
+</xsl:template>
+
+<xsl:template match="options">
+	<xsl:for-each select="option">
+		<div class="optionName"><b><xsl:value-of select="name/text()"/></b></div>
+		<div class="choicesBlock"><xsl:apply-templates select="choices"/></div>
+	</xsl:for-each>
+</xsl:template>
+
+<xsl:template match="choices">
+	<xsl:for-each select="choice">
+		<xsl:value-of select="name/text()"/><xsl:if test="string-length(price/text())&gt;0"> (<xsl:value-of select="price/text()"/>)</xsl:if><br/>
 	</xsl:for-each>
 </xsl:template>
 
