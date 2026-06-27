@@ -102,12 +102,12 @@ function goNav(page)
 							<tr><th>Choose sample menus:</th><td valign="top">
 							<html:select property="sample_menus">
 								<html:option value="">-- Please Select --</html:option>
-								<!--html:option value="sample">Basic Sample Menus</html:option-->
 								<html:option value="american">American Cuisine</html:option>
+								<html:option value="bagel">Bagel Restaurant</html:option>
 								<html:option value="chinese">Chinese Restaurant</html:option>
 								<html:option value="greek">Greek Restaurant</html:option>
 								<html:option value="indian">Indian Restaurant</html:option>
-								<html:option value="italian">Pizzeria &amp; Restaurant</html:option>
+								<html:option value="italian">Pizzeria Restaurant</html:option>
 							</html:select>
 							</td></tr>
 							<tr><th></th><td style="text-align:left;">

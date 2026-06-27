@@ -1,0 +1,642 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<location name="Brooklyn Kettle Bagels" city="New York" state="NY">
+  <menu name="Bagels and Spreads" index="1">
+    <category name="Fresh Bagels" index="1">
+      <item index="1">
+        <name>Single Bagel</name>
+        <description>Fresh-baked kettle-boiled bagel with a crisp crust and chewy center.</description>
+        <portions>
+          <size index="1" price="1.75">One bagel</size>
+          <size index="2" price="9.95">Half dozen</size>
+          <size index="3" price="17.95">Dozen</size>
+        </portions>
+        <options>
+          <option index="1" name="Bagel Flavor" type="select-one">
+            <choices>
+              <choice price="0.00">Plain</choice>
+              <choice price="0.00">Sesame</choice>
+              <choice price="0.00">Poppy</choice>
+              <choice price="0.00">Everything</choice>
+              <choice price="0.00">Onion</choice>
+              <choice price="0.00">Garlic</choice>
+              <choice price="0.00">Cinnamon raisin</choice>
+              <choice price="0.00">Whole wheat</choice>
+              <choice price="0.25">Pumpernickel</choice>
+            </choices>
+          </option>
+          <option index="2" name="Preparation" type="select-one">
+            <choices>
+              <choice price="0.00">Not toasted</choice>
+              <choice price="0.00">Lightly toasted</choice>
+              <choice price="0.00">Toasted</choice>
+              <choice price="0.00">Well toasted</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="2">
+        <name>Bagel with Butter</name>
+        <description>Your choice of fresh bagel toasted and served with creamy butter.</description>
+        <portions>
+          <size index="1" price="2.95">Single</size>
+        </portions>
+        <options>
+          <option index="1" name="Bagel Flavor" type="select-one">
+            <choices>
+              <choice price="0.00">Plain</choice>
+              <choice price="0.00">Everything</choice>
+              <choice price="0.00">Sesame</choice>
+              <choice price="0.00">Poppy</choice>
+              <choice price="0.00">Onion</choice>
+              <choice price="0.00">Cinnamon raisin</choice>
+              <choice price="0.25">Pumpernickel</choice>
+            </choices>
+          </option>
+          <option index="2" name="Preparation" type="select-one">
+            <choices>
+              <choice price="0.00">Not toasted</choice>
+              <choice price="0.00">Toasted</choice>
+              <choice price="0.00">Well toasted</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="3">
+        <name>Bagel with Cream Cheese</name>
+        <description>Your choice of bagel with a generous spread of house cream cheese.</description>
+        <portions>
+          <size index="1" price="4.25">Single</size>
+          <size index="2" price="6.25">Double cream cheese</size>
+        </portions>
+        <options>
+          <option index="1" name="Bagel Flavor" type="select-one">
+            <choices>
+              <choice price="0.00">Plain</choice>
+              <choice price="0.00">Everything</choice>
+              <choice price="0.00">Sesame</choice>
+              <choice price="0.00">Poppy</choice>
+              <choice price="0.00">Onion</choice>
+              <choice price="0.00">Garlic</choice>
+              <choice price="0.00">Cinnamon raisin</choice>
+              <choice price="0.25">Whole wheat everything</choice>
+            </choices>
+          </option>
+          <option index="2" name="Cream Cheese Flavor" type="select-one">
+            <choices>
+              <choice price="0.00">Plain</choice>
+              <choice price="0.50">Scallion</choice>
+              <choice price="0.50">Vegetable</choice>
+              <choice price="0.75">Lox spread</choice>
+              <choice price="0.75">Jalapeno cheddar</choice>
+              <choice price="0.50">Strawberry</choice>
+              <choice price="0.75">Vegan plain</choice>
+            </choices>
+          </option>
+          <option index="3" name="Preparation" type="select-one">
+            <choices>
+              <choice price="0.00">Not toasted</choice>
+              <choice price="0.00">Toasted</choice>
+              <choice price="0.00">Well toasted</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+    </category>
+
+    <category name="Cream Cheese and Spreads To Go" index="2">
+      <item index="1">
+        <name>Plain Cream Cheese</name>
+        <description>Classic whipped cream cheese made fresh daily.</description>
+        <portions>
+          <size index="1" price="4.95">Half pound</size>
+          <size index="2" price="8.95">One pound</size>
+        </portions>
+        <options>
+          <option index="1" name="Add Bagels" type="select">
+            <choices>
+              <choice price="1.75">Add one plain bagel</choice>
+              <choice price="9.95">Add half dozen assorted bagels</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="2">
+        <name>Flavored Cream Cheese</name>
+        <description>House-made cream cheese blended with sweet or savory mix-ins.</description>
+        <portions>
+          <size index="1" price="5.95">Half pound</size>
+          <size index="2" price="10.95">One pound</size>
+        </portions>
+        <options>
+          <option index="1" name="Flavor" type="select-one">
+            <choices>
+              <choice price="0.00">Scallion</choice>
+              <choice price="0.00">Vegetable</choice>
+              <choice price="1.00">Lox spread</choice>
+              <choice price="0.50">Jalapeno cheddar</choice>
+              <choice price="0.00">Strawberry</choice>
+              <choice price="0.50">Olive pimento</choice>
+            </choices>
+          </option>
+          <option index="2" name="Add Bagels" type="select">
+            <choices>
+              <choice price="1.75">Add one bagel</choice>
+              <choice price="9.95">Add half dozen assorted bagels</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="3">
+        <name>Vegan Spread</name>
+        <description>Dairy-free spread with a smooth, tangy cream cheese-style flavor.</description>
+        <portions>
+          <size index="1" price="6.95">Half pound</size>
+          <size index="2" price="12.95">One pound</size>
+        </portions>
+        <options>
+          <option index="1" name="Flavor" type="select-one">
+            <choices>
+              <choice price="0.00">Plain vegan</choice>
+              <choice price="0.50">Scallion vegan</choice>
+              <choice price="0.50">Vegetable vegan</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+    </category>
+  </menu>
+
+  <menu name="Breakfast and Sandwiches" index="2">
+    <category name="Breakfast Bagels" index="1">
+      <item index="1">
+        <name>Egg and Cheese Bagel</name>
+        <description>Two fresh-cracked eggs with melted cheese on your choice of bagel.</description>
+        <portions>
+          <size index="1" price="6.95">Regular</size>
+          <size index="2" price="8.95">With extra egg</size>
+        </portions>
+        <options>
+          <option index="1" name="Bagel Flavor" type="select-one">
+            <choices>
+              <choice price="0.00">Plain</choice>
+              <choice price="0.00">Everything</choice>
+              <choice price="0.00">Sesame</choice>
+              <choice price="0.00">Onion</choice>
+              <choice price="0.25">Whole wheat</choice>
+            </choices>
+          </option>
+          <option index="2" name="Cheese" type="select-one">
+            <choices>
+              <choice price="0.00">American</choice>
+              <choice price="0.00">Cheddar</choice>
+              <choice price="0.00">Swiss</choice>
+              <choice price="0.50">Pepper jack</choice>
+            </choices>
+          </option>
+          <option index="3" name="Add Meat" type="select">
+            <choices>
+              <choice price="2.50">Bacon</choice>
+              <choice price="2.50">Sausage</choice>
+              <choice price="2.75">Turkey bacon</choice>
+              <choice price="3.00">Pastrami</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="2">
+        <name>Bacon, Egg and Cheese Bagel</name>
+        <description>Crispy bacon, two eggs, and melted cheese on a toasted bagel.</description>
+        <portions>
+          <size index="1" price="8.95">Regular</size>
+          <size index="2" price="10.95">Double bacon</size>
+        </portions>
+        <options>
+          <option index="1" name="Bagel Flavor" type="select-one">
+            <choices>
+              <choice price="0.00">Plain</choice>
+              <choice price="0.00">Everything</choice>
+              <choice price="0.00">Sesame</choice>
+              <choice price="0.00">Poppy</choice>
+              <choice price="0.00">Onion</choice>
+            </choices>
+          </option>
+          <option index="2" name="Cheese" type="select-one">
+            <choices>
+              <choice price="0.00">American</choice>
+              <choice price="0.00">Cheddar</choice>
+              <choice price="0.50">Swiss</choice>
+              <choice price="0.50">Pepper jack</choice>
+            </choices>
+          </option>
+          <option index="3" name="Extras" type="select">
+            <choices>
+              <choice price="1.50">Extra egg</choice>
+              <choice price="1.00">Hash brown on sandwich</choice>
+              <choice price="1.00">Avocado</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="3">
+        <name>Smoked Salmon Breakfast Bagel</name>
+        <description>Smoked salmon, egg, scallion cream cheese, tomato, and red onion on a toasted bagel.</description>
+        <portions>
+          <size index="1" price="12.95">Regular</size>
+          <size index="2" price="16.95">Extra salmon</size>
+        </portions>
+        <options>
+          <option index="1" name="Bagel Flavor" type="select-one">
+            <choices>
+              <choice price="0.00">Everything</choice>
+              <choice price="0.00">Plain</choice>
+              <choice price="0.00">Sesame</choice>
+              <choice price="0.25">Pumpernickel</choice>
+            </choices>
+          </option>
+          <option index="2" name="Preparation" type="select-one">
+            <choices>
+              <choice price="0.00">Toasted</choice>
+              <choice price="0.00">Lightly toasted</choice>
+              <choice price="0.00">Not toasted</choice>
+            </choices>
+          </option>
+          <option index="3" name="Extras" type="select">
+            <choices>
+              <choice price="0.75">Capers</choice>
+              <choice price="1.00">Cucumber</choice>
+              <choice price="1.50">Extra cream cheese</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+    </category>
+
+    <category name="Deli Bagel Sandwiches" index="2">
+      <item index="1">
+        <name>Nova Lox Bagel</name>
+        <description>Nova smoked salmon with plain cream cheese, tomato, red onion, and capers.</description>
+        <portions>
+          <size index="1" price="13.95">Regular</size>
+          <size index="2" price="18.95">Extra lox</size>
+        </portions>
+        <options>
+          <option index="1" name="Bagel Flavor" type="select-one">
+            <choices>
+              <choice price="0.00">Everything</choice>
+              <choice price="0.00">Plain</choice>
+              <choice price="0.00">Sesame</choice>
+              <choice price="0.25">Pumpernickel</choice>
+              <choice price="0.25">Whole wheat everything</choice>
+            </choices>
+          </option>
+          <option index="2" name="Cream Cheese" type="select-one">
+            <choices>
+              <choice price="0.00">Plain</choice>
+              <choice price="0.50">Scallion</choice>
+              <choice price="0.50">Vegetable</choice>
+              <choice price="0.75">Vegan plain</choice>
+            </choices>
+          </option>
+          <option index="3" name="Toppings" type="select">
+            <choices>
+              <choice price="0.00">Tomato</choice>
+              <choice price="0.00">Red onion</choice>
+              <choice price="0.00">Capers</choice>
+              <choice price="1.00">Cucumber</choice>
+              <choice price="1.50">Avocado</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="2">
+        <name>Pastrami Bagel Melt</name>
+        <description>Hot pastrami with melted Swiss cheese and deli mustard on a toasted bagel.</description>
+        <portions>
+          <size index="1" price="11.95">Regular</size>
+          <size index="2" price="15.95">Overstuffed</size>
+        </portions>
+        <options>
+          <option index="1" name="Bagel Flavor" type="select-one">
+            <choices>
+              <choice price="0.00">Plain</choice>
+              <choice price="0.00">Everything</choice>
+              <choice price="0.00">Sesame</choice>
+              <choice price="0.25">Pumpernickel</choice>
+            </choices>
+          </option>
+          <option index="2" name="Cheese" type="select-one">
+            <choices>
+              <choice price="0.00">Swiss</choice>
+              <choice price="0.00">American</choice>
+              <choice price="0.50">Cheddar</choice>
+              <choice price="0.50">Pepper jack</choice>
+            </choices>
+          </option>
+          <option index="3" name="Extras" type="select">
+            <choices>
+              <choice price="0.50">Extra mustard</choice>
+              <choice price="1.00">Sauerkraut</choice>
+              <choice price="1.50">Pickle on the side</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="3">
+        <name>Turkey Club Bagel</name>
+        <description>Roasted turkey, bacon, lettuce, tomato, mayo, and cheese on your choice of bagel.</description>
+        <portions>
+          <size index="1" price="10.95">Regular</size>
+          <size index="2" price="14.95">Overstuffed</size>
+        </portions>
+        <options>
+          <option index="1" name="Bagel Flavor" type="select-one">
+            <choices>
+              <choice price="0.00">Plain</choice>
+              <choice price="0.00">Everything</choice>
+              <choice price="0.00">Sesame</choice>
+              <choice price="0.25">Whole wheat</choice>
+            </choices>
+          </option>
+          <option index="2" name="Cheese" type="select-one">
+            <choices>
+              <choice price="0.00">American</choice>
+              <choice price="0.00">Swiss</choice>
+              <choice price="0.50">Cheddar</choice>
+              <choice price="0.50">Provolone</choice>
+            </choices>
+          </option>
+          <option index="3" name="Toppings" type="select">
+            <choices>
+              <choice price="0.00">Lettuce</choice>
+              <choice price="0.00">Tomato</choice>
+              <choice price="0.00">Mayo</choice>
+              <choice price="1.50">Avocado</choice>
+              <choice price="2.00">Extra bacon</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="4">
+        <name>Veggie Bagel Sandwich</name>
+        <description>Vegetable cream cheese, cucumber, tomato, red onion, sprouts, and avocado on a bagel.</description>
+        <portions>
+          <size index="1" price="9.95">Regular</size>
+        </portions>
+        <options>
+          <option index="1" name="Bagel Flavor" type="select-one">
+            <choices>
+              <choice price="0.00">Everything</choice>
+              <choice price="0.00">Plain</choice>
+              <choice price="0.00">Sesame</choice>
+              <choice price="0.25">Whole wheat</choice>
+            </choices>
+          </option>
+          <option index="2" name="Spread" type="select-one">
+            <choices>
+              <choice price="0.00">Vegetable cream cheese</choice>
+              <choice price="0.00">Plain cream cheese</choice>
+              <choice price="0.75">Vegan plain spread</choice>
+              <choice price="0.75">Hummus</choice>
+            </choices>
+          </option>
+          <option index="3" name="Extras" type="select">
+            <choices>
+              <choice price="1.00">Extra sprouts</choice>
+              <choice price="1.50">Extra avocado</choice>
+              <choice price="1.00">Pickled onions</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+    </category>
+  </menu>
+
+  <menu name="Coffee and Drinks" index="3">
+    <category name="Hot Coffee" index="1">
+      <item index="1">
+        <name>House Coffee</name>
+        <description>Freshly brewed medium roast coffee.</description>
+        <portions>
+          <size index="1" price="2.75">Small</size>
+          <size index="2" price="3.25">Medium</size>
+          <size index="3" price="3.75">Large</size>
+        </portions>
+        <options>
+          <option index="1" name="Milk" type="select-one">
+            <choices>
+              <choice price="0.00">No milk</choice>
+              <choice price="0.00">Whole milk</choice>
+              <choice price="0.00">Half and half</choice>
+              <choice price="0.75">Oat milk</choice>
+              <choice price="0.75">Almond milk</choice>
+            </choices>
+          </option>
+          <option index="2" name="Sweetener" type="select">
+            <choices>
+              <choice price="0.00">Sugar</choice>
+              <choice price="0.00">Stevia</choice>
+              <choice price="0.00">Raw sugar</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="2">
+        <name>Latte</name>
+        <description>Espresso with steamed milk and a light layer of foam.</description>
+        <portions>
+          <size index="1" price="4.25">Small</size>
+          <size index="2" price="5.25">Medium</size>
+          <size index="3" price="6.25">Large</size>
+        </portions>
+        <options>
+          <option index="1" name="Milk" type="select-one">
+            <choices>
+              <choice price="0.00">Whole milk</choice>
+              <choice price="0.00">Skim milk</choice>
+              <choice price="0.75">Oat milk</choice>
+              <choice price="0.75">Almond milk</choice>
+            </choices>
+          </option>
+          <option index="2" name="Flavor Shot" type="select">
+            <choices>
+              <choice price="0.75">Vanilla</choice>
+              <choice price="0.75">Caramel</choice>
+              <choice price="0.75">Hazelnut</choice>
+              <choice price="0.75">Mocha</choice>
+            </choices>
+          </option>
+          <option index="3" name="Espresso" type="select-one">
+            <choices>
+              <choice price="0.00">Regular</choice>
+              <choice price="0.00">Decaf</choice>
+              <choice price="1.00">Extra shot</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+    </category>
+
+    <category name="Cold Drinks" index="2">
+      <item index="1">
+        <name>Iced Coffee</name>
+        <description>Cold-brewed house coffee served over ice.</description>
+        <portions>
+          <size index="1" price="3.75">Medium</size>
+          <size index="2" price="4.75">Large</size>
+        </portions>
+        <options>
+          <option index="1" name="Milk" type="select-one">
+            <choices>
+              <choice price="0.00">No milk</choice>
+              <choice price="0.00">Whole milk</choice>
+              <choice price="0.00">Half and half</choice>
+              <choice price="0.75">Oat milk</choice>
+              <choice price="0.75">Almond milk</choice>
+            </choices>
+          </option>
+          <option index="2" name="Flavor Shot" type="select">
+            <choices>
+              <choice price="0.75">Vanilla</choice>
+              <choice price="0.75">Caramel</choice>
+              <choice price="0.75">Hazelnut</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="2">
+        <name>Fresh Orange Juice</name>
+        <description>Fresh-squeezed orange juice served chilled.</description>
+        <portions>
+          <size index="1" price="4.95">Small</size>
+          <size index="2" price="6.95">Large</size>
+        </portions>
+        <options>
+          <option index="1" name="Add Ice" type="select-one">
+            <choices>
+              <choice price="0.00">No ice</choice>
+              <choice price="0.00">Light ice</choice>
+              <choice price="0.00">Regular ice</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="3">
+        <name>Bottled Drink</name>
+        <description>Chilled bottled beverages from the grab-and-go case.</description>
+        <portions>
+          <size index="1" price="2.75">Bottle</size>
+        </portions>
+        <options>
+          <option index="1" name="Drink Choice" type="select-one">
+            <choices>
+              <choice price="0.00">Water</choice>
+              <choice price="0.50">Sparkling water</choice>
+              <choice price="0.75">Orange soda</choice>
+              <choice price="0.75">Cola</choice>
+              <choice price="0.75">Diet cola</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+    </category>
+  </menu>
+
+  <menu name="Catering" index="4">
+    <category name="Bagel Platters" index="1">
+      <item index="1">
+        <name>Bagel and Spread Box</name>
+        <description>Assorted bagels with tubs of plain and flavored cream cheese, sliced and ready to serve.</description>
+        <portions>
+          <size index="1" price="34.95">Serves 6 to 8</size>
+          <size index="2" price="59.95">Serves 10 to 12</size>
+          <size index="3" price="89.95">Serves 16 to 20</size>
+        </portions>
+        <options>
+          <option index="1" name="Bagel Assortment" type="select-one">
+            <choices>
+              <choice price="0.00">Classic assortment</choice>
+              <choice price="5.00">Everything-heavy assortment</choice>
+              <choice price="5.00">Whole wheat assortment</choice>
+            </choices>
+          </option>
+          <option index="2" name="Spread Assortment" type="select">
+            <choices>
+              <choice price="0.00">Plain cream cheese</choice>
+              <choice price="0.00">Scallion cream cheese</choice>
+              <choice price="0.00">Vegetable cream cheese</choice>
+              <choice price="5.00">Lox spread</choice>
+              <choice price="5.00">Vegan spread</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+
+      <item index="2">
+        <name>Smoked Salmon Platter</name>
+        <description>Nova lox with assorted bagels, cream cheese, tomatoes, red onions, capers, cucumbers, and lemon.</description>
+        <portions>
+          <size index="1" price="79.95">Serves 6 to 8</size>
+          <size index="2" price="129.95">Serves 10 to 12</size>
+          <size index="3" price="189.95">Serves 16 to 20</size>
+        </portions>
+        <options>
+          <option index="1" name="Cream Cheese Choice" type="select-one">
+            <choices>
+              <choice price="0.00">Plain</choice>
+              <choice price="5.00">Scallion</choice>
+              <choice price="5.00">Vegetable</choice>
+            </choices>
+          </option>
+          <option index="2" name="Extras" type="select">
+            <choices>
+              <choice price="10.00">Extra capers and onion</choice>
+              <choice price="15.00">Extra cream cheese</choice>
+              <choice price="25.00">Extra lox</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+    </category>
+
+    <category name="Breakfast Catering" index="2">
+      <item index="1">
+        <name>Breakfast Sandwich Tray</name>
+        <description>Assorted egg and cheese bagel sandwiches with bacon, sausage, or vegetarian options.</description>
+        <portions>
+          <size index="1" price="64.95">10 sandwiches</size>
+          <size index="2" price="119.95">20 sandwiches</size>
+          <size index="3" price="169.95">30 sandwiches</size>
+        </portions>
+        <options>
+          <option index="1" name="Assortment" type="select-one">
+            <choices>
+              <choice price="0.00">Mixed meat and vegetarian</choice>
+              <choice price="0.00">Vegetarian only</choice>
+              <choice price="10.00">Bacon-heavy</choice>
+              <choice price="10.00">Sausage-heavy</choice>
+            </choices>
+          </option>
+          <option index="2" name="Add Sides" type="select">
+            <choices>
+              <choice price="14.95">Hash brown tray</choice>
+              <choice price="19.95">Fresh fruit bowl</choice>
+              <choice price="24.95">Coffee box</choice>
+            </choices>
+          </option>
+        </options>
+      </item>
+    </category>
+  </menu>
+</location>
