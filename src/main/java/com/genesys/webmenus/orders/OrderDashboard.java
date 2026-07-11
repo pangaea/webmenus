@@ -192,6 +192,7 @@ public class OrderDashboard extends HttpServlet {
 			jsonOrder.put("invoice", obj.getPropertyValue("invoice"));
 			jsonOrder.put("delivery", obj.getPropertyValue_Boolean("delivery"));
 			jsonOrder.put("estimated_time", obj.getPropertyValue("estimated_time"));
+			jsonOrder.put("notes", obj.getPropertyValue("notes"));
 			orders.put(jsonOrder);
 		}
 	}
@@ -207,6 +208,10 @@ public class OrderDashboard extends HttpServlet {
 		JsonNode inv = node.get("invoice");
 		if (inv != null) {
 			order.addProperty("invoice", inv.asText());
+		}
+		JsonNode notes = node.get("notes");
+		if (notes != null) {
+			order.addProperty("notes", notes.asText());
 		}
 		JsonNode est = node.get("estimated_time");
 		if (est != null) {

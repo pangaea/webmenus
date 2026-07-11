@@ -61,8 +61,11 @@ public class OrderView extends HttpServlet
 						return;
 					}
 					RepositoryObject oOrder = oOrders.get(0);
+					String locId = oOrder.getPropertyValue("location");
+
+					String link = "http://localhost:8080/webmenus/app/my_order.jsp?loc=" + locId + "&id=" + sOrderId;
 	
-					OrderRenderer renderer = new OrderRenderer(oOrder, info);
+					OrderRenderer renderer = new OrderRenderer(oOrder, info, link);
 					renderer.renderOrder();
 					response.setContentType( "text/html; charset=UTF-8" );
 					PrintWriter out = response.getWriter();

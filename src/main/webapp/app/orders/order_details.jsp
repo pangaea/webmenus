@@ -30,6 +30,9 @@ orderDetailsBean.loadOrderDetails();
             /* #main-console td {
                 width: 50%;
             } */
+             .order-info {
+                padding-top: 50px;
+             }
             .order-info tr td:first-child {
                 text-align: right;
                 vertical-align: top;
@@ -103,7 +106,8 @@ orderDetailsBean.loadOrderDetails();
                 var status = $("#status").val();
                 var invoice = $("#invoice").val();
                 var estimated_time = $("#estimated_time").val();
-                updateOrder("<%=request.getParameter("id")%>", status, invoice, estimated_time, () => {
+                var notes = $("#notes").val();
+                updateOrder("<%=request.getParameter("id")%>", status, invoice, estimated_time, notes, () => {
                     //loadOrders("<%=request.getParameter("id")%>");
                     const myEvent = new CustomEvent('reLoadOrder', {});
                     window.parent.document.dispatchEvent(myEvent);
@@ -139,6 +143,10 @@ orderDetailsBean.loadOrderDetails();
                         <tr>
                             <td>Invoice:</td>
                             <td><input id="invoice" type="text" value="<%=orderDetailsBean.getInvoice()%>"></input></td>
+                        </tr>
+                        <tr>
+                            <td>Notes (internal only):</td>
+                            <td><textarea id="notes" style="width:100%;height:80px"><%=orderDetailsBean.getNotes()%></textarea></td>
                         </tr>
                         <tr>
                             <td>Estimated Time:</td>

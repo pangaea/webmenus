@@ -67,12 +67,12 @@ function updateOrderStatus(id, status, callback) {
 	});
 }
 
-function updateOrder(id, status, invoice, estimated_time, callback) {
+function updateOrder(id, status, invoice, estimated_time, notes, callback) {
     $.ajax({
 		type: "POST",
 		url: "/webmenus/OrderDashboard/updateorder/" + id,
 		dataType: "json",
-        data: JSON.stringify({ status: status, invoice: invoice, estimated_time: estimated_time }),
+        data: JSON.stringify({ status: status, invoice: invoice, estimated_time: estimated_time, notes: notes }),
 		success: function(json){
 			//loadOrders();
             callback();

@@ -15,6 +15,7 @@ public class OrderDetailsBean {
     private String m_status = null;
     private String m_invoice = null;
     private String m_estimatedTime = null;
+    private String m_notes = null;
 
     public OrderDetailsBean(){
 	}
@@ -25,12 +26,13 @@ public class OrderDetailsBean {
                 Credentials info = (Credentials)m_request.getSession().getAttribute( "info" );
                 ObjectQuery queryObj = new ObjectQuery( "CCMenuOrder" );
                 queryObj.addProperty("id", m_orderId);
-                RepositoryObjectIterator locIter = new RepositoryObjectIterator(SystemServlet.getObjectManager().Query(info, queryObj));
-			    if(locIter.each()){
-                    RepositoryObject oLoc = locIter.getObj();
-                    m_status = OrderStatusUtil.convertStatusToLabel(oLoc.getPropertyValue_Int("status"));
-                    m_invoice = oLoc.getPropertyValue("invoice");
-                    m_estimatedTime = oLoc.getPropertyValue("estimated_time");
+                RepositoryObjectIterator objIter = new RepositoryObjectIterator(SystemServlet.getObjectManager().Query(info, queryObj));
+			    if(objIter.each()){
+                    RepositoryObject oObj = objIter.getObj();
+                    m_status = OrderStatusUtil.convertStatusToLabel(oObj.getPropertyValue_Int("status"));
+                    m_invoice = oObj.getPropertyValue("invoice");
+                    m_estimatedTime = oObj.getPropertyValue("estimated_time");
+                    m_notes = oObj.getPropertyValue("notes");
                 }
 			}
 			catch(AuthenticationException e){
@@ -57,5 +59,9 @@ public class OrderDetailsBean {
 
     public String getEstimatedTime() {
         return m_estimatedTime;
+    }
+
+    public String getNotes() {
+        return m_notes;
     }
 }

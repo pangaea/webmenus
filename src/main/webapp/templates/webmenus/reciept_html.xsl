@@ -67,6 +67,19 @@
 	<tr><th style="text-align:left;">Customer email/phone:</th><td><xsl:value-of select="customer/email/text()"/> / <xsl:value-of select="customer/phone_num/text()"/></td></tr>
 	<tr><th style="text-align:left;">Location:</th><td><xsl:value-of select="location/text()"/></td></tr>
 	<tr><th style="text-align:left;">Order Id:</th><td><xsl:value-of select="@id"/></td></tr>
+	<tr><th style="text-align:left;">Link:</th><td>
+	
+	<a>
+		<xsl:attribute name="href">
+			<xsl:value-of select="@link"/>
+		</xsl:attribute>
+		<xsl:attribute name="target">
+			_blank
+		</xsl:attribute>
+		Click Here
+	</a>
+
+	</td></tr>
 	<tr><th style="text-align:left;">Delivery:</th><td><xsl:value-of select="delivery/text()"/></td></tr>
 	<tr><th style="text-align:left;" valign="top">Delivery Info:</th><td>
 <pre>

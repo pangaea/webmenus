@@ -39,9 +39,12 @@ public class OrderHandlerTask extends Thread
 					String email_addr = oOrder.getPropertyValue("location.email_addr");
 					int notification_status = oOrder.getPropertyValue_Int("notification_status");
 					int new_notification_status = notification_status;
+
+					String locId = oOrder.getPropertyValue("location.id");
+					String link = "http://localhost:8080/webmenus/app/my_order.jsp?loc=" + locId + "&id=" + oOrder.getPropertyValue("id");
 					
 					// Render order
-					OrderRenderer order_renderer = new OrderRenderer(oOrder, info);
+					OrderRenderer order_renderer = new OrderRenderer(oOrder, info, link);
 					order_renderer.renderOrder();
 					String outText = order_renderer.getOrderText();
 					String outHtml = order_renderer.getOrderHTML();
@@ -52,7 +55,7 @@ public class OrderHandlerTask extends Thread
 						{
 							//  Notify patron
 							Vector toAddr = new Vector();
-							toAddr.add(oOrder.getPropertyValue("email"));
+							toAddr.add(oOrder.getPropertyValue("email"));							
 							Outbound.postMail(toAddr, SystemServlet.getGenesysFromEmail(), email_addr, false, "Your order from " + name, outText, outHtml);
 							new_notification_status |= 1;
 						}

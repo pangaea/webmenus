@@ -66,12 +66,13 @@ class OrderRenderer
 	private StringWriter 		m_outHtml;
 	private RepositoryObject	m_oOrder = null;
 	private Credentials 		m_info = null;
+	private String				m_link = null;
 	
 //	public OrderRenderer(String orderId, String roleId)
 //	{
 //		this(orderId, roleId, null, null);
 //	}
-	public OrderRenderer(RepositoryObject orderItem, Credentials info)
+	public OrderRenderer(RepositoryObject orderItem, Credentials info, String link)
 	{
 		//m_objectBean = objectBean;
 		m_objectBean = SystemServlet.getObjectManager();
@@ -85,6 +86,7 @@ class OrderRenderer
 //		{
 		m_oOrder = orderItem;
 		m_info = info;
+		m_link = link;
 //		}
 //		else
 //		{
@@ -209,6 +211,7 @@ class OrderRenderer
 				// Add order information to order node
 				xmlStreamWriter.writeAttribute("id", orderId);
 				xmlStreamWriter.writeAttribute("time", m_oOrder.getPropertyValue("order_time"));
+				xmlStreamWriter.writeAttribute("link", m_link);
 				
 				xmlStreamWriter.writeStartElement("customer");	// <customer>
 				

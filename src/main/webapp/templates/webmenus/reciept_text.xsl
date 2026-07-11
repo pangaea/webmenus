@@ -11,6 +11,7 @@ Time:		<xsl:value-of select="@time"/>
 Customer:	<xsl:value-of select="customer/email/text()"/> / <xsl:value-of select="customer/phone_num/text()"/>
 Location:	<xsl:value-of select="location/text()"/>
 Order Id:	<xsl:value-of select="@id"/>
+Link:	    <xsl:value-of select="@link"/>
 Delivery:	<xsl:value-of select="delivery/text()"/>
 Delivery Info:
 <xsl:value-of select="delivery_info/text()"/>
