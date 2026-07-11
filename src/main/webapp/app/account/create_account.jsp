@@ -43,9 +43,10 @@ function goNav(page)
 
 
 <div id="wrapper">
-	<div id="header_left"></div>
+	<!--div id="header_left"></div-->
+	<div id="header_shadow"></div>
 	<div id="header">
-		<h1 style="margin-top: 28px;">
+		<h1 style="margin-top: 18px;">
 			<a href="/">
 				<!--img src="<%//=request.getContextPath()%>/w3/images/cooltext1734059047.png"/-->
 				<span class="logo">
