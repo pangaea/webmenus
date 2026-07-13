@@ -41,7 +41,7 @@ public class OrderHandlerTask extends Thread
 					int new_notification_status = notification_status;
 
 					String locId = oOrder.getPropertyValue("location.id");
-					String link = "http://localhost:8080/webmenus/app/my_order.jsp?loc=" + locId + "&id=" + oOrder.getPropertyValue("id");
+					String link = "http://www.soundmenus.com/webmenus/app/my_order.jsp?loc=" + locId + "&id=" + oOrder.getPropertyValue("id");
 					
 					// Render order
 					OrderRenderer order_renderer = new OrderRenderer(oOrder, info, link);

@@ -63,7 +63,7 @@ public class OrderView extends HttpServlet
 					RepositoryObject oOrder = oOrders.get(0);
 					String locId = oOrder.getPropertyValue("location");
 
-					String link = "http://localhost:8080/webmenus/app/my_order.jsp?loc=" + locId + "&id=" + sOrderId;
+					String link = "/webmenus/app/my_order.jsp?loc=" + locId + "&id=" + sOrderId;
 	
 					OrderRenderer renderer = new OrderRenderer(oOrder, info, link);
 					renderer.renderOrder();
