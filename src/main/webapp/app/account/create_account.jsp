@@ -56,8 +56,8 @@ function goNav(page)
 		</h1>
 		<ul id="page_links">
 			<li><a href="/">Home</a></li>
-			<li><a href="/product-details">Product Details</a></li>
-			<li><a href="/contact-us">Contact Us</a></li>
+			<!-- <li><a href="/product-details">Product Details</a></li>
+			<li><a href="/contact-us">Contact Us</a></li> -->
 			<li><a href="<%=request.getContextPath()%>/app/account/create_account.jsp">Signup</a></li>
 			<li><a href="<%=request.getContextPath()%>/ui/login.jsp">Login</a></li>
 		</ul>
