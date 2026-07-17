@@ -65,7 +65,7 @@ function MenuGenerator()
 					  image.indexOf(".jpeg") >= 0 ||
 					  image.indexOf(".jpg") >= 0 ||
 					  image.indexOf(".png") >= 0 ) )
-					imgTag = "<img width=\"100px\" height=\"75px\" src='" + rootPath + "/ImageViewer" + image + "'/>";
+					imgTag = "<img width=\"120px\" height=\"90px\" src='" + rootPath + "/ImageViewer" + image + "'/>";
 					imgRaw = rootPath + "/ImageViewer" + image;
 				//////////////////////////////////////////////////////////////
 				

@@ -150,6 +150,7 @@ public class AccountGenerator{
 					ObjectSubmit theme = new ObjectSubmit("CETheme");
 					theme.addProperty("name", "default");
 					theme.addProperty("menuwidth", "100%");
+					theme.addProperty("itemwidth", "48%");
 					theme.addProperty("columns", 2);
 					theme.addProperty("font", "Lucida Console,Monaco,monospace");
 					theme.addProperty("font_size", "0");
@@ -195,6 +196,7 @@ public class AccountGenerator{
 					ObjectSubmit theme2 = new ObjectSubmit("CETheme");
 					theme2.addProperty("name", "olive");
 					theme2.addProperty("menuwidth", "100%");
+					theme2.addProperty("itemwidth", "500px");
 					theme2.addProperty("font", "Arial");
 					theme2.addProperty("font_size", "0");
 					theme2.addProperty("bkcolor", "f5f6b6");

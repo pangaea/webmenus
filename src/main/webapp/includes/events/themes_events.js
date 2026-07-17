@@ -54,8 +54,8 @@ $(function(){
 	$("#sample_menu").css({
 		"float": "left",
 		"margin": "6px 0 0 10px",
-		"width": "600px",
-		"height": "200px",
+		"width": "700px",
+		"height": "400px",
 		"padding": "10px 10px 20px 10px",
 		"border": "4px solid #DDDDFF"
 	});

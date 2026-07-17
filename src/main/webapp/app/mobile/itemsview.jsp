@@ -32,7 +32,7 @@
 			<webmenusCfg:EnumItems categoryId="<%=sCatId%>">
 				<li><a href="<%=request.getContextPath()%>/app/MenuView/menuitemview?item=<%=itemId%>">
 				<% if(itemImage.length() > 0){ %>
-					<img width="100px" height="75px" src="<%=request.getContextPath()%>/images<%=itemImage%>" /> 
+					<img width="120px" height="90px" src="<%=request.getContextPath()%>/images<%=itemImage%>" /> 
 				<% } %>
 					<h3><%=itemName%></h3> 
 					<p><%=itemDescription%></p>

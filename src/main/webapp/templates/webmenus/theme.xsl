@@ -129,21 +129,27 @@ a.liveOrderItem
 	min-height: 100px;
 	vertical-align: top;
 	text-align: left;
-	background: transparent;
-	margin:2px;
+	text-align: center;
+	background: #FFFFFF;
+	margin: 10px;
 	display: inline-block;
-	border-width:0 3px;
-	<xsl:if test="$layout_columns='1'">width: 100%;</xsl:if>
-	<xsl:if test="$layout_columns='2'">width: 49%;</xsl:if>
-	<xsl:if test="$layout_columns='3'">width: 32%;</xsl:if>
+	border: 3px;
+	<!-- <xsl:if test="$layout_columns='1'">width: 100%;</xsl:if>
+	<xsl:if test="$layout_columns='2'">width: 46%;</xsl:if>
+	<xsl:if test="$layout_columns='3'">width: 28%;</xsl:if> -->
+	width: <xsl:value-of select="property[@name='itemwidth']/text()"/>;
+	box-shadow: 4px 2px 6px rgba(155, 155, 133, 50.25);
+	border-radius: 12px;
+	padding: 10px;
 }
 
 .menuTitle
 {
 	font: normal <xsl:value-of select="24+$font_size"/>pt <xsl:value-of select="property[@name='font']/text()"/>;
-	color: #<xsl:value-of select="property[@name='titlebar_color']/text()"/>;
+	color: #000000;
 	text-align: left;
 	width: 100%;
+	margin-top: 20px;
 }
 .menuItem
 {
@@ -153,9 +159,12 @@ a.liveOrderItem
 {
 	font: normal <xsl:value-of select="16+$font_size"/>pt <xsl:value-of select="property[@name='font']/text()"/>;
 	color: <xsl:value-of select="property[@name='cat_text_color']/text()"/>;
-	text-align: center;
 	width: 100%;
 	background-color: #<xsl:value-of select="property[@name='titlebar_color']/text()"/>;
+	display: grid;
+  	place-items: center;
+	min-height: 50px;
+	margin-top: 20px;
 }
 .menuItemTitle
 {
@@ -243,9 +252,6 @@ span.alert
     border: 1px #ccc solid;
     background-color: #<xsl:value-of select="property[@name='bkcolor']/text()"/>;
     padding: 5px;
-}
-#sample_menu_innner .menuItemContainter{
- width: 100% !important;
 }
 
 </xsl:template>
