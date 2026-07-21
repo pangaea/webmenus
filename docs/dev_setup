@@ -43,12 +43,24 @@ sudo apt install tomcat9
 
 *Setup environment variables for DEV*
 
+- If running tomcat from catalina.sh
+
 Create file _*setenv.sh*_ in the Tomcat bin directory.
 Set variables in this file (eg):
 ~~~
 export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
 export GENESYS_ENV=development
 export GENESYS_HOME=/home/kevin/projects/webmenus/
+~~~
+
+- If running tomcat using systemctl
+~~~
+cd /etc/systemd/system
+vi tomcat9.service
+# Adjust the file location and the GENESYS_HOME path as needed.
+#Set variables in this file (eg):
+Environment='GENESYS_HOME=/opt/tomcat/webapps/webmenus/'
+Environment='GENESYS_S3_BUCKET=webmenus-development-us-standard'
 ~~~
 
 *Setup AWS*

@@ -19,3 +19,10 @@ sudo iptables -t nat -I OUTPUT -p tcp --dport 80 -j REDIRECT --to-ports 8080
 Restart Tomcat7
 
 [remote] sudo service tomcat7 restart
+
+
+===================================
+scp -i soundmenus.pem /home/kevin/projects/webmenus/target/webmenus-1.0-SNAPSHOT.war ubuntu@184.73.18.231:~
+//scp -i soundmenus.pem projects/soundmenus.tar.gz ubuntu@184.73.18.231:~
+ssh -i "soundmenus.pem" ubuntu@ec2-184-73-18-231.compute-1.amazonaws.com
+[remote] sudo cp ~/webmenus-1.0-SNAPSHOT.war /opt/tomcat/webapps/webmenus.war

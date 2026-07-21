@@ -25,17 +25,14 @@
 
     <!-- Global parameters -->
     <!--  GENESYS_HOME is used as a default if the environment variable of the same name is missing -->
-    <context-param>
+    <!-- <context-param>
         <param-name>
             GENESYS_HOME
         </param-name>
         <param-value>
-        	<!--[CDATA[C:\home\Datasphere\webapp\]]-->
-        	<!--[CDATA[..\webapps\genesys\]]-->
             <![CDATA[/home/kevin/projects/webmenus/src/main/webapp/]]>
-            <!--[CDATA[/var/lib/tomcat7/webapps/webmenus/]]-->
         </param-value>
-    </context-param>
+    </context-param> -->
     
     <!--context-param>
         <param-name>
@@ -46,14 +43,14 @@
         </param-value>
     </context-param-->
     
-    <context-param>
+    <!-- <context-param>
         <param-name>
             GENESYS_S3_BUCKET
         </param-name>
         <param-value>
             webmenus-development-us-standard
         </param-value>
-    </context-param>
+    </context-param> -->
 
 	<!--
 		high, low, off

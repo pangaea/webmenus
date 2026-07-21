@@ -159,6 +159,7 @@ public class SystemServlet implements ServletContextListener
 			//rootAppPath = webappPath.substring( 0, webappPath.length() - WEBAPP_NAME_LEN - 1 );
 			//Map<String, String> env = System.getenv();
 			String rootAppPath = System.getenv("GENESYS_HOME");
+			g_logger.info("GENESYS_HOME = " + rootAppPath);
 			if(rootAppPath == null)	rootAppPath = servContext.getInitParameter("GENESYS_HOME");
 			//SystemServlet.g_logger.debug("SystemServlet : rootAppPath = " + rootAppPath);
 			m_GenesysHome = new String(rootAppPath);
