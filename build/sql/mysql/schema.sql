@@ -124,6 +124,7 @@ CREATE TABLE `base_theme` (
   `system_text_color` varchar(6) NOT NULL,
   `template` longtext,
   `columns` int NOT NULL DEFAULT '1',
+  `itemwidth` varchar(32) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -618,6 +619,7 @@ CREATE TABLE `webmenus_menu_order` (
   `payment_info` varchar(255) DEFAULT NULL,
   `invoice` varchar(64) DEFAULT NULL,
   `estimated_time` datetime DEFAULT NULL,
+  `notes` varchar(1024) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_webmenus_menu_order__location` (`location_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -764,4 +766,4 @@ CREATE TABLE `webmenus_schedule_menu_list` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-24 18:01:20
+-- Dump completed on 2026-07-22  1:58:19
