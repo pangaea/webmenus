@@ -9,6 +9,7 @@ import com.amazonaws.AmazonServiceException;
 import com.amazonaws.HttpMethod;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.auth.profile.ProfilesConfigFile;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
@@ -96,7 +97,16 @@ public class S3API
 	private static AmazonS3 getS3Connection(){
 		AWSCredentials credentials = null;
         try {
-            credentials = new ProfileCredentialsProvider().getCredentials();
+			String homeDir = System.getProperty("user.home");
+			String credentialsPath = homeDir + "/.aws/credentials";
+
+			// For AWS SDK v1
+			System.setProperty("AWS_SHARED_CREDENTIALS_FILE", credentialsPath);
+			ProfilesConfigFile file = new ProfilesConfigFile(credentialsPath);
+			ProfileCredentialsProvider provider = new ProfileCredentialsProvider(file, "default");
+			credentials = provider.getCredentials();
+
+            //credentials = new ProfileCredentialsProvider().getCredentials();
         } catch (Exception e) {
             throw new AmazonClientException(
                     "Cannot load the credentials from the credential profiles file. " +
