@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -47,8 +48,16 @@ public class OrderCheckout extends HttpServlet {
 
 			// Save order
 			String email = request.getParameter("email");
-			ObjectMapper mapper = new ObjectMapper();
-        	Map<String, Object> attrs = mapper.convertValue(request.getParameterMap(), new TypeReference<Map<String, Object>>(){});
+			//ObjectMapper mapper = new ObjectMapper();
+        	//Map<String, String> attrs = mapper.convertValue(request.getParameterMap(), new TypeReference<Map<String, String>>(){});
+			// Flatten Map<String, String[]> to Map<String, String>
+			Map<String, String> attrs = request.getParameterMap().entrySet().stream()
+				.filter(entry -> entry.getValue() != null && entry.getValue().length > 0)
+				.collect(Collectors.toMap(
+					Map.Entry::getKey,
+					entry -> entry.getValue()[0] // Take the first value
+				));
+
 			String orderId = menuOrderBean.processOrder(email, 0, attrs);
 			if(orderId != null ){
 				response.sendRedirect( request.getContextPath() + "/app/my_order.jsp?loc=" + menuOrderBean.getCurrentLocationId() + "&id=" + orderId );

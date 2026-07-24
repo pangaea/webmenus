@@ -251,7 +251,7 @@ public class PayPalPortal extends HttpServlet
 
         String email = node.get("email").asText();
         ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> attrs = mapper.convertValue(node, new TypeReference<Map<String, Object>>(){});
+        Map<String, String> attrs = mapper.convertValue(node, new TypeReference<Map<String, String>>(){});
         // 0 - PayPal
         String currentOrderId = menuOrderBean.processOrder(email, 1, attrs);
         if (currentOrderId == null) {

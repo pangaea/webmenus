@@ -147,9 +147,10 @@ public class MenuOrderBean
 		m_creds = null;
 	}
 
-	public String processOrder(String email, int paymentType, Map<String, Object> params) {
+	public String processOrder(String email, int paymentType, Map<String, String> params) {
 		try {
-			Boolean deliveryOrder = params.get("delivery_option").toString().equalsIgnoreCase("delivery");
+			Boolean deliveryOrder = Optional.ofNullable(params.get("delivery_option"))
+											.map(o -> o.toString().equalsIgnoreCase("delivery")).orElse(false);
 			if (deliveryOrder) {
 				String delivery_info = MessageFormat.format("{0}\n{1}, {2} {3}\n{4}", (String)params.get("address"),
 																			(String)params.get("city"),
@@ -160,8 +161,8 @@ public class MenuOrderBean
 			}
 
 			if (loginPatron(email) == null) {
-				createPatron(email, params.get("firstname").toString(), params.get("lastname").toString(),
-							params.get("phone_num").toString());
+				createPatron(email, params.get("firstname"), params.get("lastname"),
+							params.get("phone_num"));
 			}
 			return submitOrder(paymentType);
 		}
