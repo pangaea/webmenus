@@ -191,7 +191,7 @@ dojo.require("dojo.parser");
       <button class="close-button" id="closeCart" aria-label="Close cart">x</button>
     </div>
 
-	<iframe src="orderview.jsp" style="height:100%"></iframe>
+	<iframe id="orderPanel" src="orderview.jsp" style="height:100%"></iframe>
 
     <!-- <div class="cart-items" id="cartItems"></div>
 
