@@ -115,6 +115,10 @@ dojo.require("dojo.parser");
 				viewOrder();
 		</script>
 		</button>
+		<button class="cart-button" id="openCart" aria-label="Open shopping cart">
+			🛒 Cart
+			<span class="cart-count" id="cartCount">0</span>
+		</button>
 <%	} %>
 		</td>
 		<td valign="middle">
@@ -132,6 +136,27 @@ dojo.require("dojo.parser");
 				message("ERROR: missing template: invalid theme selected.", "Error", function(){document.location.reload();});
 			}
 			$COMPILED_TEMPLATE = Handlebars.compile(template);
+
+			dojo.addOnLoad( function() {
+				document.getElementById("openCart").addEventListener("click", openCart);
+    			document.getElementById("closeCart").addEventListener("click", closeCart);
+			});
+			//const cartDrawer = document.getElementById("cartDrawer");
+			function openCart() {
+				const cartDrawer = document.getElementById("cartDrawer");
+				cartDrawer.classList.add("open");
+				//overlay.classList.add("open");
+				cartDrawer.setAttribute("aria-hidden", "false");
+				//document.body.style.overflow = "hidden";
+			}
+
+			function closeCart() {
+				const cartDrawer = document.getElementById("cartDrawer");
+				cartDrawer.classList.remove("open");
+				//overlay.classList.remove("open");
+				cartDrawer.setAttribute("aria-hidden", "true");
+				///document.body.style.overflow = "";
+			}
 		</script>
 <%
 		}
@@ -153,6 +178,48 @@ dojo.require("dojo.parser");
 	<div id="menuFooter"></div>
 
 </div>
+
+
+  <aside
+    class="cart-drawer"
+    id="cartDrawer"
+    aria-label="Shopping cart"
+    aria-hidden="true"
+  >
+    <div class="cart-header">
+      <h2>Your Order</h2>
+      <button class="close-button" id="closeCart" aria-label="Close cart">x</button>
+    </div>
+
+	<iframe src="orderview.jsp" style="height:100%"></iframe>
+
+    <!-- <div class="cart-items" id="cartItems"></div>
+
+    <div class="cart-summary">
+      <div class="summary-row">
+        <span>Subtotal</span>
+        <span id="subtotal">$0.00</span>
+      </div>
+      <div class="summary-row">
+        <span>Delivery</span>
+        <span id="delivery">$0.00</span>
+      </div>
+      <div class="summary-row">
+        <span>Tax</span>
+        <span id="tax">$0.00</span>
+      </div>
+      <div class="summary-row total">
+        <span>Total</span>
+        <span id="total">$0.00</span>
+      </div>
+
+      <button class="checkout-button" id="checkoutButton" disabled>
+        Proceed to Checkout
+      </button>
+      <p class="notice" id="notice" role="status"></p> -->
+    </div>
+  </aside>
+
 </webmenusCfg:GuestUser>
 </body>
 </html>
