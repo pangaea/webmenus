@@ -446,6 +446,7 @@ dojo.addOnLoad( function()
 					//orderCheckout.submit();
 					//document.getElementById("orderCheckout").submit();
 					// Redirect to a success page or update UI
+					window.parent.document.getElementById("orderPanel").contentWindow.location.reload();
 					window.location.href = '<%=request.getContextPath()%>/app/my_order.jsp?loc=<%=menuOrderBean.getCurrentLocationId()%>&id=' + orderData.order_id;
 				});
 			},
@@ -461,6 +462,7 @@ dojo.addOnLoad( function()
 			}
 
 		}).render('#paypal-container-<%=clientId%>');
+
 		</script>
 <%
 			break;
@@ -472,9 +474,9 @@ dojo.addOnLoad( function()
 		<button dojoType="dijit.form.Button">
 			Pay at Location
 			<script type="dojo/method" event="onClick">
-				//submitOrder();
-				if( validateCreateParams() )
+				if( validateCreateParams() ) {
 					orderCheckout.submit();
+				}
 			</script>
 		</button>
 <% } } %>

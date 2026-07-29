@@ -108,16 +108,6 @@ dojo.require("dojo.parser");
 <%	} %>
 		</td>
 		<td valign="middle">
-<%	if( bOpen ){ %>
-		<button dojoType="dijit.form.Button" connectId="2112" iconClass="plusIcon">
-		View Order
-		<script type="dojo/method" event="onClick">
-				viewOrder();
-		</script>
-		</button>
-<%	} %>
-		</td>
-		<td valign="middle">
 
 		<webmenusCfg:EnumMenus locId="<%=sLocId%>">
 <%
@@ -171,12 +161,14 @@ dojo.require("dojo.parser");
 		</div>&nbsp;
 		</webmenusCfg:EnumMenus>
 		</td>
-		<td style="text-align:right; width:100%; padding-right:20px;">
+<%	if( bOpen ){ %>
+		<td class="cart-button-container">
 			<button class="cart-button" id="openCart" aria-label="Open shopping cart">
-				View Cart
+				<span>Cart</span>
 				<span class="cart-count" id="cartCount">0</span>
 			</button>
 		</td>
+<% } %>
 		</tr></table>
 
 	</div>

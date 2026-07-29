@@ -355,6 +355,12 @@ span.alert
 	font-size: 0.85rem;
 }
 
+.cart-button-container {
+	text-align:right;
+	width:100%;
+	padding-right:20px;
+}
+
 .cart-button {
 	display: flex;
 	align-items: right;
@@ -365,6 +371,11 @@ span.alert
 	background: var(--text);
 	color: white;
 	font-weight: 700;
+	float: right;
+}
+
+.cart-button span:first-child {
+	margin: auto;
 }
 
 .cart-count {

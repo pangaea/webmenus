@@ -68,6 +68,10 @@ All Rights Reserved
             dojo.require("dijit.form.Button");
 
             dojo.addOnLoad( function() {
+                var parentWindow = window.parent.document.getElementById("orderPanel");
+                if (parentWindow != null) {
+                    parentWindow.contentWindow.location.reload(true);
+                }
                 getOrderStatus("<%=order_id%>", "<%=request.getContextPath()%>");
                 window.setInterval(() => {
                     getOrderStatus("<%=order_id%>", "<%=request.getContextPath()%>");
