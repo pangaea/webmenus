@@ -355,6 +355,30 @@ span.alert
 	font-size: 0.85rem;
 }
 
+.cart-button {
+	display: flex;
+	align-items: right;
+	gap: 10px;
+	padding: 10px 16px;
+	border: 0;
+	border-radius: 999px;
+	background: var(--text);
+	color: white;
+	font-weight: 700;
+}
+
+.cart-count {
+	display: grid;
+	min-width: 24px;
+	height: 24px;
+	padding-inline: 6px;
+	place-items: center;
+	border-radius: 999px;
+	background: var(--accent);
+	color: var(--text);
+	font-size: 0.8rem;
+}
+
 </xsl:template>
 
 </xsl:stylesheet>

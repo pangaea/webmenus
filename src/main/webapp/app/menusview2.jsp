@@ -115,10 +115,6 @@ dojo.require("dojo.parser");
 				viewOrder();
 		</script>
 		</button>
-		<button class="cart-button" id="openCart" aria-label="Open shopping cart">
-			🛒 Cart
-			<span class="cart-count" id="cartCount">0</span>
-		</button>
 <%	} %>
 		</td>
 		<td valign="middle">
@@ -157,6 +153,11 @@ dojo.require("dojo.parser");
 				cartDrawer.setAttribute("aria-hidden", "true");
 				///document.body.style.overflow = "";
 			}
+
+			function updateCartCount(count) {
+				const cartCount = document.getElementById("cartCount");
+				cartCount.innerText = count;
+			}
 		</script>
 <%
 		}
@@ -169,7 +170,14 @@ dojo.require("dojo.parser");
 			</div>
 		</div>&nbsp;
 		</webmenusCfg:EnumMenus>
-		</td></tr></table>
+		</td>
+		<td style="text-align:right; width:100%; padding-right:20px;">
+			<button class="cart-button" id="openCart" aria-label="Open shopping cart">
+				View Cart
+				<span class="cart-count" id="cartCount">0</span>
+			</button>
+		</td>
+		</tr></table>
 
 	</div>
 
