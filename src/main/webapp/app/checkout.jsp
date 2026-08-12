@@ -441,10 +441,6 @@ dojo.addOnLoad( function()
 				}).then(function(response) {
 					return response.json();
 				}).then(function(orderData) {
-					// Show a success message to the buyer
-					//submitOrder();
-					//orderCheckout.submit();
-					//document.getElementById("orderCheckout").submit();
 					// Redirect to a success page or update UI
 					window.parent.document.getElementById("orderPanel").contentWindow.location.reload();
 					window.location.href = '<%=request.getContextPath()%>/app/my_order.jsp?loc=<%=menuOrderBean.getCurrentLocationId()%>&id=' + orderData.order_id;
@@ -472,7 +468,7 @@ dojo.addOnLoad( function()
 
 <% if( menuOrderBean.isPayOnPickup() ){ %>
 		<button dojoType="dijit.form.Button">
-			Pay at Location
+			Pay at Pickup
 			<script type="dojo/method" event="onClick">
 				if( validateCreateParams() ) {
 					orderCheckout.submit();
