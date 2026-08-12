@@ -7,43 +7,50 @@ package com.genesys.webmenus.designer;
 
 /*<Imports>*/
 // Imported java classes
-import java.io.*;
-import java.text.NumberFormat;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Date;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.jsp.*;
-import javax.xml.stream.*;
-//import java.nio.charset.Charset;
-
-import java.util.regex.*;
-
-import java.lang.reflect.Array;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
-import java.net.*;
+import java.text.NumberFormat;
 
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.*;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+//import java.nio.charset.Charset;
+import javax.xml.stream.FactoryConfigurationError;
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
 
 import com.genesys.SystemServlet;
-import com.genesys.repository.*;
-import com.genesys.session.ClientSessionBean;
-import com.genesys.util.RandomGUID;
-import com.genesys.util.xml.*;
-
+import com.genesys.repository.AuthenticationException;
+import com.genesys.repository.Credentials;
+import com.genesys.repository.ObjectManager;
+import com.genesys.repository.ObjectQuery;
+import com.genesys.repository.ObjectSubmit;
+import com.genesys.repository.QueryResponse;
+import com.genesys.repository.RepositoryException;
+import com.genesys.repository.RepositoryObject;
+import com.genesys.repository.RepositoryObjectIterator;
+import com.genesys.repository.RepositoryObjects;
+import com.genesys.util.xml.XMLDocument;
+import com.genesys.util.xml.XMLNode;
+import com.genesys.util.xml.XMLNodeList;
+import com.genesys.views.ViewResponseWriter;
 //import com.genesys.views.HttpServletRequest;
 //import com.genesys.views.HttpServletResponse;
 //import com.genesys.views.ServletException;
 //import com.genesys.views.HttpSession;
 import com.genesys.webmenus.MenuBuilder;
-import com.genesys.views.ViewResponseWriter;
 
 /*</Imports>*/
 public class MenuDesigner extends HttpServlet

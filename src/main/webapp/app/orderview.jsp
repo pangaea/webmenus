@@ -32,6 +32,7 @@ All Rights Reserved
 		<script type="text/javascript" src="<%=request.getContextPath()%>/includes/controls.js"></script>
 		
 <%
+	int cartCount = 0;
 	String themeName = menuOrderBean.getTheme();
 	if( themeName.length() > 0 ){
 %>
@@ -67,7 +68,9 @@ function updateOrder(qid)
 }
 function checkoutOrder()
 {
-	document.location.href = "../checkout.jsp";
+	//document.location.href = "../checkout.jsp";
+	window.parent.viewCheckout();
+	window.parent.closeCart();
 }
 </script>
 </head>
@@ -155,6 +158,7 @@ function checkoutOrder()
 		if (si != null && !si.isEmpty()) {
 			%><br/><b>Special Instructions</b><pre><%=si%></pre><%
 		}
+		cartCount += item.getQuantity();
 %>
 
 						</div>
@@ -206,7 +210,7 @@ function checkoutOrder()
 			</script>
 		</button>
 <% } %>
-		<button dojoType="dijit.form.Button">
+		<!--button dojoType="dijit.form.Button">
 			Go Back to Menus
 			<script type="dojo/method" event="onClick">
 				parent.closeOrderDialog();
@@ -214,6 +218,9 @@ function checkoutOrder()
 				//dijit.parent.byId('myorder').destroy();
 				//dijit.byId('myorder').destroy();
 			</script>
-		</button>
+		</button-->
+		<script type="text/javascript">
+			window.parent.updateCartCount(<%=cartCount%>);
+		</script>
 	</body>
 </html>

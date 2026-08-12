@@ -14,7 +14,14 @@ All Rights Reserved
 		if( menuOrderBean.submitNewItem(request) == true )
 		{
 			//response.sendRedirect( "orderview.jsp" );
-			response.sendRedirect( "MenuView/vieworder" );
+			//response.sendRedirect( "MenuView/vieworder" );
+%>
+<script type="text/javascript">
+			window.parent.document.getElementById("orderPanel").contentWindow.location.reload();
+			window.parent.openCart();
+			parent.closeOrderDialog();
+</script>
+<%
 			return;
 		}
 	}

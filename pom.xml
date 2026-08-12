@@ -112,6 +112,44 @@
             <version>2.4.4</version>
             <scope>compile</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>33.0.0-jre</version> <!-- Use the latest stable version -->
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.11.0</version> <!-- Use latest stable version -->
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlinx</groupId>
+            <artifactId>kotlinx-coroutines-core-jvm</artifactId>
+            <version>1.10.1</version> <!-- Replace with your required version -->
+        </dependency>
+
+        <dependency>
+            <groupId>com.openai</groupId>
+            <artifactId>openai-java</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.android.attestation</groupId>
+            <artifactId>keyattestation</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>co.nstant.in</groupId>
+            <artifactId>cbor</artifactId>
+            <version>0.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk18on</artifactId>
+            <version>1.85.2</version>
+        </dependency>
     </dependencies>
 
     <repositories>
@@ -119,6 +157,11 @@
             <id>maven-restlet</id>
             <name>Public online Restlet repository</name>
             <url>https://maven.restlet.talend.com/</url>
+        </repository>
+        <repository>
+            <id>in-project</id>
+            <name>In Project Repo</name>
+            <url>file://${project.basedir}/libs</url>
         </repository>
     </repositories>
 

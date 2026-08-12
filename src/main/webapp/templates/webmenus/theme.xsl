@@ -254,6 +254,142 @@ span.alert
     padding: 5px;
 }
 
+:root {
+	--primary: #d94f2b;
+	--primary-dark: #ae3518;
+	--accent: #f8c146;
+	--background: #fffaf5;
+	--surface: #ffffff;
+	--text: #27231f;
+	--muted: #746d66;
+	--border: #eadfd5;
+	--success: #218739;
+	--shadow: 0 10px 30px rgba(67, 45, 29, 0.1);
+	--radius: 18px;
+}
+
+.cart-drawer {
+	position: fixed;
+	top: 0;
+	right: 0;
+	z-index: 201;
+	display: flex;
+	width: min(420px, 100%);
+	height: 100dvh;
+	flex-direction: column;
+	background: var(--surface);
+	box-shadow: -15px 0 40px rgba(0, 0, 0, 0.16);
+	transform: translateX(105%);
+	transition: 220ms ease;
+}
+
+.cart-drawer.open {
+	transform: translateX(0);
+}
+
+.cart-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 22px;
+	border-bottom: 1px solid var(--border);
+}
+
+.cart-header h2 {
+	margin: 0;
+}
+
+.close-button {
+	display: grid;
+	width: 38px;
+	height: 38px;
+	place-items: center;
+	border: 1px solid var(--border);
+	border-radius: 50%;
+	background: white;
+	font-size: 1.2rem;
+}
+
+.cart-items {
+	flex: 1;
+	overflow-y: auto;
+	padding: 10px 22px;
+}
+
+.empty-cart {
+	padding: 60px 20px;
+	text-align: center;
+	color: var(--muted);
+}
+
+.empty-cart span {
+	display: block;
+	margin-bottom: 10px;
+	font-size: 3rem;
+}
+
+.cart-item {
+	display: grid;
+	grid-template-columns: 52px 1fr auto;
+	gap: 12px;
+	padding: 16px 0;
+	border-bottom: 1px solid var(--border);
+}
+
+.cart-item-icon {
+	display: grid;
+	width: 52px;
+	height: 52px;
+	place-items: center;
+	border-radius: 13px;
+	background: #fff0dc;
+	font-size: 1.9rem;
+}
+
+.cart-item h4 {
+	margin: 0 0 3px;
+}
+
+.cart-item-price {
+	color: var(--muted);
+	font-size: 0.85rem;
+}
+
+.cart-button-container {
+	text-align:right;
+	width:100%;
+	padding-right:20px;
+}
+
+.cart-button {
+	display: flex;
+	align-items: right;
+	gap: 10px;
+	padding: 10px 16px;
+	border: 0;
+	border-radius: 999px;
+	background: var(--text);
+	color: white;
+	font-weight: 700;
+	float: right;
+}
+
+.cart-button span:first-child {
+	margin: auto;
+}
+
+.cart-count {
+	display: grid;
+	min-width: 24px;
+	height: 24px;
+	padding-inline: 6px;
+	place-items: center;
+	border-radius: 999px;
+	background: var(--accent);
+	color: var(--text);
+	font-size: 0.8rem;
+}
+
 </xsl:template>
 
 </xsl:stylesheet>

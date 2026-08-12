@@ -108,16 +108,6 @@ dojo.require("dojo.parser");
 <%	} %>
 		</td>
 		<td valign="middle">
-<%	if( bOpen ){ %>
-		<button dojoType="dijit.form.Button" connectId="2112" iconClass="plusIcon">
-		View Order
-		<script type="dojo/method" event="onClick">
-				viewOrder();
-		</script>
-		</button>
-<%	} %>
-		</td>
-		<td valign="middle">
 
 		<webmenusCfg:EnumMenus locId="<%=sLocId%>">
 <%
@@ -132,6 +122,32 @@ dojo.require("dojo.parser");
 				message("ERROR: missing template: invalid theme selected.", "Error", function(){document.location.reload();});
 			}
 			$COMPILED_TEMPLATE = Handlebars.compile(template);
+
+			dojo.addOnLoad( function() {
+				document.getElementById("openCart").addEventListener("click", openCart);
+    			document.getElementById("closeCart").addEventListener("click", closeCart);
+			});
+			//const cartDrawer = document.getElementById("cartDrawer");
+			function openCart() {
+				const cartDrawer = document.getElementById("cartDrawer");
+				cartDrawer.classList.add("open");
+				//overlay.classList.add("open");
+				cartDrawer.setAttribute("aria-hidden", "false");
+				//document.body.style.overflow = "hidden";
+			}
+
+			function closeCart() {
+				const cartDrawer = document.getElementById("cartDrawer");
+				cartDrawer.classList.remove("open");
+				//overlay.classList.remove("open");
+				cartDrawer.setAttribute("aria-hidden", "true");
+				///document.body.style.overflow = "";
+			}
+
+			function updateCartCount(count) {
+				const cartCount = document.getElementById("cartCount");
+				cartCount.innerText = count;
+			}
 		</script>
 <%
 		}
@@ -144,7 +160,16 @@ dojo.require("dojo.parser");
 			</div>
 		</div>&nbsp;
 		</webmenusCfg:EnumMenus>
-		</td></tr></table>
+		</td>
+<%	if( bOpen ){ %>
+		<td class="cart-button-container">
+			<button class="cart-button" id="openCart" aria-label="Open shopping cart">
+				<span>Cart</span>
+				<span class="cart-count" id="cartCount">0</span>
+			</button>
+		</td>
+<% } %>
+		</tr></table>
 
 	</div>
 
@@ -153,6 +178,48 @@ dojo.require("dojo.parser");
 	<div id="menuFooter"></div>
 
 </div>
+
+
+  <aside
+    class="cart-drawer"
+    id="cartDrawer"
+    aria-label="Shopping cart"
+    aria-hidden="true"
+  >
+    <div class="cart-header">
+      <h2>Your Order</h2>
+      <button class="close-button" id="closeCart" aria-label="Close cart">x</button>
+    </div>
+
+	<iframe id="orderPanel" src="orderview.jsp" style="height:100%"></iframe>
+
+    <!-- <div class="cart-items" id="cartItems"></div>
+
+    <div class="cart-summary">
+      <div class="summary-row">
+        <span>Subtotal</span>
+        <span id="subtotal">$0.00</span>
+      </div>
+      <div class="summary-row">
+        <span>Delivery</span>
+        <span id="delivery">$0.00</span>
+      </div>
+      <div class="summary-row">
+        <span>Tax</span>
+        <span id="tax">$0.00</span>
+      </div>
+      <div class="summary-row total">
+        <span>Total</span>
+        <span id="total">$0.00</span>
+      </div>
+
+      <button class="checkout-button" id="checkoutButton" disabled>
+        Proceed to Checkout
+      </button>
+      <p class="notice" id="notice" role="status"></p> -->
+    </div>
+  </aside>
+
 </webmenusCfg:GuestUser>
 </body>
 </html>

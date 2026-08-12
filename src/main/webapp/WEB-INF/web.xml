@@ -247,6 +247,23 @@
             /OrderCheckout
         </url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>
+            LLMGateway
+        </servlet-name>
+        <servlet-class>
+            com.genesys.api.llm.LLMGateway
+        </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>
+            LLMGateway
+        </servlet-name>
+        <url-pattern>
+            /LLMGateway/*
+        </url-pattern>
+    </servlet-mapping>
     
     <!--servlet>
         <servlet-name>
