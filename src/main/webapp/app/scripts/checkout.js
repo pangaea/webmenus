@@ -1,5 +1,4 @@
-function messageBox(msg, title)
-{
+function messageBox(msg, title) {
     var content = msg + "<br/><br/><center><button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('msgbox').destroy();\">OK</button></center>";
     theDialog = new dijit.Dialog({id:"msgbox", title:title, content: content});
     dojo.body().appendChild(theDialog.domNode);
@@ -7,55 +6,26 @@ function messageBox(msg, title)
     theDialog.show();
 }
 
-function validateCreateParams()
-{
+function validateCreateParams() {
     var createPatronParams = orderCheckout.getElementsByTagName("input");
-    for( i = 0; i < createPatronParams.length; i++ )
-    {
+    var errs = [];
+    for( i = 0; i < createPatronParams.length; i++ ) {
         var param = createPatronParams[i];
-        if( param.WMrequired == "true" && param.value.length == 0 )
-        {
-            messageBox("Required field '" + param.title + "' is missing.", "Invalid Parameter");
-            param.focus();
-            return false;
+        if( !param.disabled && param.attributes["wmrequired"]?.value === "true" && param.value.length == 0 ) {
+            errs.push("Required field '" + param.title + "' is missing.");
+            param.style.backgroundColor = "#ffd4d4";
+        } else {
+            param.style.backgroundColor = "#ffffff";
         }
+    }
+    if (errs.length > 0) {
+        var msg = "<ul><li>" + errs.join("</li><li>") + "</li></ul>";
+        messageBox(msg, "Invalid Parameters");
+        return false;
     }
     return true;
 }
 
-function validateParams()
-{
-    var optionDeliveryRB = dojo.byId("option_delivery");
-    if( optionDeliveryRB.checked )
-    {
-        var prevDelivInfoIN = dojo.byId("previous_deliveries");
-        if( prevDelivInfoIN.value == "0" )
-        {
-            var deliveryOptionsParams = deliveryOptions.getElementsByTagName("input");
-            for( i = 0; i < deliveryOptionsParams.length; i++ )
-            {
-                var param = deliveryOptionsParams[i];
-                if( param.WMrequired == "true" && param.value.length == 0 )
-                {
-                    messageBox("Required field '" + param.title + "' is missing.", "Invalid Parameter");
-                    param.focus();
-                    return false;
-                }
-            }
-
-            // Build delivery information
-            var addressIN = dojo.byId("address");
-            var cityIN = dojo.byId("city");
-            var stateIN = dojo.byId("state");
-            var zipIN = dojo.byId("zip");
-            var contactNumberIN = dojo.byId("contact_number");
-            var oTextArea = document.getElementById("delivery_info");
-            oTextArea.innerText = addressIN.value + " / " + cityIN.value + ", " + stateIN.value + " " + zipIN.value + " / " + contactNumberIN.value;
-        }
-    }
-    
-    return true;
-}
 function selectDeliveryOption(sel)
 {
     var bDisabled = false;

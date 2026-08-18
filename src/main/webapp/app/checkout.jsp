@@ -37,7 +37,7 @@ All Rights Reserved
 
 		<script type="text/javascript" src="<%=request.getContextPath()%>/includes/fields.js"></script>
 		<script type="text/javascript" src="<%=request.getContextPath()%>/includes/controls.js"></script>
-		<script type="text/javascript" src="<%=request.getContextPath()%>/app/scripts/checkout.js"></script>
+		<script type="text/javascript" src="<%=request.getContextPath()%>/app/scripts/checkout.js?v=<%=System.currentTimeMillis()%>"></script>
 		
 <%
 	String themeName = menuOrderBean.getTheme();
@@ -394,26 +394,41 @@ dojo.addOnLoad( function()
 				label:  'paypal'
 			},
 
-			oniClick: function() {
-				validateCreateParams()
+			onClick: function(data, actions) {
+				const isFormValid = validateCreateParams();
+				
+				if (!isFormValid) {
+					// Show local error message to user
+					//document.querySelector('#error-msg').style.display = 'block';
+					
+					// Prevent the PayPal window from opening
+					return actions.reject();
+				} else {
+					// Clear error and proceed with checkout
+					//document.querySelector('#error-msg').style.display = 'none';
+					return actions.resolve();
+				}
 			},
 
 			// Call your server to create an order
 			createOrder: function(data, actions) {
-				return fetch('/webmenus/PayPalPortal/createOrder', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify({
-						payment_index: "<%=i%>"
-					})
-				}).then(function(response) {
-					return response.json();
-				}).then(function(orderData) {
-					// Returns the order ID a.k.a. the approval URL
-					return orderData.id;
-				});
+				if (validateCreateParams()) {
+					return fetch('/webmenus/PayPalPortal/createOrder', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({
+							payment_index: "<%=i%>"
+						})
+					}).then(function(response) {
+						return response.json();
+					}).then(function(orderData) {
+						// Returns the order ID a.k.a. the approval URL
+						return orderData.id;
+					});
+				}
+				return 
 			},
 
 			// Call your server to capture the payment
