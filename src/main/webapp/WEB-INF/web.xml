@@ -264,6 +264,23 @@
             /LLMGateway/*
         </url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>
+            SupportRequest
+        </servlet-name>
+        <servlet-class>
+            com.genesys.webmenus.support.SupportRequest
+        </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>
+            SupportRequest
+        </servlet-name>
+        <url-pattern>
+            /SupportRequest/*
+        </url-pattern>
+    </servlet-mapping>
     
     <!--servlet>
         <servlet-name>

@@ -90,33 +90,7 @@ dojo.addOnLoad( function()
 <%
 	for( int i = 0; i < menuOrderBean.itemCount(); i++ )
 	{
-		OrderItem item;
-		while(true)
-		{
-			item = menuOrderBean.getItemByIndex(i);
-			if( item == null ) break;
-			String newQuan = request.getParameter(item.getId());
-			if( newQuan != null )
-			{
-				try
-				{
-					int newQuantity = new Long(newQuan).intValue();
-					if( newQuantity == 0 )
-					{
-						menuOrderBean.removeItemByIndex(i);
-						continue;
-						//item = menuOrderBean.getItemByIndex(i);
-						//if( item == null ) break;
-					}
-					else
-					{
-						item.setQuantity(newQuantity);
-					}
-				}
-				catch(NumberFormatException e){}
-			}
-			break;
-		}
+		OrderItem item = menuOrderBean.getItemByIndex(i);
 		if( item == null ) break;
 %>
 			<tr>

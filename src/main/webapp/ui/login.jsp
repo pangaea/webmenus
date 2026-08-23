@@ -104,7 +104,7 @@
 				<td valign="top">
 					<table cellspacing="0" cellpadding="2" align="center">
 					<tr>
-						<td align="center"><img class="logo" src="<%=request.getContextPath() + SystemServlet.getloginPageImage()%>"/></td>
+						<td align="center"><a href="/"><img class="logo" src="<%=request.getContextPath() + SystemServlet.getloginPageImage()%>"/></a></td>
 					</tr>
 					<tr>
 						<td class="screen_title">Please Login:</td>
