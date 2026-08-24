@@ -11,7 +11,15 @@ All Rights Reserved
 	boolean bOpen = menuOrderBean.isWithinOpertingHours();
 	if( bOpen )
 	{
-		if( menuOrderBean.submitNewItem(request) == true )
+		boolean orderSuccess = false;
+		String orderIndex = request.getParameter("order_index");
+		if (orderIndex == null) {
+			orderSuccess = menuOrderBean.submitNewItem(request);
+		} else {
+			orderSuccess = menuOrderBean.editItem(Integer.parseInt(orderIndex), request);
+		}
+
+		if (orderSuccess)
 		{
 			//response.sendRedirect( "orderview.jsp" );
 			//response.sendRedirect( "MenuView/vieworder" );

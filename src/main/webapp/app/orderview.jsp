@@ -72,6 +72,12 @@ function checkoutOrder()
 	window.parent.viewCheckout();
 	window.parent.closeCart();
 }
+function editMenuItem(id, index)
+{
+	//document.location.href = "../checkout.jsp";
+	window.parent.editMenuItem(id, index);
+	window.parent.closeCart();
+}
 </script>
 </head>
 
@@ -119,7 +125,7 @@ function checkoutOrder()
 			<tr>
 				<td valign="top">
 
-						<div class='menuItemTitle'>
+						<div class='menuItemTitle' style="cursor:pointer" onclick="editMenuItem('<%=item.getSizeId()%>', <%=i%>)">
 						<%=item.getName()%>
 						<% if( item.getSize().length() > 0 ){ %>
 							(<%=item.getSize()%>)
