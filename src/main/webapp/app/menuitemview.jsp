@@ -8,9 +8,44 @@ All Rights Reserved
 <%@ page import="java.text.*"%>
 <%@ page import="com.genesys.SystemServlet"%>
 <%@ page import="com.genesys.repository.*"%>
+<%@ page import="com.genesys.webmenus.OrderItem"%>
+<%@ page import="com.fasterxml.jackson.databind.JsonNode"%>
+<%@ page import="com.fasterxml.jackson.databind.ObjectMapper"%>
 <jsp:useBean id="menuOrderBean" scope="session" class="com.genesys.webmenus.MenuOrderBean"/>
 <%
 	boolean bOpen = menuOrderBean.isWithinOpertingHours();
+
+	// Pull in order index if this is an update operation
+	String orderIndex = request.getParameter("order_index");
+	String special_insrtuctions = "";
+	int defaultAmount = 1;
+	Set<String> selectedChoices = new HashSet<>();
+	if (orderIndex != null) {
+		OrderItem item = menuOrderBean.getItemByIndex(Integer.parseInt(orderIndex));
+		special_insrtuctions = item.getSpecialInstructions();
+		defaultAmount = item.getQuantity();
+
+		// Extract options/choices
+		String optionsJson = item.getOptions();
+		if (optionsJson != null && !optionsJson.isBlank()) {
+			ObjectMapper mapper = new ObjectMapper();
+			try {
+				JsonNode node = mapper.readTree(optionsJson);
+				JsonNode options = node.get("options");
+				if (options.isArray()) {
+					for (JsonNode option : options) {
+						option.get("name").asText();
+						JsonNode choices = option.get("selected_choices");
+						if (choices.isArray()) {
+							for (JsonNode choice : choices) {
+								selectedChoices.add(option.get("name").asText() + "#" + choice.get("name").asText());
+							}
+						}
+					}
+				}
+			} catch (Exception e){}
+		}
+	}
 %>
 <html>
 	<head>
@@ -61,11 +96,15 @@ All Rights Reserved
 <%
 	//Credentials info = new Credentials();
 	//if( objectBean.Login( "guest", "guest", info ) == true )
-	if( menuOrderBean.verifyObjManCreds() )
-	{
+	if( menuOrderBean.verifyObjManCreds() ) {
 %>
 	<form method="post" id="submitItem" action="../menuitemsubmit.jsp">
 <%
+		if (orderIndex != null) {
+%>
+		<input type="hidden" name="order_index" value="<%=orderIndex%>"/>
+<%
+		}
 		String sizeid = request.getParameter("id");
 		if( sizeid == null ) return;
 %>
@@ -173,8 +212,11 @@ All Rights Reserved
 							sChoicePrice = "";
 						}
 					}
+
+					String hash = obj.getPropertyValue("name") + "#" + choice.getPropertyValue("name");
+					boolean selected = selectedChoices.contains(hash);
 %>
-					<input dojoType="dijit.form.CheckBox" type="checkbox" name="<%=obj.getPropertyValue("name")+ii%>"><%=choice.getPropertyValue("name")%><%=sChoicePrice%></input><br/>
+					<input dojoType="dijit.form.CheckBox" checked="<%=selected%>" type="checkbox" name="<%=obj.getPropertyValue("name")+ii%>"><%=choice.getPropertyValue("name")%><%=sChoicePrice%></input><br/>
 <%
 				}
 			}
@@ -192,8 +234,10 @@ All Rights Reserved
 							sChoicePrice = "";
 						}
 					}
+					String hash = obj.getPropertyValue("name") + "#" + choice.getPropertyValue("name");
+					boolean selected = selectedChoices.contains(hash);
 %>
-					<input dojoType="dijit.form.RadioButton" <%=(ii == 0) ? "checked" : ""%> type="radio" name="<%=obj.getPropertyValue("name")%>" value="<%=choice.getPropertyValue("name")%>"><%=choice.getPropertyValue("name")%><%=sChoicePrice%></input><br/>
+					<input checked="<%=selected%>" dojoType="dijit.form.RadioButton" <%=(ii == 0) ? "checked" : ""%> type="radio" name="<%=obj.getPropertyValue("name")%>" value="<%=choice.getPropertyValue("name")%>"><%=choice.getPropertyValue("name")%><%=sChoicePrice%></input><br/>
 <%
 				}
 			}
@@ -213,7 +257,7 @@ All Rights Reserved
 			<tr>
 				<th valign="top">Special Instructions</th>
 				<td>
-					<textarea name="special_instructions" style="width:100%;height:80px"></textarea>
+					<textarea name="special_instructions" style="width:100%;height:80px"><%=special_insrtuctions%></textarea>
 				</td>
 			</tr>
 <%
@@ -223,7 +267,7 @@ All Rights Reserved
 			<tr>
 				<th valign="top">Quantity</th>
 				<td>
-					<input dojoType="dijit.form.NumberSpinner" style="width:80px" constraints="{min:1,max:200}" type="text" id="quantity" name="quantity" value="1" onkeypress="validateinput( this, 'int' );" onblur="formatinput( this, 'int', 0 );"/>
+					<input dojoType="dijit.form.NumberSpinner" style="width:80px" constraints="{min:1,max:200}" type="text" id="quantity" name="quantity" value="<%=defaultAmount%>" onkeypress="validateinput( this, 'int' );" onblur="formatinput( this, 'int', 0 );"/>
 				</td>
 			</tr>
 		</table>
@@ -231,7 +275,17 @@ All Rights Reserved
 		<br>
 <%		if( bOpen ){ %>
 		<button dojoType="dijit.form.Button">
+<%
+		if (orderIndex == null) {
+%>
 			Add To Order
+<%
+		} else {
+%>
+			Update Order
+<%
+		}
+%>
 			<script type="dojo/method" event="onClick">
 				submitMenuItem();
 			</script>

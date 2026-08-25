@@ -72,6 +72,19 @@ function checkoutOrder()
 	window.parent.viewCheckout();
 	window.parent.closeCart();
 }
+function editMenuItem(id, index)
+{
+	//document.location.href = "../checkout.jsp";
+	window.parent.editMenuItem(id, index);
+	window.parent.closeCart();
+}
+function removeMenuItem(index)
+{
+	//var qtEl = document.getElementById("quantity"+index);
+	//qtEl.value = 0;	// Force to 0
+	dijit.byId("quantity"+index).attr("value", 0);
+	//window.setTimeout('orderForm.submit();', 500);
+}
 </script>
 </head>
 
@@ -127,6 +140,10 @@ function checkoutOrder()
 						</div>
 						<div class='menuItemDesc'>
 						<%=item.getDesc()%>
+						</div>
+						<div class="menuItemButtons">
+							<a href="#" onclick="editMenuItem('<%=item.getSizeId()%>', <%=i%>)">Edit</a>
+							<a href="#" onclick="removeMenuItem(<%=i%>)">Remove</a>
 						</div>
 						<div class='menuOptions'>
 <%

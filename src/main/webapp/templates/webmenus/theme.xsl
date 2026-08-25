@@ -175,6 +175,17 @@ a.liveOrderItem
 	text-align: left;
 	width: 100%;
 }
+.menuItemButtons
+{
+	padding: 4px;
+	height: 20px;
+}
+.menuItemButtons a:first-child {
+	float: left;
+}
+.menuItemButtons a:last-child {
+	float: right;
+}
 .menuButton
 {
 	font: normal 9pt <xsl:value-of select="property[@name='font']/text()"/>;
@@ -203,6 +214,8 @@ a.liveOrderItem
 	color: #<xsl:value-of select="property[@name='item_text_color']/text()"/>;
 	text-align: left;
 	width: 100%;
+	clear: both;
+	padding-top: 10px;
 }
 
 /*

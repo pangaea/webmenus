@@ -20,8 +20,10 @@ public class OrderItem
 	private String options;
 	private int quantity;
 	private String special_instructions;
+	private String size_id;
 
-	public OrderItem( String id, String name, String description, String size, BigDecimal price, int quantity, String options, String special_instructions )
+	public OrderItem( String id, String name, String description, String size, BigDecimal price, int quantity, String options,
+		String special_instructions, String sizeId )
 	{
 		this.id = id;
 		setName( name );
@@ -31,6 +33,7 @@ public class OrderItem
 		setQuantity( quantity );
 		setOptions( options );
 		setSpecialInstructions( special_instructions );
+		setSizeId( sizeId );
 	}
 	public String getId()
 	{
@@ -101,5 +104,13 @@ public class OrderItem
 	public String getSpecialInstructions()
 	{
 		return this.special_instructions;
+	}
+	public void setSizeId( String size_id )
+	{
+		this.size_id = size_id;
+	}
+	public String getSizeId()
+	{
+		return this.size_id;
 	}
 }

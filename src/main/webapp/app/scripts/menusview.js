@@ -187,6 +187,12 @@ function viewCheckout()
 	showOrderDialog("/webmenus/app/checkout.jsp");
 }
 
+function editMenuItem(id, index)
+{
+	var url = "MenuView/menuitemview?id=" + id + "&order_index=" + index + "&r=" + RandomNum();
+	showOrderDialog(url);
+}
+
 function viewMenuItem(id, title)
 {
 	var url = "MenuView/menuitemview?id=" + id + "&r=" + RandomNum();

@@ -62,8 +62,8 @@ dojo.require("dojo.parser");
 <script type="text/javascript" src="<%=request.getContextPath()%>/xlibs/handlebars/handlebars-v1.3.0.js"></script>
 
 <script type="text/javascript" src="<%=request.getContextPath()%>/includes/common.js"></script>
-<script type="text/javascript" src="scripts/menus.js"></script>
-<script type="text/javascript" src="scripts/menusview.js"></script>
+<script type="text/javascript" src="scripts/menus.js?v=<%=System.currentTimeMillis()%>"></script>
+<script type="text/javascript" src="scripts/menusview.js?v=<%=System.currentTimeMillis()%>"></script>
 <script type="text/javascript" src="scripts/handlebars.helpers.js"></script>
 
 </head>
@@ -193,30 +193,6 @@ dojo.require("dojo.parser");
 
 	<iframe id="orderPanel" src="orderview.jsp" style="height:100%"></iframe>
 
-    <!-- <div class="cart-items" id="cartItems"></div>
-
-    <div class="cart-summary">
-      <div class="summary-row">
-        <span>Subtotal</span>
-        <span id="subtotal">$0.00</span>
-      </div>
-      <div class="summary-row">
-        <span>Delivery</span>
-        <span id="delivery">$0.00</span>
-      </div>
-      <div class="summary-row">
-        <span>Tax</span>
-        <span id="tax">$0.00</span>
-      </div>
-      <div class="summary-row total">
-        <span>Total</span>
-        <span id="total">$0.00</span>
-      </div>
-
-      <button class="checkout-button" id="checkoutButton" disabled>
-        Proceed to Checkout
-      </button>
-      <p class="notice" id="notice" role="status"></p> -->
     </div>
   </aside>
 

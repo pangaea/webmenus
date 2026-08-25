@@ -697,8 +697,32 @@ public class MenuOrderBean
 	{
 		return m_validated;
 	}
+
+	public boolean editItem(int index, HttpServletRequest request) {
+		OrderItem item = processItem(request);
+		if (item != null) {
+			// Replace item
+			OrderItem oldItem = m_orderItemList.get(index);
+			m_orderItemMap.remove(oldItem.getId());
+			m_orderItemList.set(index, item);
+			m_orderItemMap.put( item.getId(), item );
+			return true;
+		}
+		return false;
+	}
+
+	public boolean submitNewItem(HttpServletRequest request) {
+		OrderItem item = processItem(request);
+		if (item != null) {
+			// Add new order item to order
+			m_orderItemMap.put( item.getId(), item );
+			m_orderItemList.add( item );
+			return true;
+		}
+		return false;
+	}
 	
-	public boolean submitNewItem(HttpServletRequest request)
+	private OrderItem processItem(HttpServletRequest request)
 	{
 		String sizeId = request.getParameter("sizeId");
 		
@@ -715,7 +739,7 @@ public class MenuOrderBean
 				RepositoryObjects oMenuItemSizes = qrMenuItemSizes.getObjects( queryMenuItemSize.getClassName() );
 				if( oMenuItemSizes.count() == 0 )
 				{
-					return false;
+					return null;
 				}
 				RepositoryObject oMenuItemSize = oMenuItemSizes.get(0);
 				//String sMenuItemPrice = oMenuItemSize.getPropertyValue("price");
@@ -745,13 +769,13 @@ public class MenuOrderBean
 					RepositoryObjects oMenuCats = qrMenuCats.getObjects( queryMenuCat.getClassName() );
 					if( oMenuCats.count() == 0 )
 					{
-						return false;
+						return null;
 					}
 					RepositoryObject oMenuCategory = oMenuCats.get(0);
 					String sMenuId = oMenuCategory.getPropertyValue("menu");
 					if( isWithinMenuOpertingHours(sMenuId) == false )
 					{
-						return false;
+						return null;
 					}
 
 					JSONObject optionsJson = new JSONObject();
@@ -851,11 +875,12 @@ public class MenuOrderBean
 					RandomGUID guid = new RandomGUID();
 					OrderItem item = new OrderItem(guid.toString(), sMenuItemName, sMenuItemDesc, sMenuItemSizeDesc,
 													bdPrice, iQuantity, optionsJson.toString(1),
-													specialInstructions);
+													specialInstructions, sizeId);
+					return item;
 	
 					// Add new order item to order
-					m_orderItemMap.put( guid.toString(), item );
-					m_orderItemList.add( item );
+					// m_orderItemMap.put( guid.toString(), item );
+					// m_orderItemList.add( item );
 	
 					//BigDecimal bdSumPrice = bdPrice.multiply(new BigDecimal(lQuantity));
 					//subTotal = subTotal.add(bdSumPrice);
@@ -869,7 +894,7 @@ public class MenuOrderBean
 				SystemServlet.g_logger.error( "UnsupportedEncodingException thrown - " + ex.getMessage() );
 			}
 		}
-		return true;
+		return null;
 	}
 	public String getTheme()
 	{
