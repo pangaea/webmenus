@@ -78,6 +78,13 @@ function editMenuItem(id, index)
 	window.parent.editMenuItem(id, index);
 	window.parent.closeCart();
 }
+function removeMenuItem(index)
+{
+	//var qtEl = document.getElementById("quantity"+index);
+	//qtEl.value = 0;	// Force to 0
+	dijit.byId("quantity"+index).attr("value", 0);
+	//window.setTimeout('orderForm.submit();', 500);
+}
 </script>
 </head>
 
@@ -125,7 +132,7 @@ function editMenuItem(id, index)
 			<tr>
 				<td valign="top">
 
-						<div class='menuItemTitle' style="cursor:pointer" onclick="editMenuItem('<%=item.getSizeId()%>', <%=i%>)">
+						<div class='menuItemTitle'>
 						<%=item.getName()%>
 						<% if( item.getSize().length() > 0 ){ %>
 							(<%=item.getSize()%>)
@@ -134,7 +141,11 @@ function editMenuItem(id, index)
 						<div class='menuItemDesc'>
 						<%=item.getDesc()%>
 						</div>
-						<div class='menuOptions'>
+						<div style="padding: 4px; height: 20px;">
+							<a href="#" style="float: left" onclick="editMenuItem('<%=item.getSizeId()%>', <%=i%>)">Edit</a>
+							<a href="#" style="float: right" onclick="removeMenuItem(<%=i%>)">Remove</a>
+						</div>
+						<div class='menuOptions' style="clear: both; padding-top: 10px;">
 <%
 		String optionsJson = item.getOptions();
 		if (optionsJson != null && !optionsJson.isBlank()) {
