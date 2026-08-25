@@ -141,11 +141,11 @@ function removeMenuItem(index)
 						<div class='menuItemDesc'>
 						<%=item.getDesc()%>
 						</div>
-						<div style="padding: 4px; height: 20px;">
-							<a href="#" style="float: left" onclick="editMenuItem('<%=item.getSizeId()%>', <%=i%>)">Edit</a>
-							<a href="#" style="float: right" onclick="removeMenuItem(<%=i%>)">Remove</a>
+						<div class="menuItemButtons">
+							<a href="#" onclick="editMenuItem('<%=item.getSizeId()%>', <%=i%>)">Edit</a>
+							<a href="#" onclick="removeMenuItem(<%=i%>)">Remove</a>
 						</div>
-						<div class='menuOptions' style="clear: both; padding-top: 10px;">
+						<div class='menuOptions'>
 <%
 		String optionsJson = item.getOptions();
 		if (optionsJson != null && !optionsJson.isBlank()) {

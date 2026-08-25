@@ -109,6 +109,17 @@ a::hover
 	text-align: left;
 	width: 100%;
 }
+.menuItemButtons
+{
+	padding: 4px;
+	height: 20px;
+}
+.menuItemButtons a:first-child {
+	float: left;
+}
+.menuItemButtons a:last-child {
+	float: right;
+}
 .menuButton
 {
 	font: normal bolder 9pt Arial;
@@ -134,6 +145,8 @@ a::hover
 	color: chocolate;
 	text-align: left;
 	width: 100%;
+	clear: both;
+	padding-top: 10px;
 }
 
 /*
