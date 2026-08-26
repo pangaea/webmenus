@@ -827,7 +827,9 @@ public class MenuOrderBean
 							for( int ii = 0; ii < oChoices.count(); ii++ ) {
 								RepositoryObject choice = oChoices.get(ii);
 								String opt = choice.getPropertyValue("name");
-								String param = new String(request.getParameter(sOptionName).getBytes("ISO8859_1"), "UTF-8");
+								String optionName = request.getParameter(sOptionName);
+								if (optionName == null) continue;
+								String param = new String(optionName.getBytes("ISO8859_1"), "UTF-8");
 								if( opt.equals(param) ) {
 									BigDecimal bdChoicePrice = new BigDecimal(choice.getPropertyValue("price"));
 									bdPrice = bdPrice.add(bdChoicePrice);

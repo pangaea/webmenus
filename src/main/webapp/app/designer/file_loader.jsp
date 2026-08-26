@@ -17,10 +17,17 @@ All Rights Reserved
 		    } else {
 		    	$('#load_from_template :input').attr('disabled', true);
 		    }
+
 		    if ($('#load_from_f').is(':checked')) {
 		    	$('#load_from_file :input').removeAttr('disabled');
 		    } else {
 		    	$('#load_from_file :input').attr('disabled', true);
+		    }
+
+		    if ($('#load_from_ai').is(':checked')) {
+		    	$('#load_from_prompt :input').removeAttr('disabled');
+		    } else {
+		    	$('#load_from_prompt :input').attr('disabled', true);
 		    }   
 		}
 	</script>
@@ -59,6 +66,19 @@ All Rights Reserved
 			<td><input type="file" name="menuFile"/></td>
 		</tr><tr>
 			<td colspan="2"><input type="submit" value="Load File"/></td>
+		</tr></table>
+		</form>
+	</div>
+	<hr/>
+	<input type="radio" id="load_from_ai" name="load_from" onclick="selectImportMethod()">From File</input>
+	<div id="load_from_prompt">
+		<form method="post" action="<%=request.getContextPath()%>/MenuDesigner/loadfromprompt">
+		<table><tr>
+			<td>Generate menus using AI. Try it out. <b>You can change it later.</b> Describe your restaurant:</td>
+		</tr><tr>
+			<td><textarea name="promptText" style="height:200px;width:100%"></textarea></td>
+		</tr><tr>
+			<td><input type="submit" value="Generate From AI"/></td>
 		</tr></table>
 		</form>
 	</div>

@@ -77,6 +77,7 @@ function goNav(page)
 		<div class="error"><html:errors property="password2"/></div>
 		<div class="error"><html:errors property="sample_menus"/></div>
 		<div class="error"><html:errors property="accept"/></div>
+		<div class="error"><html:errors property="promptText"/></div>
 	</div>
 
 	<center>
@@ -100,16 +101,47 @@ function goNav(page)
 							<tr><th>Username:</th><td><html:text property="username"/></td></tr>
 							<tr><th>Password:</th><td><html:password property="password"/></td></tr>
 							<tr><th>Password (Verify):</th><td><html:password property="password2"/></td></tr>
-							<tr><th>Choose sample menus:</th><td valign="top">
-							<html:select property="sample_menus">
-								<html:option value="">-- Please Select --</html:option>
-								<html:option value="american">American Cuisine</html:option>
-								<html:option value="bagel">Bagel Restaurant</html:option>
-								<html:option value="chinese">Chinese Restaurant</html:option>
-								<html:option value="greek">Greek Restaurant</html:option>
-								<html:option value="indian">Indian Restaurant</html:option>
-								<html:option value="italian">Pizzeria Restaurant</html:option>
-							</html:select>
+							<tr><th>Sample menus:</th><td valign="top">
+
+							<div class="vertical-grouped-select">
+
+								<div class="vertical-grouped-select__list">
+									<label class="vertical-grouped-select__item">
+										<html:radio property="sample_menus_method" value="template"/>
+										<span class="vertical-grouped-select__content">
+										<span class="vertical-grouped-select__indicator"></span>
+										<span class="vertical-grouped-select__text">
+											<span class="vertical-grouped-select__title">Choose from a template:</span>
+											<span class="vertical-grouped-select__description">
+												<html:select property="sample_menus">
+													<html:option value="">-- Please Select --</html:option>
+													<html:option value="american">American Cuisine</html:option>
+													<html:option value="bagel">Bagel Restaurant</html:option>
+													<html:option value="chinese">Chinese Restaurant</html:option>
+													<html:option value="greek">Greek Restaurant</html:option>
+													<html:option value="indian">Indian Restaurant</html:option>
+													<html:option value="italian">Pizzeria Restaurant</html:option>
+												</html:select>
+											</span>
+										</span>
+										</span>
+									</label>
+
+									<label class="vertical-grouped-select__item">
+										<html:radio property="sample_menus_method" value="prompt"/>
+										<span class="vertical-grouped-select__content">
+										<span class="vertical-grouped-select__indicator"></span>
+										<span class="vertical-grouped-select__text">
+											<span class="vertical-grouped-select__title">Generate menus using AI. Try it out. <b>You can change it later.</b> Describe your restaurant:</span>
+											<span class="vertical-grouped-select__description">
+											<html:textarea style="height:200px;width:100%" property="promptText"/>
+											</span>
+										</span>
+										</span>
+									</label>
+								</div>
+							</div>
+
 							</td></tr>
 							<tr><th></th><td style="text-align:left;">
 								<html:checkbox property="acceptEula" style="width:20px;" value="yes"><span>I accept <a href="<%=request.getContextPath()%>/app/account/license_agreement.html" target="_blank">license</a></span></html:checkbox>

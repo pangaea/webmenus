@@ -32,6 +32,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
 import com.genesys.SystemServlet;
+import com.genesys.api.llm.adapters.OpenAiAdapter;
 import com.genesys.repository.AuthenticationException;
 import com.genesys.repository.Credentials;
 import com.genesys.repository.ObjectManager;
@@ -42,6 +43,7 @@ import com.genesys.repository.RepositoryException;
 import com.genesys.repository.RepositoryObject;
 import com.genesys.repository.RepositoryObjectIterator;
 import com.genesys.repository.RepositoryObjects;
+import com.genesys.util.ServletUtilities;
 import com.genesys.util.xml.XMLDocument;
 import com.genesys.util.xml.XMLNode;
 import com.genesys.util.xml.XMLNodeList;
@@ -144,6 +146,11 @@ public class MenuDesigner extends HttpServlet
 			else if( resPath.equalsIgnoreCase("/loadfromtemplate") )
 			{
 				Handle_LoadFromTemplate( request, response );
+			}
+			else if( resPath.equalsIgnoreCase("/loadfromprompt") )
+			{
+				//throw new ServletException("No Implemented");
+				Handle_LoadFromPrompt( request, response );
 			}
 			else
 			{
@@ -1236,15 +1243,9 @@ public class MenuDesigner extends HttpServlet
 	public void Handle_LoadFromTemplate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		if (request == null) throw new IOException("Invalid request");
-		
-		// Login to object manager
-		//HttpSession thisSession = request.getSession();
-		//if( thisSession.getAttribute( "info" ) == null ) throw new IOException("Missing credentials");
-		//Credentials info = (Credentials)thisSession.getAttribute( "info" );
-		
+
 		String menuXml = new String("");
 
-		
 		//////////////////////////////////////////////
 		/////////////////////////////////////
 		String sample_menu = request.getParameter("sample_menu");
@@ -1254,62 +1255,21 @@ public class MenuDesigner extends HttpServlet
 			// C R E A T E   S A M P L E   M E N U S //
 			String rootAppPath = SystemServlet.getGenesysHome();//thisContext.getInitParameter("GENESYS_HOME");
 			String importFile = new String(rootAppPath + "WEB-INF/import/menus/" + sample_menu);
-		
-			// Create DOM document
-			//XMLDocument xmlDoc = new XMLDocument();
-			//if( xmlDoc.loadXML(importFile) )
-			//{
-/*				MenuBuilder mb = new MenuBuilder();
-				XMLNodeList menuNodes = xmlDoc.getNodeList("//menu");
-				for( int i = 0; i < menuNodes.getCount(); i++ )
-				{
-					XMLNode menuNode = menuNodes.getNodeByIndex(i);
-					mb.importMenu(info, loc_id, menuNode, true);
-				}*/
-				try
-				{
-					//String itemName = item.getName();
-					
-					File iFile = new File(importFile);
-					//byte[] bytes = getBytesFromFile(iFile);
-					//menuXml = decodeUTF8(bytes);
-					
-					InputStream is = new FileInputStream(importFile);
-					InputStreamReader reader = new InputStreamReader(is, "UTF-8");
-					BufferedReader in = new BufferedReader(reader);
-					//BufferedReader in = new BufferedReader(new InputStreamReader(item.getInputStream()));
-					String line = null;
-					StringBuffer sb = new StringBuffer();
-			        while((line = in.readLine()) != null)
-			        {
-			            sb.append(line);
-			            sb.append('\n');
-			        }
-			        menuXml = sb.toString();
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace();
-				}
-			//}
+			menuXml = ServletUtilities.loadFileContents(importFile);
 		}
 		//////////////////////////////////////////////
 		/////////////////////////////////////
-		//os = xx.getOutputStream();
-		//PrintStream ps = new PrintStream(os, true, "UTF8");
-		//ps.println("Hello, world.");
+
 		LoadMenuInDesigner(response, menuXml);
-/*		response.setCharacterEncoding("UTF-8");
-		PrintWriter out = response.getWriter();
-		out.println("<!doctype html><head/><body><textarea id='data' style='display:none;'>");
-		out.println(menuXml.replace("&amp;", "&amp;amp;"));
-		out.println("</textarea>");
-		out.println("<script type='text/javascript'>");
-		out.println("var data=document.getElementById('data').value;");
-		//out.println("alert(data);");
-		out.println("parent.drawMenuFromStream(data);");
-		out.println("parent.closeDialog();");
-		out.println("</script></body></html>");
-		out.flush();*/
+	}
+
+	public void Handle_LoadFromPrompt(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String prompt_text = request.getParameter("promptText");
+		String rootAppPath = SystemServlet.getGenesysHome();
+		String prompt = new String(rootAppPath + "WEB-INF/import/menus/prompts/menu_generation.md");
+		String menuPrompt = ServletUtilities.loadFileContents(prompt);
+		OpenAiAdapter llm = new OpenAiAdapter();
+		String content = llm.makeLLMRequest(menuPrompt.replace("%S", prompt_text));
+		LoadMenuInDesigner(response, content);
 	}
 }

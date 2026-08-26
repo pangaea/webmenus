@@ -666,7 +666,7 @@ function URLDecode(psEncodeString)
 
 function loadFile()
 {
-	showDialog(contextPath + "/app/designer/file_loader.jsp?loc=" + locationId, "Import Menus", 500, 370);
+	showDialog(contextPath + "/app/designer/file_loader.jsp?loc=" + locationId, "Import Menus", 600, 680);
 }
 
 function viewXmlSource(id)
