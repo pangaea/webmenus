@@ -7,9 +7,11 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamWriter;
 
 import com.genesys.SystemServlet;
+import com.genesys.api.llm.adapters.OpenAiAdapter;
 import com.genesys.repository.*;
 import com.genesys.util.xml.*;
 import com.genesys.util.xsl.XSLParser;
+import com.genesys.util.ServletUtilities;
 import com.genesys.util.email.Outbound;
 import com.genesys.webmenus.MenuBuilder;
 import com.genesys.views.InterfaceCfg;
@@ -72,7 +74,9 @@ public class AccountGenerator{
 		String restaurant_timezone = getParam("restaurant_timezone");
 		String restaurant_email = getParam("restaurant_email");
 		String restaurant_phonenum = getParam("restaurant_phoneNum");
+		String restaurant_sample_menus_method = getParam("restaurant_sample_menus_method");
 		String restaurant_sample_menus = getParam("restaurant_sample_menus");
+		String restaurant_prompt_text = getParam("restaurant_prompt_text");
 		String restaurant_logo = getParam("restaurant_logo");
 		
 		String allow_email = getParam("allow_email"); //, rForm.getEmailMe()?"Y":"N"
@@ -150,7 +154,7 @@ public class AccountGenerator{
 					ObjectSubmit theme = new ObjectSubmit("CETheme");
 					theme.addProperty("name", "default");
 					theme.addProperty("menuwidth", "100%");
-					theme.addProperty("itemwidth", "48%");
+					theme.addProperty("itemwidth", "400px");
 					theme.addProperty("columns", 2);
 					theme.addProperty("font", "Lucida Console,Monaco,monospace");
 					theme.addProperty("font_size", "0");
@@ -298,21 +302,37 @@ public class AccountGenerator{
 //}
 					//////////////////////////////////////////////
 					/////////////////////////////////////
-					
-					if( restaurant_sample_menus.equalsIgnoreCase("none") == false )
-					{
-						// C R E A T E   S A M P L E   M E N U S //
-						String rootAppPath = SystemServlet.getGenesysHome();//thisContext.getInitParameter("GENESYS_HOME");
-						String importFile = new String(rootAppPath + "WEB-INF/import/menus/" + restaurant_sample_menus + ".xml");
-					
-						// Create DOM document
+					if( restaurant_sample_menus_method.equalsIgnoreCase("template") ) {
+						if( restaurant_sample_menus.equalsIgnoreCase("none") == false ) {
+							// C R E A T E   S A M P L E   M E N U S //
+							String rootAppPath = SystemServlet.getGenesysHome();//thisContext.getInitParameter("GENESYS_HOME");
+							String importFile = new String(rootAppPath + "WEB-INF/import/menus/" + restaurant_sample_menus + ".xml");
+						
+							// Create DOM document
+							XMLDocument xmlDoc = new XMLDocument();
+							if( xmlDoc.loadXML(importFile) ) {
+								MenuBuilder mb = new MenuBuilder();
+								XMLNodeList menuNodes = xmlDoc.getNodeList("//menu");
+								for( int i = 0; i < menuNodes.getCount(); i++ ) {
+									XMLNode menuNode = menuNodes.getNodeByIndex(i);
+									// Default ordering to 'on' for sample locaion
+									menuNode.setAttribute("take_orders", "1");
+									mb.importMenu(info, loc_id, menuNode, true);
+								}
+							}
+						}
+					} else {
+						// Generate template from prompt
+						String rootAppPath = SystemServlet.getGenesysHome();
+						String prompt = new String(rootAppPath + "WEB-INF/import/menus/prompts/menu_generation.md");
+						String menuPrompt = ServletUtilities.loadFileContents(prompt);
+						OpenAiAdapter llm = new OpenAiAdapter();
+						String content = llm.makeLLMRequest(menuPrompt.replace("%S", restaurant_prompt_text));
 						XMLDocument xmlDoc = new XMLDocument();
-						if( xmlDoc.loadXML(importFile) )
-						{
+						if( xmlDoc.loadXMLStream(content) ) {
 							MenuBuilder mb = new MenuBuilder();
 							XMLNodeList menuNodes = xmlDoc.getNodeList("//menu");
-							for( int i = 0; i < menuNodes.getCount(); i++ )
-							{
+							for( int i = 0; i < menuNodes.getCount(); i++ ) {
 								XMLNode menuNode = menuNodes.getNodeByIndex(i);
 								// Default ordering to 'on' for sample locaion
 								menuNode.setAttribute("take_orders", "1");
@@ -322,15 +342,6 @@ public class AccountGenerator{
 					}
 					//////////////////////////////////////////////
 					/////////////////////////////////////
-
-					
-					// Create account
-					//ObjectSubmit account = new ObjectSubmit("CCAccount");
-					//account.addProperty("role", role_id);
-					//account.addProperty("username", account_username);
-					//account.addProperty("password", account_password);
-					//account.addProperty("accept_license", account_accept.equalsIgnoreCase("yes")?"Y":"N");
-					//String acc_id = m_objectBean.Insert(info, account);
 				}
 				while(false);
 			}
@@ -341,14 +352,7 @@ public class AccountGenerator{
 			catch(RepositoryException e)
 			{
 				/// Validation failure message ///
-				//ActionForward forward = mapping.findForward("success");
-				//ForwardParameters fwdParams = new ForwardParameters();
-				//fwdParams.add("msg", e.getErrMsg());
-				////fwdParams.add("something", "fornothing");
-				//return fwdParams.forward(forward);
 				rollback_account(m_objectBean, info, role_id, ref_id, user_id, null, loc_id, theme_id);
-				//ActionForward forward = mapping.findForward("failure");
-				//return new ForwardParameters().add("msg", e.getErrMsg()).forward(forward);
 				return 2;
 			}
 			catch( Exception e )

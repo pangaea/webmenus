@@ -7,9 +7,10 @@ All Rights Reserved
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title>File Loader</title>
-	<style>
-	</style>
+	<link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/xlibs/jquery/css/redmond/jquery-ui-1.7.2.custom.css" />
+	<script type="text/javascript" src="<%=request.getContextPath()%>/includes/msgbox.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xlibs/jquery/js/jquery-1.3.2.min.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/xlibs/jquery/js/jquery-ui-1.7.2.custom.min.js"></script>
 	<script type="text/javascript">
 		function selectImportMethod(){
 		    if ($('#load_from_t').is(':checked')) {
@@ -17,10 +18,17 @@ All Rights Reserved
 		    } else {
 		    	$('#load_from_template :input').attr('disabled', true);
 		    }
+
 		    if ($('#load_from_f').is(':checked')) {
 		    	$('#load_from_file :input').removeAttr('disabled');
 		    } else {
 		    	$('#load_from_file :input').attr('disabled', true);
+		    }
+
+		    if ($('#load_from_ai').is(':checked')) {
+		    	$('#load_from_prompt :input').removeAttr('disabled');
+		    } else {
+		    	$('#load_from_prompt :input').attr('disabled', true);
 		    }   
 		}
 	</script>
@@ -59,6 +67,19 @@ All Rights Reserved
 			<td><input type="file" name="menuFile"/></td>
 		</tr><tr>
 			<td colspan="2"><input type="submit" value="Load File"/></td>
+		</tr></table>
+		</form>
+	</div>
+	<hr/>
+	<input type="radio" id="load_from_ai" name="load_from" onclick="selectImportMethod()">From File</input>
+	<div id="load_from_prompt">
+		<form method="post" onsubmit="startAnimation()" action="<%=request.getContextPath()%>/MenuDesigner/loadfromprompt">
+		<table><tr>
+			<td>Generate menus using AI. Try it out. <b>You can change it later.</b> Describe your restaurant:</td>
+		</tr><tr>
+			<td><textarea name="promptText" style="height:200px;width:100%"></textarea></td>
+		</tr><tr>
+			<td><input type="submit" value="Generate From AI"/></td>
 		</tr></table>
 		</form>
 	</div>

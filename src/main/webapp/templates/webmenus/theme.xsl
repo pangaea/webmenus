@@ -205,6 +205,7 @@ a.liveOrderItem
 	/*font: normal 9pt <xsl:value-of select="property[@name='font']/text()"/>;*/
 	font: normal <xsl:value-of select="9+$font_size"/>pt <xsl:value-of select="property[@name='font']/text()"/>;
 	color: #<xsl:value-of select="property[@name='item_text_color']/text()"/>;
+	padding: 4px;
 }
 .menuOptions
 {

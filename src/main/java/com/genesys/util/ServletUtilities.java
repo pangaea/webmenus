@@ -1,7 +1,10 @@
 package com.genesys.util;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URLDecoder;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -70,4 +73,27 @@ public class ServletUtilities
         }
         return mapper.nullNode();
     }
+
+	public static String loadFileContents(String fileName) {
+		try
+		{
+			InputStream is = new FileInputStream(fileName);
+			InputStreamReader reader = new InputStreamReader(is, "UTF-8");
+			try (BufferedReader in = new BufferedReader(reader)) {
+				String line = null;
+				StringBuffer sb = new StringBuffer();
+				while((line = in.readLine()) != null)
+				{
+					sb.append(line);
+					sb.append('\n');
+				}
+				return sb.toString();
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

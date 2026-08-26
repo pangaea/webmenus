@@ -18,7 +18,9 @@ public final class Create_Form extends ActionForm
 	private String _password = null;
 	private String _password2 = null;
 	private boolean _accept = false;
+	private String _sample_menus_method = "template";
 	private String _sample_menus = null;
+	private String _prompt_text = null;
 	
 	public String getFirstName(){ return _fname; }
 	public void setFirstName(String fname){ _fname = fname; }
@@ -41,8 +43,14 @@ public final class Create_Form extends ActionForm
 	public boolean getAcceptEula(){ return _accept; }
 	public void setAcceptEula(boolean accept){ _accept = accept; }
 	
+	public String getSample_menus_method(){ return _sample_menus_method; }
+	public void setSample_menus_method(String sample_menus_method){ _sample_menus_method = sample_menus_method; }
+
 	public String getSample_menus(){ return _sample_menus; }
 	public void setSample_menus(String sample_menus){ _sample_menus = sample_menus; }
+
+	public String getPromptText(){ return _prompt_text; }
+	public void setPromptText(String prompt_text){ _prompt_text = prompt_text; }
 	
 	public void reset(ActionMapping mapping, HttpServletRequest request)
 	{
@@ -110,8 +118,15 @@ public final class Create_Form extends ActionForm
 		if( null == _password2 || _password2.equalsIgnoreCase(_password) == false )
 			errors.add("password2", new ActionMessage("account.error.password.mismatch"));
 		
-		if( null == _sample_menus || _sample_menus.length() == 0 )
-			errors.add("sample_menus", new ActionMessage("restaurant.error.sample_menus.missing"));
+		if( null == _sample_menus_method) {
+			errors.add("sample_menus_method", new ActionMessage("restaurant.error.sample_menus.missing"));
+		} else if(_sample_menus_method.equalsIgnoreCase("template") ) {
+			if( null == _sample_menus || _sample_menus.length() == 0 )
+				errors.add("sample_menus", new ActionMessage("restaurant.error.sample_menus.missing"));
+		} else if(_sample_menus_method.equalsIgnoreCase("prompt") ) {
+			if( null == _prompt_text || _prompt_text.length() == 0 )
+				errors.add("promptText", new ActionMessage("restaurant.error.sample_menus.prompt.missing"));
+		}
 
 		if( _accept == false )
 			errors.add("accept", new ActionMessage("account.error.accept.missing"));

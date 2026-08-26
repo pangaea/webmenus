@@ -42,7 +42,9 @@ public class Create_Action extends Action
 			accountParams.put("restaurant_timezone",		"US/Eastern");
 			accountParams.put("restaurant_email", 			rForm.getEmail());
 			accountParams.put("restaurant_phoneNum", 		"(212) 111-2222");
+			accountParams.put("restaurant_sample_menus_method",	rForm.getSample_menus_method());
 			accountParams.put("restaurant_sample_menus",	rForm.getSample_menus());
+			accountParams.put("restaurant_prompt_text",	rForm.getPromptText());
 			accountParams.put("allow_email",				"N");
 			accountParams.put("restaurant_logo",			"/public/soundmenus-logo-small.png");
 
