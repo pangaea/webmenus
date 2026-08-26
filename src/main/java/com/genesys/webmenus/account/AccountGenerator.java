@@ -154,7 +154,7 @@ public class AccountGenerator{
 					ObjectSubmit theme = new ObjectSubmit("CETheme");
 					theme.addProperty("name", "default");
 					theme.addProperty("menuwidth", "100%");
-					theme.addProperty("itemwidth", "48%");
+					theme.addProperty("itemwidth", "400px");
 					theme.addProperty("columns", 2);
 					theme.addProperty("font", "Lucida Console,Monaco,monospace");
 					theme.addProperty("font_size", "0");

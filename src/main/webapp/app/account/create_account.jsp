@@ -31,9 +31,62 @@ function goNav(page)
 	//document.location.href = "<%=request.getContextPath()%>/app/account/" + page;
 	document.location.href = page;
 }
+
+$(function() {
+	const form = document.getElementById("account_form");
+	const overlay = document.getElementById("loadingOverlay");
+
+	let isSubmitting = false;
+
+	form.addEventListener("submit", function () {
+		if (isSubmitting) {
+			return false;
+		}
+
+		isSubmitting = true;
+
+		overlay.style.display = "flex";
+	});
+});
 </script>
 
 <link href="<%=request.getContextPath()%>/w3/styles/masterpage.css" type="text/css" rel="stylesheet"/>
+
+<style>
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.75);
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  pointer-events: all;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #ddd;
+  border-top-color: #007bff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.loading-text {
+  margin-top: 12px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  color: #333;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>
 
 <!--%@ include file="/analytics/google-analytics.jsp"%-->
 </head>
@@ -84,7 +137,12 @@ function goNav(page)
 
 		<div id="frame">
 
-			<html:form action="create_account.do">
+			<div id="loadingOverlay" class="loading-overlay">
+				<div class="spinner"></div>
+				<div class="loading-text">Submitting...</div>
+			</div>
+
+			<html:form action="create_account.do" styleId="account_form">
 
 				<div class="outer">
 					<div style="float: left; font: 16pt verdana; color: navy; text-align: left;">Create a FREE Account</div>

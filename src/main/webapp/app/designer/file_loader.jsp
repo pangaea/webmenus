@@ -7,9 +7,10 @@ All Rights Reserved
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title>File Loader</title>
-	<style>
-	</style>
+	<link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/xlibs/jquery/css/redmond/jquery-ui-1.7.2.custom.css" />
+	<script type="text/javascript" src="<%=request.getContextPath()%>/includes/msgbox.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xlibs/jquery/js/jquery-1.3.2.min.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/xlibs/jquery/js/jquery-ui-1.7.2.custom.min.js"></script>
 	<script type="text/javascript">
 		function selectImportMethod(){
 		    if ($('#load_from_t').is(':checked')) {
@@ -72,7 +73,7 @@ All Rights Reserved
 	<hr/>
 	<input type="radio" id="load_from_ai" name="load_from" onclick="selectImportMethod()">From File</input>
 	<div id="load_from_prompt">
-		<form method="post" action="<%=request.getContextPath()%>/MenuDesigner/loadfromprompt">
+		<form method="post" onsubmit="startAnimation()" action="<%=request.getContextPath()%>/MenuDesigner/loadfromprompt">
 		<table><tr>
 			<td>Generate menus using AI. Try it out. <b>You can change it later.</b> Describe your restaurant:</td>
 		</tr><tr>
