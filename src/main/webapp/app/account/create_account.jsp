@@ -212,7 +212,7 @@ $(function() {
 				<table style="width:100%;">
 					<tr><td colspan="2" style="text-align:right;">
 						<html:button property="backButton" onclick="goNav('/');">Cancel</html:button>
-						<html:submit>Sign Up Now</html:submit>
+						<html:submit>Create Account</html:submit>
 					</td></tr>
 				</table>
 

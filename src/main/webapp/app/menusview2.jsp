@@ -19,7 +19,7 @@ All Rights Reserved
 	
 	// Load location information into the order bean
 	menuOrderBean.setCurrentLocation(sLocId);
-	boolean bOpen = menuOrderBean.isWithinOpertingHours();
+	boolean bOpen = menuOrderBean.isWithinOperatingHours();
 	String exitURL = menuOrderBean.getExitURL();
 %>
 <html>

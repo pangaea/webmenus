@@ -186,7 +186,7 @@ public class Menus extends HttpServlet
 	{
 		//String errMsg = "There was an error encountered:-(";
 		MenuOrderBean menuOrderBean = (MenuOrderBean) request.getSession().getAttribute("menuOrderBean");
-		boolean bOpen = menuOrderBean.isWithinOpertingHours();
+		boolean bOpen = menuOrderBean.isWithinOperatingHours();
 		if( bOpen ){
 			if( menuOrderBean.submitNewItem(request) == true ){
 				response.sendRedirect(rootMenuPath + "/orderview");
@@ -200,7 +200,7 @@ public class Menus extends HttpServlet
 	{
 		//String errMsg = "There was an error encountered:-(";
 		MenuOrderBean menuOrderBean = (MenuOrderBean) request.getSession().getAttribute("menuOrderBean");
-		boolean bOpen = menuOrderBean.isWithinOpertingHours();
+		boolean bOpen = menuOrderBean.isWithinOperatingHours();
 		// if( bOpen ){
 			
 		// 	if( menuOrderBean.isValidated() == false ){

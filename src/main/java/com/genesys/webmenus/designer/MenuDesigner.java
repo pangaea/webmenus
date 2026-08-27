@@ -378,7 +378,7 @@ public class MenuDesigner extends HttpServlet
 			//StringBuffer xmlString = new StringBuffer();
 			//xmlString.append("<?xml version='1.0' encoding='UTF-8'?><query-results><menu ");
 			
-			//if( menuOrderBean.isWithinMenuOpertingHours(sMenu) )
+			//if( menuOrderBean.isWithinMenuOperatingHours(sMenu) )
 			//	xmlStreamWriter.writeAttribute("status", "open");
 			//else
 			//	xmlStreamWriter.writeAttribute("status", "closed");

@@ -11,7 +11,7 @@ All Rights Reserved
 <%@ page import="com.fasterxml.jackson.databind.ObjectMapper"%>
 <jsp:useBean id="menuOrderBean" scope="session" class="com.genesys.webmenus.MenuOrderBean"/>
 <%
-	boolean bOpen = menuOrderBean.isWithinOpertingHours();
+	boolean bOpen = menuOrderBean.isWithinOperatingHours();
 	if( bOpen == false )
 	{
 %>

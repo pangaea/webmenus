@@ -13,7 +13,7 @@ All Rights Reserved
 <%@ page import="com.fasterxml.jackson.databind.ObjectMapper"%>
 <jsp:useBean id="menuOrderBean" scope="session" class="com.genesys.webmenus.MenuOrderBean"/>
 <%
-	boolean bOpen = menuOrderBean.isWithinOpertingHours();
+	boolean bOpen = false;
 
 	// Pull in order index if this is an update operation
 	String orderIndex = request.getParameter("order_index");
@@ -125,6 +125,8 @@ All Rights Reserved
 		String sMenuItemId = oMenuItemSize.getPropertyValue("menuitem");
 		if( sMenuItemId.equalsIgnoreCase("null") == true || sMenuItemId.length() == 0 )
 			sMenuItemId = sizeid;
+
+		bOpen = menuOrderBean.isItemWithinOperatingHours(sMenuItemId);
 
 		ObjectQuery queryMenuItem = new ObjectQuery( "CCMenuItem" );
 		queryMenuItem.addProperty("id",sMenuItemId);

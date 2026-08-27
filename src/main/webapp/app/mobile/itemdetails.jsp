@@ -24,7 +24,7 @@
 <webmenusCfg:GuestUser>
 <body>
 <webmenusCfg:MenuItemSize itemSizeId="<%=sItemId%>">
-<% boolean bMenuOpen = menuOrderBean.isWithinMenuOpertingHours(itemMenuId); %>
+<% boolean bMenuOpen = menuOrderBean.isWithinMenuOperatingHours(itemMenuId); %>
 <div data-role="page" id="page-<%=sItemId%>">
 
 	<div data-role="header">

@@ -101,7 +101,7 @@ public class QueryMenuItems extends HttpServlet
 			boolean showOptions = tmpCat.getPropertyValue_Boolean("menu.show_options");
 			//xmlStreamWriter.writeAttribute("show_options",tmpCat.getPropertyValue("menu.show_options"));
 			
-			if( menuOrderBean.isWithinMenuOpertingHours(tmpCat.getPropertyValue("menu")) )
+			if( menuOrderBean.isWithinMenuOperatingHours(tmpCat.getPropertyValue("menu")) )
 				xmlStreamWriter.writeAttribute("status", "open");
 				//xmlString.append(" status='open'>");
 			else
@@ -316,7 +316,7 @@ public class QueryMenuItems extends HttpServlet
 			//xmlString.append("<?xml version='1.0' encoding='UTF-8'?><query-results><menu ");
 			
 			
-			//if( menuOrderBean.isWithinMenuOpertingHours(sMenu) )
+			//if( menuOrderBean.isWithinMenuOperatingHours(sMenu) )
 			//	xmlStreamWriter.writeAttribute("status", "open");
 			//else
 			//	xmlStreamWriter.writeAttribute("status", "closed");

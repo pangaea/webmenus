@@ -6,7 +6,7 @@ All Rights Reserved
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="ISO-8859-1" %>
 <jsp:useBean id="menuOrderBean" scope="session" class="com.genesys.webmenus.MenuOrderBean"/>
 <%
-	boolean bOpen = menuOrderBean.isWithinOpertingHours();
+	boolean bOpen = menuOrderBean.isWithinOperatingHours();
 %>
 <html>
 	<head>

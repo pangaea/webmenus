@@ -10,7 +10,7 @@ All Rights Reserved
 	// Load location information into the order bean
 	RepositoryObject currentLocation = (RepositoryObject)request.getAttribute("locationObject");
 	menuOrderBean.setCurrentLocation( currentLocation );
-	boolean bOpen = menuOrderBean.isWithinOpertingHours();
+	boolean bOpen = menuOrderBean.isWithinOperatingHours();
 	String rootMenuPath = request.getContextPath() + "/Menus/" + currentLocation.getId();
 	String exitURL = menuOrderBean.getExitURL();
 %>

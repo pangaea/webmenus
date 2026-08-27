@@ -10,7 +10,7 @@ All Rights Reserved
 
 <jsp:useBean id="menuOrderBean" scope="session" class="com.genesys.webmenus.MenuOrderBean"/>
 <%
-	boolean bOpen = menuOrderBean.isWithinOpertingHours();
+	boolean bOpen = menuOrderBean.isWithinOperatingHours();
 	if( bOpen == false ){
 %>
 		Sorry, this establishment is currently not taking orders.

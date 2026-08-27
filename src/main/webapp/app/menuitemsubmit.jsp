@@ -8,7 +8,7 @@ All Rights Reserved
 <%
 	//menuOrderBean.setObjectManager(objectBean);
 	String errMsg = "There was an error encountered:-(";
-	boolean bOpen = menuOrderBean.isWithinOpertingHours();
+	boolean bOpen = menuOrderBean.isWithinOperatingHours();
 	if( bOpen )
 	{
 		boolean orderSuccess = false;

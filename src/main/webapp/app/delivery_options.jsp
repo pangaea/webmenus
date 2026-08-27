@@ -7,7 +7,7 @@ All Rights Reserved
 <%@ page import="java.util.*"%>
 <jsp:useBean id="menuOrderBean" scope="session" class="com.genesys.webmenus.MenuOrderBean"/>
 <%
-	boolean bOpen = menuOrderBean.isWithinOpertingHours();
+	boolean bOpen = menuOrderBean.isWithinOperatingHours();
 %>
 <html>
 	<head>

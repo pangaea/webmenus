@@ -601,12 +601,17 @@ public class MenuOrderBean
 		 return iSunOffset;
 	}
 
-	public boolean isWithinOpertingHours()
+	public boolean isItemWithinOperatingHours(String itemId)
 	{
-		return isWithinMenuOpertingHours("");
+		return isItemMenuOpen(itemId);
 	}
 
-	public boolean isWithinMenuOpertingHours(String menuId)
+	public boolean isWithinOperatingHours()
+	{
+		return isWithinMenuOperatingHours("");
+	}
+
+	public boolean isWithinMenuOperatingHours(String menuId)
 	{
 		if( m_locTZ == null ) return false;
 		 //SimpleTimeZone pdt = m_objectBean.GetObjManTimeZone();
@@ -721,6 +726,38 @@ public class MenuOrderBean
 		}
 		return false;
 	}
+
+	private boolean isItemMenuOpen(String sMenuItemId) {
+		try {
+			ObjectQuery queryMenuItem = new ObjectQuery( "CCMenuItem" );
+			queryMenuItem.addProperty("id",sMenuItemId);
+			QueryResponse qrMenuItems = m_objectBean.Query( m_creds, queryMenuItem );
+			RepositoryObjects oMenuItems = qrMenuItems.getObjects( queryMenuItem.getClassName() );
+			if( oMenuItems.count() > 0 )
+			{
+				RepositoryObject oMenuItem = oMenuItems.get(0);
+				String sMenuItemName = oMenuItem.getPropertyValue("name");
+				String sMenuItemDesc = oMenuItem.getPropertyValue("description");
+				String sMenuCategory = oMenuItem.getPropertyValue("menucategory");
+				ObjectQuery queryMenuCat = new ObjectQuery( "CCMenuCategory" );
+				queryMenuCat.addProperty("id", sMenuCategory);
+				QueryResponse qrMenuCats = m_objectBean.Query( m_creds, queryMenuCat );
+				RepositoryObjects oMenuCats = qrMenuCats.getObjects( queryMenuCat.getClassName() );
+				if( oMenuCats.count() > 0 )
+				{
+					RepositoryObject oMenuCategory = oMenuCats.get(0);
+					String sMenuId = oMenuCategory.getPropertyValue("menu");
+					if( isWithinMenuOperatingHours(sMenuId) )
+					{
+						return true;
+					}
+				}
+			}
+		} catch (Exception e) {
+			SystemServlet.g_logger.error( "Failed to retrieve menu status - " + e.getMessage() );
+		}
+		return false;
+	}
 	
 	private OrderItem processItem(HttpServletRequest request)
 	{
@@ -773,7 +810,7 @@ public class MenuOrderBean
 					}
 					RepositoryObject oMenuCategory = oMenuCats.get(0);
 					String sMenuId = oMenuCategory.getPropertyValue("menu");
-					if( isWithinMenuOpertingHours(sMenuId) == false )
+					if( isWithinMenuOperatingHours(sMenuId) == false )
 					{
 						return null;
 					}
