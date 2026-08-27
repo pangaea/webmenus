@@ -1278,7 +1278,7 @@ function drawMenu(xml)
 			var menuNodes = menuTree.children(rootNode);
 			if( menuNodes!=null && menuNodes.length > 0)
 			{
-				var msg = "Importing new menus will overwrite your current ones. You will lose any unsaved or unpublished data. Continue?";
+				var msg = "Importing new menus will overwrite your current ones, in the designer ONLY. This DOES NOT overwrite the menus you've already published, until you publish again. You will lose any unsaved or unpublished data. Continue?";
 				messageBox(msg, "Continue Loading Menus", {
 					"No": function(){$(this).dialog("close");},
 					"Yes": function(){drawMenuYes(xml);$(this).dialog("close");}
