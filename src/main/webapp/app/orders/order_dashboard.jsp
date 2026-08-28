@@ -86,6 +86,7 @@ orderDashboardBean.loadLocationDetails(request.getParameter("loc"));
             <tr><td><b>Invoice:</b></td><td class="invoice">{invoice}</td></tr>
             <tr><td><b>Delivery:</b></td><td><img class="delivery_image" src="{delivery}"></img></td></tr>
             <tr><td><b>Due:</b></td><td class="estimated-time">{estimated_time_label}</td></tr>
+            <tr><td><b></b></td><td class="order-error">{error_msg}</td></tr>
           </table>
         </div>
       </template>

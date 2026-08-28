@@ -53,3 +53,10 @@
 .delivery_image {
     height: 12px;
 }
+
+.order-error {
+    color: red;
+    font-weight: 600;
+    font-family: sans-serif;
+    font-size: 14pt;
+}

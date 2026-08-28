@@ -97,11 +97,16 @@ function initKanban(orders) {
         // Create order DIV
         const time_diff = (o.estimated_time != null && o.estimated_time.length > 0) ? timeDiffInMinutes(o.estimated_time) : null;
         const order = document.createElement('div');
+        var error_msg = "";
+        if (o.delivery == false && o.status === "outfordelivery") {
+            error_msg = "Status invalid: This is not a delivery order!";
+        }
         order.innerHTML = orderHTML.replace("{id}", o.id)
                                     .replace("{label}", o.label)
                                     .replace("{invoice}", o.invoice)
                                     .replace("{delivery}", (o.delivery) ? "/webmenus/app/images/checkmark.png" : "/webmenus/app/images/close.png")
-                                    .replace("{estimated_time_label}", convertToLabel(time_diff));
+                                    .replace("{estimated_time_label}", convertToLabel(time_diff))
+                                    .replace("{error_msg}", error_msg);
 
         if (time_diff != null) {
             if (time_diff < 0) {
