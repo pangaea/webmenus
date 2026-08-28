@@ -183,13 +183,12 @@ function updateCartCount(count) {
 
 </div>
 
-
   <aside
     class="cart-drawer"
     id="cartDrawer"
     aria-label="Shopping cart"
-    aria-hidden="true"
-  >
+    aria-hidden="true">
+
     <div class="cart-header">
       <h2>Your Order</h2>
       <button class="close-button" id="closeCart" aria-label="Close cart">x</button>

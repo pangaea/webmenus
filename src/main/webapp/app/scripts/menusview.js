@@ -39,7 +39,6 @@ function openOrderDialog(url)
 	var txtContent = "<iframe width='" + dlgWidth + "px' height='" + dlgHeight + "px' src='" + url + "'></iframe>";
 	var theDialog = new dijit.Dialog({
 		id: "wm_modal_dialog",
-		title: "My Order",
 		content: txtContent,
 		layout: "none"
 	});
