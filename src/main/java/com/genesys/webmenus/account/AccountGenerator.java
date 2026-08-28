@@ -174,7 +174,7 @@ public class AccountGenerator{
 					theme2.addProperty("name", "olive");
 					theme2.addProperty("menuwidth", "100%");
 					theme2.addProperty("itemwidth", "500px");
-					theme2.addProperty("font", "Arial");
+					theme2.addProperty("font", "Verdana");
 					theme2.addProperty("font_size", "0");
 					theme2.addProperty("bkcolor", "f5f6b6");
 					theme2.addProperty("option_text_color", "d1d345");

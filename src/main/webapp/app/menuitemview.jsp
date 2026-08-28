@@ -152,7 +152,7 @@ All Rights Reserved
 				sMenuItemImg.indexOf(".jpg") >= 0 ||
 				sMenuItemImg.indexOf(".png") >= 0 ) ){
 %>
-				<img src='../../ImageViewer<%=sMenuItemImg%>'/>
+				<img class="menuItemImage" src='../../ImageViewer<%=sMenuItemImg%>'/>
 	<% 	} %>
 			</td><td valign='top'>
 			

@@ -66,6 +66,40 @@ dojo.require("dojo.parser");
 <script type="text/javascript" src="scripts/menusview.js?v=<%=System.currentTimeMillis()%>"></script>
 <script type="text/javascript" src="scripts/handlebars.helpers.js"></script>
 
+<script type="text/javascript">
+var template = "<%=menuOrderBean.getThemeTemplate().replace("\\", "\\\\").replace("\n", "").replace("\"", "\\\"")%>";
+if(template.length == 0){
+	createMessageDialog();
+	message("ERROR: missing template: invalid theme selected.", "Error", function(){document.location.reload();});
+}
+$COMPILED_TEMPLATE = Handlebars.compile(template);
+dojo.addOnLoad( function() {
+	document.getElementById("openCart").addEventListener("click", openCart);
+	document.getElementById("closeCart").addEventListener("click", closeCart);
+});
+//const cartDrawer = document.getElementById("cartDrawer");
+function openCart() {
+	const cartDrawer = document.getElementById("cartDrawer");
+	cartDrawer.classList.add("open");
+	//overlay.classList.add("open");
+	cartDrawer.setAttribute("aria-hidden", "false");
+	//document.body.style.overflow = "hidden";
+}
+
+function closeCart() {
+	const cartDrawer = document.getElementById("cartDrawer");
+	cartDrawer.classList.remove("open");
+	//overlay.classList.remove("open");
+	cartDrawer.setAttribute("aria-hidden", "true");
+	///document.body.style.overflow = "";
+}
+
+function updateCartCount(count) {
+	const cartCount = document.getElementById("cartCount");
+	cartCount.innerText = count;
+}
+</script>
+
 </head>
 <body id="menuBody" class="tundra" style="background-image: url('images/bg2.jpg')">
 <webmenusCfg:GuestUser>
@@ -82,6 +116,8 @@ dojo.require("dojo.parser");
 	<div id="menuHeader">
 	<% if( menuOrderBean.getLogo().length() > 0 ){ %>
 	<img src="<%=request.getContextPath()%>/ImageViewer<%=menuOrderBean.getLogo()%>"/>
+	<% } else { %>
+		<h1 class="locationName"><%=menuOrderBean.getLocationName()%></h1>
 	<% } %>
 	</div>
 	<div id="menuMenu">
@@ -116,38 +152,6 @@ dojo.require("dojo.parser");
 %>
 		<script type="text/javascript">
 			var sFirstMenuId="<%=menuId%>";
-			var template = "<%=menuOrderBean.getThemeTemplate().replace("\\", "\\\\").replace("\n", "").replace("\"", "\\\"")%>";
-			if(template.length == 0){
-				createMessageDialog();
-				message("ERROR: missing template: invalid theme selected.", "Error", function(){document.location.reload();});
-			}
-			$COMPILED_TEMPLATE = Handlebars.compile(template);
-
-			dojo.addOnLoad( function() {
-				document.getElementById("openCart").addEventListener("click", openCart);
-    			document.getElementById("closeCart").addEventListener("click", closeCart);
-			});
-			//const cartDrawer = document.getElementById("cartDrawer");
-			function openCart() {
-				const cartDrawer = document.getElementById("cartDrawer");
-				cartDrawer.classList.add("open");
-				//overlay.classList.add("open");
-				cartDrawer.setAttribute("aria-hidden", "false");
-				//document.body.style.overflow = "hidden";
-			}
-
-			function closeCart() {
-				const cartDrawer = document.getElementById("cartDrawer");
-				cartDrawer.classList.remove("open");
-				//overlay.classList.remove("open");
-				cartDrawer.setAttribute("aria-hidden", "true");
-				///document.body.style.overflow = "";
-			}
-
-			function updateCartCount(count) {
-				const cartCount = document.getElementById("cartCount");
-				cartCount.innerText = count;
-			}
 		</script>
 <%
 		}

@@ -49,6 +49,11 @@ a.liveOrderItem
 {
 	background-color: #<xsl:value-of select="property[@name='bkcolor']/text()"/>;
 }
+h1.locationName
+{
+	padding-top: 20px;
+    padding-left: 20px;
+}
 #menuHeader
 {
 	background-repeat: no-repeat;
@@ -175,6 +180,11 @@ a.liveOrderItem
 	text-align: left;
 	width: 100%;
 }
+.menuItemImage
+{
+	max-width: 400px;
+	max-height: 400px;
+}
 .menuItemButtons
 {
 	padding: 4px;
@@ -206,6 +216,11 @@ a.liveOrderItem
 	font: normal <xsl:value-of select="9+$font_size"/>pt <xsl:value-of select="property[@name='font']/text()"/>;
 	color: #<xsl:value-of select="property[@name='item_text_color']/text()"/>;
 	padding: 4px;
+}
+.menuItemSizeDesc
+{
+  font-weight: 300;
+  color: #6c757d;
 }
 .menuOptions
 {
