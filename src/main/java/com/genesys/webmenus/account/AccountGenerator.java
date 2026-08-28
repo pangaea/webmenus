@@ -166,8 +166,25 @@ public class AccountGenerator{
 					theme.addProperty("itemdesc_text_color", "000000");
 					theme.addProperty("system_text_color", "ff0000");
 					theme.addProperty("template", defaultTemplate);
-					theme_id = m_objectBean.Insert(info, theme);
+					m_objectBean.Insert(info, theme);
 					//////////////////////////////////////////
+
+					// Add another sample theme
+					ObjectSubmit theme2 = new ObjectSubmit("CETheme");
+					theme2.addProperty("name", "olive");
+					theme2.addProperty("menuwidth", "100%");
+					theme2.addProperty("itemwidth", "500px");
+					theme2.addProperty("font", "Arial");
+					theme2.addProperty("font_size", "0");
+					theme2.addProperty("bkcolor", "f5f6b6");
+					theme2.addProperty("option_text_color", "d1d345");
+					theme2.addProperty("titlebar_color", "191919");
+					theme2.addProperty("cat_text_color", "ffffff");
+					theme2.addProperty("item_text_color", "bf5f00");
+					theme2.addProperty("itemdesc_text_color", "000000");
+					theme2.addProperty("system_text_color", "ff0000");
+					theme2.addProperty("template", defaultTemplate);
+					theme_id = m_objectBean.Insert(info, theme2);
 					
 					// Location object
 					ObjectSubmit location = new ObjectSubmit("CELocation");
@@ -194,25 +211,6 @@ public class AccountGenerator{
 					//location.setOverrideRole(role_id);
 					//location.addProperty("role", role_id);
 					loc_id = m_objectBean.Insert(info, location);
-					
-					
-					// Add another sample theme
-					ObjectSubmit theme2 = new ObjectSubmit("CETheme");
-					theme2.addProperty("name", "olive");
-					theme2.addProperty("menuwidth", "100%");
-					theme2.addProperty("itemwidth", "500px");
-					theme2.addProperty("font", "Arial");
-					theme2.addProperty("font_size", "0");
-					theme2.addProperty("bkcolor", "f5f6b6");
-					theme2.addProperty("option_text_color", "d1d345");
-					theme2.addProperty("titlebar_color", "191919");
-					theme2.addProperty("cat_text_color", "ffffff");
-					theme2.addProperty("item_text_color", "bf5f00");
-					theme2.addProperty("itemdesc_text_color", "000000");
-					theme2.addProperty("system_text_color", "ff0000");
-					theme2.addProperty("template", defaultTemplate);
-					m_objectBean.Insert(info, theme2);
-					
 					
 					// Add sample schedule
 					ObjectSubmit schedule = new ObjectSubmit("CCSchedule");

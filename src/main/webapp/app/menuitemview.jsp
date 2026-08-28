@@ -236,10 +236,11 @@ All Rights Reserved
 							sChoicePrice = "";
 						}
 					}
+
 					String hash = obj.getPropertyValue("name") + "#" + choice.getPropertyValue("name");
-					boolean selected = selectedChoices.contains(hash);
+					boolean selected = (orderIndex == null) ? (ii == 0) : selectedChoices.contains(hash);
 %>
-					<input checked="<%=selected%>" dojoType="dijit.form.RadioButton" <%=(ii == 0) ? "checked" : ""%> type="radio" name="<%=obj.getPropertyValue("name")%>" value="<%=choice.getPropertyValue("name")%>"><%=choice.getPropertyValue("name")%><%=sChoicePrice%></input><br/>
+					<input checked="<%=selected%>" dojoType="dijit.form.RadioButton" type="radio" name="<%=obj.getPropertyValue("name")%>" value="<%=choice.getPropertyValue("name")%>"><%=choice.getPropertyValue("name")%><%=sChoicePrice%></input><br/>
 <%
 				}
 			}
