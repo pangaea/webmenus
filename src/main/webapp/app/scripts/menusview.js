@@ -178,7 +178,7 @@ function orderDlgProc(param)
 
 function viewOrder()
 {
-	showOrderDialog("MenuView/vieworder?r=" + RandomNum());
+	showOrderDialog("/webmenus/app/MenuView/vieworder?r=" + RandomNum());
 }
 
 function viewCheckout()
@@ -188,13 +188,13 @@ function viewCheckout()
 
 function editMenuItem(id, index)
 {
-	var url = "MenuView/menuitemview?id=" + id + "&order_index=" + index + "&r=" + RandomNum();
+	var url = "/webmenus/app/MenuView/menuitemview?id=" + id + "&order_index=" + index + "&r=" + RandomNum();
 	showOrderDialog(url);
 }
 
 function viewMenuItem(id, title)
 {
-	var url = "MenuView/menuitemview?id=" + id + "&r=" + RandomNum();
+	var url = "/webmenus/app/MenuView/menuitemview?id=" + id + "&r=" + RandomNum();
 	showOrderDialog(url);
 }
 
