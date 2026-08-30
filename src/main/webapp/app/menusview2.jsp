@@ -62,9 +62,9 @@ dojo.require("dojo.parser");
 <script type="text/javascript" src="<%=request.getContextPath()%>/xlibs/handlebars/handlebars-v1.3.0.js"></script>
 
 <script type="text/javascript" src="<%=request.getContextPath()%>/includes/common.js"></script>
-<script type="text/javascript" src="scripts/menus.js?v=<%=System.currentTimeMillis()%>"></script>
-<script type="text/javascript" src="scripts/menusview.js?v=<%=System.currentTimeMillis()%>"></script>
-<script type="text/javascript" src="scripts/handlebars.helpers.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/app/scripts/menus.js?v=<%=System.currentTimeMillis()%>"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/app/scripts/menusview.js?v=<%=System.currentTimeMillis()%>"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/app/scripts/handlebars.helpers.js"></script>
 
 <script type="text/javascript">
 var template = "<%=menuOrderBean.getThemeTemplate().replace("\\", "\\\\").replace("\n", "").replace("\"", "\\\"")%>";
@@ -194,7 +194,7 @@ function updateCartCount(count) {
       <button class="close-button" id="closeCart" aria-label="Close cart">x</button>
     </div>
 
-	<iframe id="orderPanel" src="orderview.jsp" style="height:100%"></iframe>
+	<iframe id="orderPanel" src="<%=request.getContextPath()%>/app/orderview.jsp" style="height:100%"></iframe>
 
     </div>
   </aside>
