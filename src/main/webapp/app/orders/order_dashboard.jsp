@@ -68,6 +68,14 @@ orderDashboardBean.loadLocationDetails(request.getParameter("loc"));
     </head>
     <body>
 
+      <div style="display:none;">
+        <div id="message_box" style="width:300px; padding:20px; text-align:center;">
+            <h3 id="message_box_title"></h3>
+            <p id="message_box_body"></p>
+            <button id="close_btn" onclick="$.fancybox.close();">OK</button>
+        </div>
+      </div>
+
       <div style="height:60px;">
         <h2 style="padding-top:10px;"><%=orderDashboardBean.getName()%></h2>
         <div style="position:absolute;right:10px;top:10px;">

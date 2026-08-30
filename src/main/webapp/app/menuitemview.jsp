@@ -13,6 +13,16 @@ All Rights Reserved
 <%@ page import="com.fasterxml.jackson.databind.ObjectMapper"%>
 <jsp:useBean id="menuOrderBean" scope="session" class="com.genesys.webmenus.MenuOrderBean"/>
 <%
+	String locId = menuOrderBean.getCurrentLocationId();
+	if( locId == null || locId.isEmpty() )
+	{
+%>
+		Your session has timed out. Please <a href="#" onclick="parent.location.reload()">refresh</a>
+<%
+		return;
+	}
+%>
+<%
 	boolean bOpen = false;
 
 	// Pull in order index if this is an update operation

@@ -27,6 +27,19 @@ function drop(ev) {
     });
 }
 
+// A simple, reusable alert box function
+function showAlert(title, message) {
+    $("#message_box_title").text(title);
+    $("#message_box_body").text(message);
+    $.fancybox({
+        'href'              : '#message_box',
+        'transitionIn'      : 'fade',
+        'transitionOut'     : 'fade',
+        'hideOnOverlayClick': false,
+        'enableEscapeButton': true
+    });
+}
+
 function select(ev) {
     console.log("Selected id => " + ev);
     //showDialog("/webmenus/app/orders/order_details.jsp?id=" + ev, "Order Details", 1280);
@@ -50,7 +63,10 @@ function loadOrders() {
 		dataType: "json",
 		success: function(json){
 			initKanban(json);
-		}
+		},
+        error: function() {
+            showAlert("Server Error", "Lost connection to the server. Please try refreshing the page or logging in again.");
+        }
 	});
 }
 
