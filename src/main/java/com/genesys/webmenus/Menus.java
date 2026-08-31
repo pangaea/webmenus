@@ -110,12 +110,12 @@ public class Menus extends HttpServlet
 							if(ServletUtilities.isMobileDevice(request)){
 								getServletContext().getRequestDispatcher("/app/mobile/" + viewPage + ".jsp").forward(request, response);
 							}else{
-								//response.sendRedirect( request.getContextPath() + "/app/menusview2.jsp?loc=" + locationId );
+								//response.sendRedirect( request.getContextPath() + "/app/menusview.jsp?loc=" + locationId );
 								// 2. Attach the data to the request object
         						//request.setAttribute("loc", locationId);
 
 								// 3. Forward the request and response to the JSP page
-								getServletContext().getRequestDispatcher("/app/menusview2.jsp?loc=" + locationId).forward(request, response);
+								getServletContext().getRequestDispatcher("/app/menusview.jsp?loc=" + locationId).forward(request, response);
 							}
 						} ////////////////////////////////////////////////////////
 					}

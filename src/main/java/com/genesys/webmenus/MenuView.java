@@ -103,10 +103,7 @@ public class MenuView extends HttpServlet
 			}
 			else
 			{
-				if( menu_template.compareToIgnoreCase("menu-top") == 0 )
-					getServletContext().getRequestDispatcher("/app/menusview2.jsp").forward(request, response); 
-				else
-					getServletContext().getRequestDispatcher("/app/menusview.jsp").forward(request, response);
+				getServletContext().getRequestDispatcher("/app/menusview.jsp").forward(request, response);
 			}
 		}
 		catch(AuthenticationException ex)

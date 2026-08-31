@@ -1,22 +1,21 @@
 <!--
-Copyright (c) 2004-2005 Kevin Jacovelli
+Copyright (c) 2004-2016 Kevin Jacovelli
 All Rights Reserved
 -->
 <%@ taglib uri="/WEB-INF/tlds/webmenus.tld" prefix="webmenusCfg" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="ISO-8859-1" %>
-<%@ page import="java.math.BigDecimal"%>
-<%@ page import="java.util.Date"%>
+<%@ page import="java.util.List"%>
 <jsp:useBean id="menuOrderBean" scope="session" class="com.genesys.webmenus.MenuOrderBean"/>
 <%
 	//menuOrderBean.setObjectManager(objectBean);
 	String sLocId = request.getParameter("loc");
 	if( sLocId == null ){
 %>
-		<h2>Location id missing</h2>
+		<html><body><h2>Location id missing</h2></body></html>
 <%
 		return;
 	}
-	String sFirstMenuId = new String("");
+	boolean bFirstMenuFound = false;
 	
 	// Load location information into the order bean
 	menuOrderBean.setCurrentLocation(sLocId);
@@ -32,6 +31,7 @@ All Rights Reserved
 
 <script type="text/javascript" src="<%=request.getContextPath()%>/xlibs/dojo/dojo/dojo.js" djConfig="parseOnLoad: true"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/includes/xutils.js"></script>
+
 <%
 	String themeName = menuOrderBean.getTheme();
 	if( themeName.length() > 0 ){
@@ -53,97 +53,83 @@ dojo.require("dijit.form.Button");
 dojo.require("dijit.Dialog");
 dojo.require("dijit.layout.SplitContainer");
 dojo.require("dijit.layout.ContentPane");
-dojo.require("dojo.data.ItemFileReadStore");
-dojo.require("dijit.Tree");
+dojo.require("dijit.Menu");
 dojo.require("dojo.parser");
 </script>
 
-
 <script type="text/javascript" src="<%=request.getContextPath()%>/xlibs/jquery/js/jquery-1.3.2.min.js"></script>
 
+<script type="text/javascript" src="<%=request.getContextPath()%>/xlibs/handlebars/handlebars-v1.3.0.js"></script>
 
 <script type="text/javascript" src="<%=request.getContextPath()%>/includes/common.js"></script>
-<script type="text/javascript" src="scripts/menus.js"></script>
-<script type="text/javascript" src="scripts/menusview.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/app/scripts/menus.js?v=<%=System.currentTimeMillis()%>"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/app/scripts/menusview.js?v=<%=System.currentTimeMillis()%>"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/app/scripts/handlebars.helpers.js"></script>
 
+<script type="text/javascript">
+var template = "<%=menuOrderBean.getThemeTemplate().replace("\\", "\\\\").replace("\n", "").replace("\"", "\\\"")%>";
+if(template.length == 0){
+	createMessageDialog();
+	message("ERROR: missing template: invalid theme selected.", "Error", function(){document.location.reload();});
+}
+$COMPILED_TEMPLATE = Handlebars.compile(template);
+dojo.addOnLoad( function() {
+	document.getElementById("openCart").addEventListener("click", openCart);
+	document.getElementById("closeCart").addEventListener("click", closeCart);
+});
+//const cartDrawer = document.getElementById("cartDrawer");
+function openCart() {
+	const cartDrawer = document.getElementById("cartDrawer");
+	cartDrawer.classList.add("open");
+	//overlay.classList.add("open");
+	cartDrawer.setAttribute("aria-hidden", "false");
+	//document.body.style.overflow = "hidden";
+}
+
+function closeCart() {
+	const cartDrawer = document.getElementById("cartDrawer");
+	cartDrawer.classList.remove("open");
+	//overlay.classList.remove("open");
+	cartDrawer.setAttribute("aria-hidden", "true");
+	///document.body.style.overflow = "";
+}
+
+function updateCartCount(count) {
+	const cartCount = document.getElementById("cartCount");
+	cartCount.innerText = count;
+}
+</script>
 
 </head>
 <body id="menuBody" class="tundra" style="background-image: url('images/bg2.jpg')">
 <webmenusCfg:GuestUser>
-<script type="text/javascript">
-var treeData =
-{	identifier: 'id',
-	label: 'name',
-	items: [
-<webmenusCfg:EnumMenus locId="<%=sLocId%>">
-<% 	if( Integer.parseInt(menuIdx) > 0 ){ %>,<% } %>
-<%
-	if( sFirstMenuId.length() == 0 ) sFirstMenuId = menuId; // Set the first menu Id
-%>
-	{ id: '<%=menuId%>', name:'<%=menuName%>', type:'menu', children:[
-	<webmenusCfg:EnumCategories menuId="<%=menuId%>">
-	<% if( Integer.parseInt(catIdx) > 0 ){ %>,<% } %>
-		{ id:'<%=catId%>', name:'<%=catName%>', type:'category'}
-	</webmenusCfg:EnumCategories>
-	]}
-</webmenusCfg:EnumMenus>
-]};
-
-var sFirstMenuId="<%=sFirstMenuId%>";
-
-function expandAllNode()
-{
-	var treeObj = dijit.byId('menuTreex');
-
-	var children = treeObj.rootNode.getChildren();
-	expandChildNode(children, treeObj);
-}
-
-function expandChildNode(children, treeObj)
-{
-	for (var i = 0; i < children.length; i++)
-	{
-		var node = children[i];
-		if (node.isExpandable && !node.isExpanded)
-		{
-			treeObj._expandNode(node);
-		}
-
-		var childNodes = node.getChildren();
-		if (childNodes.length > 0)
-		{
-			expandChildNode(childNodes, treeObj);
-		}
-	}
-}
-
-function init()
-{
-	timer = setTimeout("expandAllNode()",100);
-	//highlightNode();
-
-	//var splitter = document.getElementById("splitter");
-	//if( splitter == null ) return;
-	//dojo.byId('splitter').setAttribute("height", "100%");
-	//splitter.height = "100%";
-}
-</script>
-
 <div id="frame">
-<div id="menuHeader">
-<% if( menuOrderBean.getLogo().length() > 0 ){ %>
-<img src="<%=request.getContextPath()%>/ImageViewer<%=menuOrderBean.getLogo()%>"/>
-<% } %>
-</div>
-<div dojoType="dijit.layout.SplitContainer" id="splitter" orientation="horizontal" sizerWidth="7" activeSizing="true" persist="false"
-	 style="width:100%;height:98%;">
 
-	<div dojoType="dijit.layout.ContentPane" sizeShare="8" style="padding:10px;">
-	
-	
+<%
+	if (!menuOrderBean.isReadyForCheckout()) {
+%>
+		<span style="color:red">WARNING: This menu has neither <b>Pay On Pickup</b> enabled or <b>Payment Methods</b> assigned so, checkout will be blocked</span>
+<%
+	}
+%>
+
+	<div id="menuHeader">
+	<% if( menuOrderBean.getLogo().length() > 0 ){ %>
+	<img src="<%=request.getContextPath()%>/ImageViewer<%=menuOrderBean.getLogo()%>"/>
+	<% } else { %>
+		<h1 class="locationName"><%=menuOrderBean.getLocationName()%></h1>
+	<% } %>
+	</div>
+	<div id="menuMenu">
+
+		<table><tr style="white-space: nowrap;">
+		<td valign="middle">
 <%	if( exitURL.length() > 0 ){ %>
 		<button dojoType="dijit.form.Button" connectId="2112" iconClass="plusIcon">
-		Home
+<%
+		String[] params = exitURL.split("buttontitle=");
+%>
+		<%= params.length > 1 ? params[1] : "Home" %>
 		<script type="dojo/method" event="onClick">
 				document.location = "<jsp:getProperty name='menuOrderBean' property='exitURL'/>";
 		</script>
@@ -156,41 +142,63 @@ function init()
 		</script>
 		</button>
 <%	} %>
+		</td>
+		<td valign="middle">
+
+		<webmenusCfg:EnumMenus locId="<%=sLocId%>">
+<%
+		if( bFirstMenuFound == false ){ // Set the first menu Id
+			bFirstMenuFound = true;
+%>
+		<script type="text/javascript">
+			var sFirstMenuId="<%=menuId%>";
+		</script>
+<%
+		}
+%>
+		<div dojoType="dijit.form.ComboButton" onclick="menuClick('<%=menuId%>')"><span style="font:8pt;"><%=menuName%></span>
+			<div dojoType="dijit.Menu" toggle="fade" style="display:none;">
+			<webmenusCfg:EnumCategories menuId="<%=menuId%>">
+				<div dojoType="dijit.MenuItem" iconClass="dijitEditorIcon dijitEditorIconCopy" onclick="catClick('<%=catId%>')"><%=catName%></div>
+			</webmenusCfg:EnumCategories>
+			</div>
+		</div>&nbsp;
+		</webmenusCfg:EnumMenus>
+		</td>
 <%	if( bOpen ){ %>
-		<button dojoType="dijit.form.Button">
-		View Order
-		<script type="dojo/method" event="onClick">
-				viewOrder();
-		</script>
-		</button>
-<%	} %>
-		<br/><br/>
-		<div dojoType="dojo.data.ItemFileReadStore" jsId="menuStore" data="treeData"></div>
-		<div style="text-align:left;" dojoType="dijit.Tree" id="menuTreex" store="menuStore" query="{type:'menu'}" labelAttr="name" label="Menus">
-		<script type="dojo/method" event="onClick" args="item">
-			if(item)
-			{
-				try
-				{
-					var id = menuStore.getValue(item,"id");
-					var type = menuStore.getValue(item,"type");
-					if( type == "menu" )
-						menuClick(id);
-					else
-						catClick(id);
-				}
-				catch(e){}
-			}
-		</script>
-		</div>
+		<td class="cart-button-container">
+			<button class="cart-button" id="openCart" aria-label="Open shopping cart">
+				<span>Cart</span>
+				<span class="cart-count" id="cartCount">0</span>
+			</button>
+		</td>
+<% } %>
+		</tr></table>
+
 	</div>
 
-	<div dojoType="dijit.layout.ContentPane" sizeShare="20">
-		<div id="menuContent"></div>
-	</div>
+	<div id="menuContent"></div>
+	
+	<div id="menuFooter"></div>
+
 </div>
-<div id="menuFooter"></div>
-</div>
+
+  <aside
+    class="cart-drawer"
+    id="cartDrawer"
+    aria-label="Shopping cart"
+    aria-hidden="true">
+
+    <div class="cart-header">
+      <h2>Your Order</h2>
+      <button class="close-button" id="closeCart" aria-label="Close cart">x</button>
+    </div>
+
+	<iframe id="orderPanel" src="<%=request.getContextPath()%>/app/orderview.jsp" style="height:100%"></iframe>
+
+    </div>
+  </aside>
+
 </webmenusCfg:GuestUser>
 </body>
 </html>
