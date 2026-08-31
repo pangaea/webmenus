@@ -33,8 +33,10 @@ function selectDeliveryOption(sel)
     {
     case "pickup":
         bDisabled = true;
+        dojo.byId("dijit_form_Button_0_label").textContent = "Pay at Pickup";
         break;
     case "delivery":
+        dojo.byId("dijit_form_Button_0_label").textContent = "Pay on Delivery";
         bDisabled = false;
         break;
     }
