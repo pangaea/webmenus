@@ -265,7 +265,6 @@ All Rights Reserved
 			</tr>
 <%
 		}
-		//objectBean.Logout(info);
 		if( oMenuItem.getPropertyValue_Boolean("special_instructions") ) { %>
 			<tr>
 				<th valign="top">Special Instructions</th>

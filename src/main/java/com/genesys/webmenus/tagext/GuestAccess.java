@@ -76,6 +76,18 @@ public class GuestAccess extends BodyTagSupport
 			pageContext.setAttribute( pageAttr, "" );
 		}
 	}
+	public void setPageAttribute( String pageAttr, Boolean inputAttr )
+	{
+		try
+		{
+			// Find value in node
+			pageContext.setAttribute( pageAttr, inputAttr );
+		}
+		catch( Exception e )
+		{
+			pageContext.setAttribute( pageAttr, false );
+		}
+	}
 	public int getIndex(){ return m_objectsIdx;	}
 	public int getCount(){ return m_objectsCount;	}
 	

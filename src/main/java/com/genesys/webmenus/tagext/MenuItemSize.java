@@ -49,6 +49,7 @@ public class MenuItemSize extends GuestAccess
 				setPageAttribute( "itemSizeId", obj.getId() );
 				setPageAttribute( "itemName", oMenuItem.getPropertyValue("name") );
 				setPageAttribute( "itemDescription", oMenuItem.getPropertyValue("description") );
+				setPageAttribute( "itemSpecialInstructions", oMenuItem.getPropertyValue_Boolean("special_instructions") );
 				//setPageAttribute( "itemHidden", obj.getPropertyValue("hidden") );
 				String image = oMenuItem.getPropertyValue("image");
 				if( image.indexOf(".gif") >= 0 ||

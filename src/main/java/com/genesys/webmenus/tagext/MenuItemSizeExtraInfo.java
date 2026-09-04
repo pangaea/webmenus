@@ -17,7 +17,8 @@ public class MenuItemSizeExtraInfo extends TagExtraInfo
 			new VariableInfo( "itemPrice", "java.lang.String", true, VariableInfo.NESTED ),
 			new VariableInfo( "itemIdx", "java.lang.String", true, VariableInfo.NESTED ),
 			new VariableInfo( "itemMenuId", "java.lang.String", true, VariableInfo.NESTED ),
-			new VariableInfo( "itemSizeId", "java.lang.String", true, VariableInfo.NESTED )
+			new VariableInfo( "itemSizeId", "java.lang.String", true, VariableInfo.NESTED ),
+			new VariableInfo( "itemSpecialInstructions", "java.lang.Boolean", true, VariableInfo.NESTED )
 		};
 	}
 	

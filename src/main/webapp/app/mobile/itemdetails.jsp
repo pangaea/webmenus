@@ -34,7 +34,9 @@
 <webmenusCfg:GuestUser>
 <body>
 <webmenusCfg:MenuItemSize itemSizeId="<%=sItemId%>">
-<% boolean bMenuOpen = menuOrderBean.isWithinMenuOperatingHours(itemMenuId); %>
+<%
+	boolean bMenuOpen = menuOrderBean.isWithinMenuOperatingHours(itemMenuId);
+%>
 <div data-role="page" id="page-<%=sItemId%>">
 
 	<div data-role="header">
@@ -118,10 +120,21 @@ else if( sOptionType.equalsIgnoreCase("select-one") == true )
 
 </webmenusCfg:EnumItemOptions>
 <%
+if( itemSpecialInstructions ) {
+%>
+		<tr>
+			<th valign="top">Special Instructions</th>
+			<td>
+				<textarea name="special_instructions" style="width:100%;height:80px"><%=special_insrtuctions%></textarea>
+			</td>
+		</tr>
+<%
+}
+
 String label = (orderIndex == null) ? "Add To Order" : "Update Order";
 if(bMenuOpen){ %>
 		<fieldset data-role="controlgroup">
-			Quantity: <input data-mini="true" style="width:55px;display:inline-block;margin:0px;" type="number" name="quantity" id="quantity" value="1" min="1"/>
+			Quantity: <input data-mini="true" style="width:55px;display:inline-block;margin:0px;" type="number" name="quantity" id="quantity" value="<%=defaultAmount%>" min="1"/>
 		</fieldset>
 		<input type="submit" data-role="button" value="<%=label%>"/>
 <% } %>
