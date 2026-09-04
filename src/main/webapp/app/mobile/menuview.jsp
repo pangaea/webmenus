@@ -21,7 +21,7 @@
 	<div data-role="header">
 		<h1>Menu</h1>
 		<a data-rel="button" href="<%=rootMenuPath%>">Home</a>
-		<a rel="external" data-ajax="false" href="<%=rootMenuPath%>/orderview">View Order</a>
+		<a rel="external" data-ajax="false" href="<%=rootMenuPath%>/orderview">Cart<%=menuOrderBean.generateItemCountLabel()%></a>
 	</div>
  
 	<div data-role="content">
@@ -44,6 +44,7 @@
 					</a>
 					<% if(bExtraSizes){ %>
 						<ul>
+							<h3 class="selectSizeTitle">Please Select a Size:</h3>
 							<li><a href="<%=rootMenuPath%>/itemdetails?item=<%=itemId%>"><%=menuOrderBean.getCurrencyString(itemPrice)%> (<%=itemSizeDescription%>)</a></li>
 						<webmenusCfg:EnumItemSizes itemId="<%=itemId%>">
 							<li><a href="<%=rootMenuPath%>/itemdetails?item=<%=itemSizeId%>"><%=menuOrderBean.getCurrencyString(itemSizePrice)%> (<%=itemSizeDesc%>)</a></li>

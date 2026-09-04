@@ -1,62 +1,590 @@
+/* =========================================================
+   Order Dashboard
+   Polished professional refresh
+   ========================================================= */
+
+:root {
+    --page-bg: #f5f7fb;
+    --surface: #ffffff;
+    --surface-soft: #f0f3f8;
+    --surface-muted: #e7ebf2;
+
+    --text: #172033;
+    --text-muted: #667085;
+    --text-soft: #8a94a6;
+
+    --border: #d9e0ea;
+    --border-strong: #c5cfdd;
+
+    --shadow-xs: 0 1px 2px rgba(16, 24, 40, 0.06);
+    --shadow-sm: 0 4px 10px rgba(16, 24, 40, 0.08);
+    --shadow-md: 0 12px 30px rgba(16, 24, 40, 0.12);
+
+    --blue: #2563eb;
+    --amber: #f59e0b;
+    --green: #10b981;
+    --purple: #7c3aed;
+    --slate: #64748b;
+
+    --danger: #dc2626;
+    --danger-bg: #fee2e2;
+    --success: #16a34a;
+    --success-bg: #dcfce7;
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+}
+
+/* =========================================================
+   Base
+   ========================================================= */
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+}
+
+body {
+    background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.12), transparent 34%),
+        radial-gradient(circle at top right, rgba(16, 185, 129, 0.08), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, var(--page-bg) 250px);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.hidden {
+    display: none;
+}
+
+/* =========================================================
+   Header
+   ========================================================= */
+
+.dashboard-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    box-sizing: border-box;
+    min-height: 86px;
+    padding: 18px 26px;
+    background: rgba(255, 255, 255, 0.92);
+    border-bottom: 1px solid rgba(217, 224, 234, 0.9);
+    box-shadow: 0 2px 18px rgba(16, 24, 40, 0.06);
+    backdrop-filter: blur(10px);
+}
+
+.dashboard-title-block h1 {
+    margin: 0;
+    color: #101828;
+    font-size: 30px;
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+}
+
+.dashboard-subtitle {
+    margin-top: 5px;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+}
+
+.location-card {
+    min-width: 190px;
+    box-sizing: border-box;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: linear-gradient(180deg, #ffffff, #fbfcfe);
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.45;
+    text-align: right;
+    box-shadow: var(--shadow-xs);
+}
+
+/* =========================================================
+   Kanban Board
+   ========================================================= */
+
 .kanban-board {
     display: flex;
-    gap: 20px;
-    padding: 20px;
-    background-color: #f4f4f9;
+    align-items: flex-start;
+    gap: 18px;
+    box-sizing: border-box;
+    min-height: calc(100vh - 86px);
+    padding: 24px;
+    background: transparent;
+    overflow-x: auto;
 }
+
+/* Horizontal scroll styling */
+.kanban-board::-webkit-scrollbar {
+    height: 10px;
+}
+
+.kanban-board::-webkit-scrollbar-track {
+    background: #e6ebf2;
+    border-radius: 999px;
+}
+
+.kanban-board::-webkit-scrollbar-thumb {
+    background: #b9c3d2;
+    border-radius: 999px;
+}
+
+.kanban-board::-webkit-scrollbar-thumb:hover {
+    background: #9aa8ba;
+}
+
+/* =========================================================
+   Columns
+   ========================================================= */
 
 .column {
-    flex: 1;
-    background-color: #ebedf0;
-    border-radius: 5px;
-    padding: 10px;
-    min-height: 400px;
+    position: relative;
+    flex: 1 0 250px;
+    min-width: 250px;
+    max-height: calc(100vh - 134px);
+    min-height: 520px;
+    box-sizing: border-box;
+    padding: 12px;
+    border: 1px solid rgba(217, 224, 234, 0.95);
+    border-top-width: 4px;
+    border-radius: var(--radius-lg);
+    background: rgba(244, 247, 251, 0.92);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition:
+        transform 160ms ease,
+        box-shadow 160ms ease,
+        border-color 160ms ease,
+        background-color 160ms ease;
 }
 
+.column:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    background: rgba(248, 250, 253, 0.96);
+}
+
+.column h3 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: -12px -12px 10px;
+    padding: 15px 14px 14px;
+    border-radius: 14px 14px 0 0;
+    color: #ffffff;
+    font-size: 15px;
+    line-height: 1.2;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    box-shadow: inset 0 -1px rgba(255, 255, 255, 0.2);
+}
+
+.column-note {
+    margin: -2px 2px 10px;
+    color: var(--text-soft);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+/* Column colors */
+#open {
+    border-top-color: var(--blue);
+}
+
+#open h3 {
+    background: linear-gradient(135deg, #3b82f6, var(--blue));
+}
+
+#inprogress {
+    border-top-color: var(--amber);
+}
+
+#inprogress h3 {
+    background: linear-gradient(135deg, #fbbf24, var(--amber));
+}
+
+#readyforpickup {
+    border-top-color: var(--green);
+}
+
+#readyforpickup h3 {
+    background: linear-gradient(135deg, #34d399, var(--green));
+}
+
+#outfordelivery {
+    border-top-color: var(--purple);
+}
+
+#outfordelivery h3 {
+    background: linear-gradient(135deg, #8b5cf6, var(--purple));
+}
+
+#complete {
+    border-top-color: var(--slate);
+}
+
+#complete h3 {
+    background: linear-gradient(135deg, #94a3b8, var(--slate));
+}
+
+/* =========================================================
+   Task List
+   ========================================================= */
+
+.task-list {
+    min-height: 430px;
+    max-height: calc(100vh - 225px);
+    padding: 2px 4px 8px 1px;
+    overflow-y: auto;
+}
+
+.task-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.task-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.task-list::-webkit-scrollbar-thumb {
+    background: #c7d0dd;
+    border-radius: 999px;
+}
+
+.task-list::-webkit-scrollbar-thumb:hover {
+    background: #9caabe;
+}
+
+/* =========================================================
+   Task Cards
+   ========================================================= */
+
 .task {
-    background-color: white;
-    margin: 10px 0;
-    padding: 15px;
-    border-radius: 3px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    position: relative;
+    box-sizing: border-box;
+    margin: 0 0 12px;
+    padding: 13px 13px 12px;
+    border: 1px solid var(--border);
+    border-left-width: 5px;
+    border-radius: 14px;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(250, 252, 255, 0.98));
+    box-shadow: var(--shadow-xs);
     cursor: grab;
+    user-select: none;
+    transition:
+        transform 140ms ease,
+        box-shadow 140ms ease,
+        border-color 140ms ease,
+        background-color 140ms ease,
+        opacity 140ms ease;
+}
+
+.task:hover {
+    transform: translateY(-2px);
+    border-color: var(--border-strong);
+    box-shadow: 0 10px 22px rgba(16, 24, 40, 0.13);
 }
 
 .task:active {
     cursor: grabbing;
+    transform: rotate(0.6deg) scale(1.01);
 }
 
-/* td {
-    vertical-align: top;
-} */
+#open .task {
+    border-left-color: var(--blue);
+}
+
+#inprogress .task {
+    border-left-color: var(--amber);
+}
+
+#readyforpickup .task {
+    border-left-color: var(--green);
+}
+
+#outfordelivery .task {
+    border-left-color: var(--purple);
+}
+
+#complete .task {
+    border-left-color: var(--slate);
+    opacity: 0.82;
+}
+
+#complete .task:hover {
+    opacity: 1;
+}
+
+/* Subtle drag affordance */
+.task::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 16px;
+    height: 16px;
+    opacity: 0.28;
+    background-image:
+        radial-gradient(circle, #667085 1.5px, transparent 1.5px),
+        radial-gradient(circle, #667085 1.5px, transparent 1.5px);
+    background-size: 7px 7px;
+    background-position: 0 0, 3.5px 3.5px;
+}
+
+.task:hover::before {
+    opacity: 0.45;
+}
+
+/* =========================================================
+   Order Card
+   ========================================================= */
 
 .order_card {
-    padding: 4px;
+    width: 100%;
+    padding: 0;
+    border-collapse: collapse;
 }
 
 .order_card td {
     vertical-align: top;
+    padding: 4px 0;
+    line-height: 1.35;
 }
 
+.order_card td:first-child {
+    width: 76px;
+    padding-right: 8px;
+    color: var(--text-soft);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.055em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.order_card td:first-child b {
+    font-weight: 800;
+}
+
+.order_card td:nth-child(2) {
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Invoice pill */
+.invoice {
+    display: inline-block;
+    padding: 3px 8px;
+    border: 1px solid #c7d2fe;
+    border-radius: 999px;
+    background: #eef2ff;
+    color: #3730a3 !important;
+    font-size: 12px !important;
+    font-style: normal;
+    font-weight: 800 !important;
+    letter-spacing: 0.01em;
+}
+
+/* Delivery image */
+.delivery_image {
+    width: auto;
+    height: 18px;
+    vertical-align: middle;
+}
+
+/* Due time */
+.estimated-time {
+    display: inline-block;
+    font-weight: 800 !important;
+}
+
+/* Time status */
 .late {
-    color: red;
+    color: var(--danger) !important;
+    font-weight: 900 !important;
 }
 
 .early {
-    color: green;
+    color: var(--success) !important;
+    font-weight: 900 !important;
 }
 
-.invoice {
-    font-style: italic;
+/* Optional chip-like style when late/early is applied to due field */
+.estimated-time.late,
+.late.estimated-time {
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: var(--danger-bg);
 }
 
-.delivery_image {
-    height: 12px;
+.estimated-time.early,
+.early.estimated-time {
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: var(--success-bg);
 }
 
+/* Error message */
 .order-error {
-    color: red;
-    font-weight: 600;
-    font-family: sans-serif;
-    font-size: 14pt;
+    display: inline-block;
+    margin-top: 4px;
+    padding: 7px 9px;
+    border: 1px solid #fecaca;
+    border-radius: var(--radius-sm);
+    background: var(--danger-bg);
+    color: #991b1b;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    font-weight: 900;
+    line-height: 1.3;
+}
+
+.order-error:empty {
+    display: none;
+}
+
+/* =========================================================
+   Fancybox Message Box
+   ========================================================= */
+
+#message_box {
+    box-sizing: border-box;
+    width: 320px;
+    padding: 24px;
+    border-radius: var(--radius-lg);
+    background: #ffffff;
+    color: var(--text);
+    text-align: center;
+    box-shadow: var(--shadow-md);
+}
+
+#message_box_title {
+    margin: 0 0 10px;
+    color: #101828;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+#message_box_body {
+    margin: 0 0 18px;
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+#close_btn {
+    min-width: 88px;
+    padding: 10px 18px;
+    border: 0;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 6px 14px rgba(37, 99, 235, 0.28);
+    transition:
+        transform 130ms ease,
+        box-shadow 130ms ease,
+        background-color 130ms ease;
+}
+
+#close_btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 9px 18px rgba(37, 99, 235, 0.34);
+}
+
+#close_btn:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.24);
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+
+@media screen and (max-width: 1100px) {
+    .kanban-board {
+        padding: 18px;
+        gap: 14px;
+    }
+
+    .column {
+        flex-basis: 255px;
+        min-width: 255px;
+    }
+}
+
+@media screen and (max-width: 760px) {
+    .dashboard-header {
+        position: static;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 14px;
+        padding: 16px;
+    }
+
+    .dashboard-title-block h1 {
+        font-size: 25px;
+    }
+
+    .location-card {
+        width: 100%;
+        text-align: left;
+    }
+
+    .kanban-board {
+        flex-direction: column;
+        min-height: auto;
+        padding: 16px;
+        overflow-x: visible;
+    }
+
+    .column {
+        width: 100%;
+        min-width: 0;
+        min-height: 260px;
+        max-height: none;
+    }
+
+    .task-list {
+        min-height: 180px;
+        max-height: none;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .order_card td:first-child {
+        width: 66px;
+        font-size: 10px;
+    }
+
+    .order_card td:nth-child(2) {
+        font-size: 12px;
+    }
+
+    .task {
+        padding: 12px;
+    }
 }

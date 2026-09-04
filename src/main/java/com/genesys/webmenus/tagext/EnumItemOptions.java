@@ -1,8 +1,5 @@
 package com.genesys.webmenus.tagext;
 
-import javax.servlet.jsp.*;
-import javax.servlet.jsp.tagext.*;
-
 import com.genesys.SystemServlet;
 import com.genesys.repository.*;
 

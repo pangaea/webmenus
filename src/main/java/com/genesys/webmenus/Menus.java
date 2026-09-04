@@ -7,6 +7,8 @@ package com.genesys.webmenus;
 
 import java.io.*;
 import java.net.URLEncoder;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -104,7 +106,11 @@ public class Menus extends HttpServlet
 							submitOrder(request, response);
 						} ////////////////////////////////////////////////////////
 
-							
+						// Handles 'checkout' route to process a customer submitting their order
+						else if( viewPage.equalsIgnoreCase("checkout_order") ){
+							checkoutOrder(request, response);
+						} ////////////////////////////////////////////////////////
+
 						// Handles page render request
 						else{
 							if(ServletUtilities.isMobileDevice(request)){
@@ -193,7 +199,14 @@ public class Menus extends HttpServlet
 		MenuOrderBean menuOrderBean = (MenuOrderBean) request.getSession().getAttribute("menuOrderBean");
 		boolean bOpen = menuOrderBean.isWithinOperatingHours();
 		if( bOpen ){
-			if( menuOrderBean.submitNewItem(request) == true ){
+			String orderIndex = request.getParameter("order_index");
+			boolean orderSuccess = false;
+			if (orderIndex == null) {
+				orderSuccess = menuOrderBean.submitNewItem(request);
+			} else {
+				orderSuccess = menuOrderBean.editItem(Integer.parseInt(orderIndex), request);
+			}
+			if( orderSuccess ){
 				response.sendRedirect(rootMenuPath + "/orderview");
 				return;
 			}
@@ -206,26 +219,30 @@ public class Menus extends HttpServlet
 		//String errMsg = "There was an error encountered:-(";
 		MenuOrderBean menuOrderBean = (MenuOrderBean) request.getSession().getAttribute("menuOrderBean");
 		boolean bOpen = menuOrderBean.isWithinOperatingHours();
-		// if( bOpen ){
-			
-		// 	if( menuOrderBean.isValidated() == false ){
-		// 		response.sendRedirect( rootMenuPath + "/login_patron" );
-		// 		return;
-		// 	}
-			
-		// 	String sDelivery = request.getParameter("delivery_option");
-		// 	if( sDelivery != null && sDelivery.equalsIgnoreCase("delivery") == true ){
-		// 		String sDeliveryInfo = request.getParameter("delivery_info");
-		// 		menuOrderBean.setDeliveryAddress( sDeliveryInfo );
-		// 	}
-			
-		// 	if( menuOrderBean.submitOrder() == true ){
-		// 		response.sendRedirect(rootMenuPath + "/order_success");
-		// 	}
-		// 	else{
-		// 		response.sendRedirect(rootMenuPath + "/order_failure");
-		// 	}
-		// }
+		if( bOpen ){
+
+			// Save order
+			String email = request.getParameter("email");
+			Map<String, String> attrs = request.getParameterMap().entrySet().stream()
+				.filter(entry -> entry.getValue() != null && entry.getValue().length > 0)
+				.collect(Collectors.toMap(
+					Map.Entry::getKey,
+					entry -> entry.getValue()[0] // Take the first value
+				));
+
+			String orderId = menuOrderBean.processOrder(email, 0, attrs);
+			if(orderId != null ){
+				response.sendRedirect(rootMenuPath + "/order_success");
+			}
+			else{
+				response.sendRedirect(rootMenuPath + "/order_failure");
+			}
+		}
 		response.sendRedirect(rootMenuPath + "/location_closed");
+	}
+
+	public void checkoutOrder( HttpServletRequest request, HttpServletResponse response ) throws IOException, ServletException
+	{
+		response.sendRedirect( rootMenuPath + "/checkout" );
 	}
 }
