@@ -1,171 +1,337 @@
-.wm-dashboard-page{
-	padding: 0 20px 0 0;
+/* =========================================================
+   SoundMenus Overview Refresh - Dashboard Styles
+   ========================================================= */
+
+.wm-dashboard-page {
+	padding: 8px 18px 18px 8px;
+	color: #243447;
 }
 
-.wm-dashboard-page a{
-	color: blue;
+.wm-dashboard-page a {
+	color: #1476c9;
+	font-weight: 700;
+	text-decoration: none;
 }
 
-.wm-dashboard-page .wm-wrapper{
+.wm-dashboard-page a:hover {
+	color: #0b4f8f;
+	text-decoration: underline;
+}
+
+/* Main two-column dashboard layout */
+.wm-dashboard-page .wm-wrapper {
 	display: table;
-	border-spacing: 10px;
+	border-spacing: 18px;
 	width: 100%;
-	margin: -8px;
+	margin: -18px;
 }
 
-.wm-dashboard-page .wm-wrapper .wm-heading{
+/* Optional heading row support */
+.wm-dashboard-page .wm-wrapper .wm-heading {
 	clear: both;
 	display: table-row;
-	font-size: 20px;
-	color: #000099;
+	color: #0a2a42;
+	font-size: 22px;
+	font-weight: 800;
 }
 
-.wm-dashboard-page .wm-wrapper .wm-heading > div{
+.wm-dashboard-page .wm-wrapper .wm-heading > div {
 	display: table-cell;
 	padding: 0 0 4px 0;
 }
 
-.wm-dashboard-page .wm-wrapper .wm-locations{
-	margin: 10px;
-	/*padding: 10px;*/
-	/*border: 1px solid #aaccff;*/
-	border: 1px solid #062134;
-	/*border-radius: 10px;*/
-	min-height: 170px;
+/* =========================================================
+   Primary Panels
+   ========================================================= */
+
+.wm-dashboard-page .wm-wrapper .wm-locations,
+.wm-dashboard-page .wm-wrapper .wm-quickbar {
+	background: #ffffff;
+	border: 1px solid #dbe5ef;
+	border-radius: 14px;
+	box-shadow: 0 8px 24px rgba(20, 45, 70, 0.11);
+	overflow: hidden;
+}
+
+.wm-dashboard-page .wm-wrapper .wm-locations {
 	display: table-cell;
+	min-height: 170px;
 }
 
-.wm-dashboard-page .wm-wrapper .wm-locations > div:first-child{
-	/*background: #aaccff;*/
-	background: #062134;
-	/*border-radius: 10px 10px 0 0;*/
-	border-radius: 0;
-	margin: -1px -1px -1px -1px;
-	/*color: #000099;*/
+.wm-dashboard-page .wm-wrapper .wm-quickbar {
+	display: table-cell;
+	vertical-align: top;
+	width: 320px;
+	min-height: 170px;
+}
+
+/* Panel headers */
+.wm-dashboard-page .wm-wrapper .wm-locations > div:first-child,
+.wm-dashboard-page .wm-wrapper .wm-quickbar > div:first-child {
+	background: linear-gradient(135deg, #0a2a42 0%, #135178 100%);
+	border: 0;
 	color: #ffffff;
-	font-size: 14pt;
-	/*width: 100%;*/
-	/*border: 1px solid #aaccff;*/
-	border: 1px solid #062134;
-	padding: 10px;
+	font-size: 18px;
+	font-weight: 800;
+	letter-spacing: 0.2px;
+	margin: 0;
+	padding: 14px 18px;
 }
 
-.wm-dashboard-page .wm-wrapper .wm-locations .wm-location-widgets{
-	padding: 14px;
+/* Panel bodies */
+.wm-dashboard-page .wm-wrapper .wm-locations .wm-location-widgets,
+.wm-dashboard-page .wm-wrapper .wm-quickbar .wm-quickbar-widgets {
+	padding: 18px;
 }
 
-.wm-dashboard-page .wm-wrapper .widget{
-	padding: 10px;
-	border-radius: 4px;
+/* =========================================================
+   Widgets / Cards
+   ========================================================= */
+
+.wm-dashboard-page .wm-wrapper .widget {
+	background: #ffffff;
+	border: 1px solid #e0e8f0;
+	border-radius: 12px;
+	box-shadow: 0 3px 12px rgba(20, 45, 70, 0.07);
+	padding: 16px;
 }
 
-.wm-dashboard-page .wm-wrapper .widget a.manage-link{
+.wm-dashboard-page .wm-wrapper .widget > div {
+	border-bottom: 1px solid #edf2f7;
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+}
+
+.wm-dashboard-page .wm-wrapper .widget > div:last-child {
+	border-bottom: 0;
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+
+.wm-dashboard-page .wm-wrapper .widget a.manage-link {
+	color: #1476c9;
 	float: right;
-	font-size: 12px;
-    line-height: 24px;
-    vertical-align: middle;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+	font-size: 11px;
+	font-weight: 900;
+	letter-spacing: 1.5px;
+	line-height: 24px;
+	text-transform: uppercase;
+	vertical-align: middle;
 }
-.wm-dashboard-page .wm-wrapper .widget a.live-menu-link{
-	font-size: 12px;
-    line-height: 24px;
-    vertical-align: middle;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+
+.wm-dashboard-page .wm-wrapper .widget a.live-menu-link {
+	color: #1476c9;
+	font-size: 11px;
+	font-weight: 900;
+	letter-spacing: 1.5px;
+	line-height: 24px;
 	margin-left: 20px;
+	text-transform: uppercase;
+	vertical-align: middle;
 }
 
-.wm-dashboard-page .wm-wrapper .widget > div{
-	border-bottom: 1px solid #eeeeee;
+.wm-dashboard-page .wm-wrapper .widget a.manage-link:hover,
+.wm-dashboard-page .wm-wrapper .widget a.live-menu-link:hover {
+	color: #0b4f8f;
 }
 
-.wm-dashboard-page .wm-wrapper .wm-locations .wm-location{
-	margin-bottom: 8px;
-	border-radius: 0;
-	border-top: 1px solid #062134;
+/* =========================================================
+   Location Card
+   ========================================================= */
+
+.wm-dashboard-page .wm-wrapper .wm-locations .wm-location {
+	border-top: 0;
+	margin-bottom: 14px;
 }
 
-.wm-dashboard-page .wm-wrapper .wm-locations .wm-location:first-child{
-	border-top: 0px;
+.wm-dashboard-page .wm-wrapper .wm-locations .wm-location:first-child {
+	border-top: 0;
 }
 
-.wm-dashboard-page .wm-wrapper .wm-locations .wm-location button{
-	margin-right:6px;
-	line-height:16px;
-	padding:4px;
-	font-family:Arial;
-	height:29px;
-	/*border-color: #6699CC;*/
-	border-color: #C0C0C0;
-	border-radius: 6px;
-}
-.wm-dashboard-page .wm-wrapper .wm-locations .wm-location button:hover{
-	color: #3300FF;
-}
-
-.wm-dashboard-page .wm-wrapper .wm-locations .wm-location div:first-child > img{
+.wm-dashboard-page .wm-wrapper .wm-locations .wm-location div:first-child > img {
+	background: #f7fafc;
+	border: 1px solid #e3ebf3;
+	border-radius: 10px;
 	float: right;
+	height: auto;
+	max-width: 120px;
+	padding: 8px;
 }
 
-.wm-dashboard-page .wm-wrapper .wm-locations .wm-location div:first-child div{
+.wm-dashboard-page .wm-wrapper .wm-locations .wm-location div:first-child div {
+	color: #52677a;
 	font-size: 14px;
+	line-height: 1.55;
 }
 
-.wm-dashboard-page .wm-wrapper .wm-locations .wm-location div:first-child .wm-location-title a{
-	font-size: 22px !important;
+.wm-dashboard-page .wm-wrapper .wm-locations .wm-location div:first-child .wm-location-title {
+	margin-bottom: 4px;
 }
 
-.wm-dashboard-page .wm-wrapper .wm-quickbar{
-	margin: 10px;
-	/*padding: 10px;*/
-	/*border: 1px solid #aaccff;*/
-	border: 1px solid #062134;
-	border-radius: 0;
-	min-height: 170px;
-	width: 300px;
-	display: table-cell;
+.wm-dashboard-page .wm-wrapper .wm-locations .wm-location div:first-child .wm-location-title a {
+	color: #0a2a42;
+	font-size: 24px !important;
+	font-weight: 900;
+	letter-spacing: -0.3px;
+}
+
+.wm-dashboard-page .wm-wrapper .wm-locations .wm-location div:first-child .wm-location-title a:hover {
+	color: #1476c9;
+	text-decoration: none;
+}
+
+.wm-dashboard-page .wm-wrapper .wm-locations .wm-location label {
+	color: #334e68;
+	display: block;
+	font-size: 14px !important;
+	font-weight: 800;
+	margin: 10px 0 6px 0;
+}
+
+/* The textarea has inline styles in the page, so use !important here. */
+.wm-dashboard-page .wm-link-display {
+	background: #f7fafc !important;
+	border: 1px solid #cbd8e3;
+	border-radius: 8px;
+	box-sizing: border-box;
+	color: #334e68;
+	font-family: Consolas, "Courier New", monospace;
+	font-size: 12px;
+	height: 48px !important;
+	line-height: 16px;
+	padding: 8px;
+	resize: none;
+	width: 100%;
+}
+
+.wm-dashboard-page .wm-link-display:focus {
+	background: #ffffff !important;
+	border-color: #1476c9;
+	box-shadow: 0 0 0 3px rgba(20, 118, 201, 0.14);
+}
+
+/* Location buttons */
+.wm-dashboard-page .wm-wrapper .wm-locations .wm-location button {
+	background: linear-gradient(135deg, #1476c9 0%, #0f5f9f 100%) !important;
+	border: 1px solid #0f5f9f !important;
+	border-radius: 8px !important;
+	box-shadow: 0 4px 10px rgba(20, 118, 201, 0.22);
+	color: #ffffff !important;
+	cursor: pointer;
+	font-family: "Segoe UI", Arial, Helvetica, sans-serif !important;
+	font-size: 13px !important;
+	font-weight: 800;
+	height: auto !important;
+	line-height: 18px !important;
+	margin: 4px 8px 4px 0 !important;
+	padding: 8px 12px !important;
+	text-shadow: none;
+	transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.wm-dashboard-page .wm-wrapper .wm-locations .wm-location button:hover {
+	background: linear-gradient(135deg, #0f86e8 0%, #1476c9 100%) !important;
+	box-shadow: 0 6px 14px rgba(20, 118, 201, 0.3);
+	color: #ffffff !important;
+	transform: translateY(-1px);
+}
+
+.wm-dashboard-page .wm-wrapper .wm-locations .wm-location button:active {
+	box-shadow: 0 2px 6px rgba(20, 118, 201, 0.2);
+	transform: translateY(0);
+}
+
+/* =========================================================
+   Quickbar / Customizations
+   ========================================================= */
+
+.wm-dashboard-page .wm-wrapper .wm-quickbar .wm-quickbar-widgets > div {
+	margin-bottom: 18px;
 	vertical-align: top;
 }
 
-.wm-dashboard-page .wm-wrapper .wm-quickbar > div:first-child{
-	/*background: #aaccff;*/
-	background: #062134;
-	border-radius: 0;
-	margin: -1px -1px -1px -1px;
-	/*color: #000099;*/
-	color: #ffffff;
-	padding: 10px;
-	font-size: 14pt;
-	/*width: 100%;*/
-	/*border: 1px solid #aaccff;*/
-	border: 1px solid #062134;
+.wm-dashboard-page .wm-wrapper .wm-quickbar .wm-quickbar-widgets > div:last-child {
+	margin-bottom: 0;
 }
 
-.wm-dashboard-page .wm-wrapper .wm-quickbar .wm-quickbar-widgets{
-	padding: 14px;
+.wm-dashboard-page .wm-wrapper .wm-quickbar .wm-quickbar-widgets > div h1 {
+	border-bottom: 1px solid #e2eaf2;
+	color: #0a2a42;
+	font-size: 22px;
+	font-weight: 900;
+	letter-spacing: -0.2px;
+	margin: 0 0 12px 0;
+	padding-bottom: 8px;
 }
 
-.wm-dashboard-page .wm-wrapper .wm-quickbar .wm-quickbar-widgets > div{
-	margin-bottom: 20px;
-	vertical-align: top;
+.wm-dashboard-page .wm-wrapper .wm-quickbar .wm-quickbar-widgets > div div:first-child {
+	display: block;
+	width: auto;
+	padding-right: 0;
 }
 
-.wm-dashboard-page .wm-wrapper .wm-quickbar .wm-quickbar-widgets > div h1{
-	margin: 0 0 10px 0;
-	color: #000000;
-	font-size: 24px;
-	border-bottom: 1px solid #000000;
+.wm-dashboard-page .wm-wrapper .wm-quickbar .wm-quickbar-widgets > div > div {
+	color: #52677a;
+	min-height: 26px;
+	padding: 8px 0;
 }
 
-.wm-dashboard-page .wm-wrapper .wm-quickbar .wm-quickbar-widgets > div div:first-child{
-	display: inline;
-	width:  100%;
-	padding-right: 70px;
+.wm-dashboard-page .wm-wrapper .wm-quickbar .wm-quickbar-widgets > div > div > div a {
+	color: #1476c9;
+	font-weight: 700;
 }
 
-.wm-dashboard-page .wm-wrapper .wm-quickbar .wm-quickbar-widgets > div > div > a{
+/* Preview/design pill buttons */
+.wm-dashboard-page .wm-wrapper .wm-quickbar .wm-quickbar-widgets > div > div > a,
+.wm-dashboard-page .wm-wrapper .wm-quickbar .wm-quickbar-widgets ._button {
+	background: #eef6ff;
+	border: 1px solid #cbe4fb;
+	border-radius: 999px;
+	color: #1476c9;
+	display: inline-block;
 	float: right;
+	font-size: 11px;
+	font-weight: 900;
+	letter-spacing: 1px;
+	line-height: 16px;
+	padding: 4px 10px;
+	text-transform: uppercase;
+}
+
+.wm-dashboard-page .wm-wrapper .wm-quickbar .wm-quickbar-widgets > div > div > a:hover,
+.wm-dashboard-page .wm-wrapper .wm-quickbar .wm-quickbar-widgets ._button:hover {
+	background: #1476c9;
+	border-color: #1476c9;
+	color: #ffffff;
+	text-decoration: none;
+}
+
+/* =========================================================
+   Responsive Fallback
+   ========================================================= */
+
+@media screen and (max-width: 900px) {
+	.wm-dashboard-page {
+		padding: 10px;
+	}
+
+	.wm-dashboard-page .wm-wrapper {
+		display: block;
+		border-spacing: 0;
+		margin: 0;
+		width: auto;
+	}
+
+	.wm-dashboard-page .wm-wrapper .wm-locations,
+	.wm-dashboard-page .wm-wrapper .wm-quickbar {
+		display: block;
+		width: auto;
+		margin-bottom: 18px;
+	}
+
+	.wm-dashboard-page .wm-wrapper .wm-locations .wm-location div:first-child > img {
+		float: none;
+		display: block;
+		margin-bottom: 12px;
+	}
 }

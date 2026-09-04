@@ -37,7 +37,7 @@ int openTab = -1, i = 0;
 	%>
 			<div style="width:100%;text-align:center;overflow:hidden;">
 			<div style="text-align:left;">
-			<table><tr><td valign="middle"></td><td valign="middle" class="nav_shortcut"
+			<table style="width:100%;padding-right:20px;"><tr><td valign="middle"></td><td valign="middle" class="nav_shortcut"
 				style="background: url(<%=navImage%>) no-repeat 6px 10px #062134;">
 			<% if( navFilter.equalsIgnoreCase( "js" ) == false ){ %>
 				<a class="nav_link" href="javascript:void(0)" onclick="startAnimation(); setTimeout(function(){location.href='<%=sHREF%>';}, 1000);"><%=navText%></a>
