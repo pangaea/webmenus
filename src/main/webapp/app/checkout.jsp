@@ -351,7 +351,7 @@ dojo.addOnLoad( function()
 
 <% if( menuOrderBean.itemCount() > 0 ){ %>
 
-<%@ include file="../payment_methods/paypal_client.jsp"%>
+<%@ include file="payment_methods/paypal_client.jsp"%>
 
 <% if( menuOrderBean.isPayOnPickup() ){ %>
 		<button dojoType="dijit.form.Button">
