@@ -3,7 +3,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="ISO-8859-1" %>
 <%@ page import="com.genesys.webmenus.*"%>
 <%@ page import="java.math.BigDecimal"%>
-
+<%@ page import="com.fasterxml.jackson.databind.JsonNode"%>
+<%@ page import="com.fasterxml.jackson.databind.ObjectMapper"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,9 +24,14 @@ $(function(){
 		}
 	})
 	$("a.remove_item").live("click", function(){
-		var target_count = $(this).attr("item_id")
+		var target_count = $(this).attr("item_id");
 		$("#"+target_count).val("0");
 		window.setTimeout(function(){ $("#orderForm").submit();	}, 100);
+	})
+	$("a.edit_item").live("click", function(){
+		var item_id = $(this).attr("item_id");
+		var item_index = $(this).attr("item_index");
+		location.href = "<%=rootMenuPath%>/itemdetails?item=" + item_id + "&order_index=" + item_index;
 	})
 });
 </script>
@@ -38,14 +44,9 @@ $(function(){
 	<div data-role="header">
 		<h1>Place Order</h1>
 		<a data-rel="button" href="<%=rootMenuPath%>">Home</a>
-<% if( menuOrderBean.itemCount() > 0 ){ %>
-		<a data-rel="button" rel="external" data-ajax="false" href="<%=rootMenuPath%>/submit_order">Submit</a>
-<% } %>
 	</div><!-- /header -->
 	
 	<div data-role="content">
-	
-	
 	
 		<form method="POST" id="orderForm" action="<%=rootMenuPath%>/orderview">
 		<table id="itemTable" cellpadding="2" class="orderTable" style="width:100%;">
@@ -91,7 +92,38 @@ $(function(){
 						</div>
 
 						<div class='menuOptions'>
-							<%=item.getOptions().replaceAll("\n", "</br>")%>
+
+<%
+		String optionsJson = item.getOptions();
+		if (optionsJson != null && !optionsJson.isBlank()) {
+			ObjectMapper mapper = new ObjectMapper();
+			try {
+				JsonNode node = mapper.readTree(optionsJson);
+				JsonNode options = node.get("options");
+				if (options.isArray()) {
+					for (JsonNode option : options) {
+						%><b><%=option.get("name").asText()%></b><br/><%
+						JsonNode choices = option.get("selected_choices");
+						if (choices.isArray()) {
+							for (JsonNode choice : choices) {
+								%>&nbsp;&nbsp;<%=choice.get("name").asText()%><%
+								if (choice.get("price").asDouble() > 0) {
+									%> (<%=menuOrderBean.getCurrencyString(choice.get("price").asText())%>)<%
+								}
+								%><br/><%
+							}
+						}
+					}
+				}
+			} catch (Exception e){}
+		}
+
+		String si = item.getSpecialInstructions();
+		if (si != null && !si.isEmpty()) {
+			%><br/><b>Special Instructions</b><pre><%=si%></pre><%
+		}
+%>
+
 						</div>
 
 				</td>
@@ -106,6 +138,7 @@ $(function(){
 				<td>
 					X&nbsp;<input data-mini="true" style="width:55px;display:inline-block;margin:0px;" type="number" name="<%=item.getId()%>" id="quantity<%=i%>" value="<%=item.getQuantity()%>" min="0" />
 					&nbsp;<a href="javascript:void(0)" class="remove_item" item_id="quantity<%=i%>">remove</a>
+					&nbsp;<a href="javascript:void(0)" class="edit_item" item_id="<%=item.getSizeId()%>" item_index="<%=i%>">edit</a>
 				</td>
 				<td  class="itemPrice"><%=item.getTotalStr()%></td>
 			</tr>
@@ -139,7 +172,7 @@ $(function(){
 		</table>
 		</form>
 <% if( menuOrderBean.itemCount() > 0 ){ %>
-		<a data-role="button" rel="external" data-ajax="false" href="<%=rootMenuPath%>/submit_order">Submit Order</a>
+		<a data-role="button" rel="external" data-ajax="false" href="<%=rootMenuPath%>/checkout_order">Checkout</a>
 <% } %>
 		</div>
 	</div>

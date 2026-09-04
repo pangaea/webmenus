@@ -313,6 +313,19 @@ public class MenuOrderBean
 		return retId;
 	}
 
+	public String generateOptionPriceLabel(String price) {
+		if( price.length() > 0 )
+		{
+			BigDecimal bdOptionPrice = new BigDecimal(price);
+			if( bdOptionPrice.doubleValue() > 0.00 )
+			{
+				NumberFormat n = NumberFormat.getCurrencyInstance(Locale.US); 
+				return "<em> (add " + n.format(bdOptionPrice) + ")</em>";
+			}
+		}
+		return "";
+	}
+
 	public java.util.Date getCurrentLocationTime()
 	{
 		//SimpleTimeZone omtz = m_locTZ;		
@@ -703,6 +716,29 @@ public class MenuOrderBean
 		return m_validated;
 	}
 
+	public Set<String> buildChoicesList(String optionsJson) {
+		Set<String> selectedChoices = new HashSet<>();
+		if (optionsJson != null && !optionsJson.isBlank()) {
+			ObjectMapper mapper = new ObjectMapper();
+			try {
+				JsonNode node = mapper.readTree(optionsJson);
+				JsonNode options = node.get("options");
+				if (options.isArray()) {
+					for (JsonNode option : options) {
+						option.get("name").asText();
+						JsonNode choices = option.get("selected_choices");
+						if (choices.isArray()) {
+							for (JsonNode choice : choices) {
+								selectedChoices.add(option.get("name").asText() + "#" + choice.get("name").asText());
+							}
+						}
+					}
+				}
+			} catch (Exception e){}
+		}
+		return selectedChoices;
+	}
+
 	public boolean editItem(int index, HttpServletRequest request) {
 		OrderItem item = processItem(request);
 		if (item != null) {
@@ -1013,6 +1049,13 @@ public class MenuOrderBean
 	public int itemCount()
 	{
 		return m_orderItemList.size();
+	}
+	public String generateItemCountLabel()
+	{
+		if (m_orderItemList.size() > 0) {
+			return " (" + m_orderItemList.size() + ")";
+		}
+		return "";
 	}
 
 	public OrderItem getItemByIndex( int index )

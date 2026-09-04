@@ -76,16 +76,18 @@ orderDashboardBean.loadLocationDetails(request.getParameter("loc"));
         </div>
       </div>
 
-      <div style="height:60px;">
-        <h2 style="padding-top:10px;"><%=orderDashboardBean.getName()%></h2>
-        <div style="position:absolute;right:10px;top:10px;">
+      <header class="dashboard-header">
+        <div class="dashboard-title-block">
+            <h1><%=orderDashboardBean.getName()%></h1>
+            <div class="dashboard-subtitle">Order Dashboard</div>
+        </div>
+
+        <div class="location-card">
           <div><%=orderDashboardBean.getAddress()%></div>
           <div><%=orderDashboardBean.getCity()%>, <%=orderDashboardBean.getState()%> <%=orderDashboardBean.getZip()%></div>
           <div><%=orderDashboardBean.getPhone()%></div>
         </div>
-      </div>
-      
-      <hr/>
+      </header>
 
       <template id="order-template">
         <div class="task" id="{id}" draggable="true" ondragstart="drag(event)" onclick="select(id)">

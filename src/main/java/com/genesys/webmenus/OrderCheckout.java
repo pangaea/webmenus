@@ -48,9 +48,6 @@ public class OrderCheckout extends HttpServlet {
 
 			// Save order
 			String email = request.getParameter("email");
-			//ObjectMapper mapper = new ObjectMapper();
-        	//Map<String, String> attrs = mapper.convertValue(request.getParameterMap(), new TypeReference<Map<String, String>>(){});
-			// Flatten Map<String, String[]> to Map<String, String>
 			Map<String, String> attrs = request.getParameterMap().entrySet().stream()
 				.filter(entry -> entry.getValue() != null && entry.getValue().length > 0)
 				.collect(Collectors.toMap(

@@ -18,7 +18,7 @@
 		<h1>
 		<%=menuOrderBean.getLocationName()%> : Menus
 		</h1>
-		<a rel="external" data-ajax="false" href="<%=rootMenuPath%>/orderview">View Order</a>
+		<a rel="external" data-ajax="false" href="<%=rootMenuPath%>/orderview">Cart<%=menuOrderBean.generateItemCountLabel()%></a>
 	</div>
 
 	<div data-role="content">

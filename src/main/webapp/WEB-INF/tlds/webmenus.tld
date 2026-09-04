@@ -101,6 +101,19 @@
 </attribute>
 </tag>
 
+<tag>
+<name>EnumItemOptionChoices</name>
+<tagclass>com.genesys.webmenus.tagext.EnumItemOptionChoices</tagclass>
+<teiclass>com.genesys.webmenus.tagext.EnumItemOptionChoicesExtraInfo</teiclass>
+<bodycontent>JSP</bodycontent>
+<info>EnumItemOptionChoices Custom Tag</info>
+<attribute>
+	<name>optionId</name>
+	<required>false</required>
+	<rtexprvalue>true</rtexprvalue>
+</attribute>
+</tag>
+
 
 <tag>
 <name>EnumSchedules</name>
