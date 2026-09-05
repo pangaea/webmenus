@@ -419,6 +419,379 @@ span.alert
 	font-size: 0.8rem;
 }
 
+body.cart-page {
+	margin: 0;
+	padding: 24px;
+	background: var(--background);
+	color: var(--text);
+	font: 14px/1.6 "Segoe UI", Arial, sans-serif;
+}
+
+.cart-page *,
+.cart-page *::before,
+.cart-page *::after {
+	box-sizing: border-box;
+}
+
+.cart-page-header,
+.cart-page #orderForm,
+.cart-page .cart-checkout {
+	width: 100%;
+	max-width: 900px;
+	margin-inline: auto;
+}
+
+.cart-page-header {
+	margin-bottom: 24px;
+}
+
+.cart-page .cart-eyebrow {
+	margin: 0 0 6px;
+	color: var(--primary-dark);
+	font-size: 11px;
+	font-weight: 800;
+	letter-spacing: 0.14em;
+}
+
+.cart-page-header h1 {
+	margin: 0;
+	font-size: clamp(26px, 5vw, 36px);
+	line-height: 1.2;
+	letter-spacing: -0.035em;
+}
+
+.cart-page-header > p:last-child {
+	margin: 8px 0 0;
+	color: var(--muted);
+}
+
+/* Table surface */
+
+.cart-page #orderForm {
+	padding: 8px 20px;
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	background: var(--surface);
+	box-shadow: var(--shadow);
+}
+
+.cart-page #itemTable {
+	width: 100%;
+	table-layout: fixed;
+	border-collapse: collapse;
+}
+
+.cart-page #itemTable tr th,
+.cart-page #itemTable tr td {
+	padding: 18px 10px;
+	border: 0;
+	vertical-align: top;
+}
+
+.cart-page #itemTable .cart-column-headings th {
+	width: 16%;
+	border-bottom: 1px solid var(--border);
+	color: var(--muted);
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-align: right;
+	text-transform: uppercase;
+}
+
+.cart-page #itemTable .cart-column-headings th:first-child {
+	width: 52%;
+	text-align: left;
+}
+
+.cart-page #itemTable .cart-product-row td {
+	border-bottom: 1px solid var(--border);
+	text-align: right;
+	font-variant-numeric: tabular-nums;
+}
+
+.cart-page #itemTable .cart-product-row td:first-child {
+	text-align: left;
+}
+
+.cart-page #itemTable .cart-product-row td:last-child {
+	font-weight: 750;
+}
+
+/* Item details */
+
+.cart-page .menuItemTitle {
+	margin-bottom: 6px;
+	color: var(--text);
+	font: 700 16px/1.4 "Segoe UI", Arial, sans-serif;
+	overflow-wrap: anywhere;
+}
+
+.cart-page .menuItemDesc {
+	color: var(--muted);
+	font: 400 13px/1.6 "Segoe UI", Arial, sans-serif;
+}
+
+.cart-page .menuItemButtons {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	height: auto;
+	padding: 12px 0;
+}
+
+.cart-page .menuItemButtons a {
+	display: inline-flex;
+	min-height: 36px;
+	align-items: center;
+	padding: 6px 12px;
+	float: none;
+	border-radius: 8px;
+	background: #fff1e8;
+	color: var(--primary-dark);
+	font-size: 12px;
+	font-weight: 700;
+	text-decoration: none;
+	transition: background-color 160ms ease;
+}
+
+.cart-page .menuItemButtons a:hover {
+	background: #ffe0cd;
+}
+
+.cart-page .menuItemButtons a:last-child {
+	background: #fdf0ee;
+	color: #a63030;
+}
+
+.cart-page .menuItemButtons a:last-child:hover {
+	background: #f9dcd7;
+}
+
+.cart-page .menuOptions {
+	padding: 10px 12px;
+	border: 1px solid var(--border);
+	border-radius: 10px;
+	background: var(--background);
+	color: var(--muted);
+	font: 400 12px/1.7 "Segoe UI", Arial, sans-serif;
+	overflow-wrap: anywhere;
+}
+
+.cart-page .menuOptions b {
+	color: var(--text);
+	font-weight: 600;
+}
+
+/* Dojo quantity spinner */
+
+.cart-page .dijitNumberSpinner {
+	width: 76px;
+	min-height: 36px;
+	border: 1px solid var(--border);
+	border-radius: 8px;
+	background: var(--surface);
+	color: var(--text);
+}
+
+.cart-page .dijitNumberSpinner .dijitInputField {
+	padding: 6px 2px;
+}
+
+.cart-page .dijitNumberSpinner input {
+	font: 600 14px/1.4 "Segoe UI", Arial, sans-serif;
+	text-align: center;
+}
+
+.cart-page .dijitNumberSpinner .dijitArrowButton {
+	background: #fff1e8;
+}
+
+.cart-page .dijitNumberSpinnerFocused {
+	border-color: var(--primary);
+	outline: 3px solid rgba(217, 79, 43, 0.18);
+	outline-offset: 2px;
+}
+
+/* Order summary */
+
+.cart-page #itemTable .cart-summary-row th,
+.cart-page #itemTable .cart-summary-row td {
+	padding-block: 10px;
+	text-align: right;
+	font-variant-numeric: tabular-nums;
+}
+
+.cart-page #itemTable .cart-summary-row th {
+	color: var(--muted);
+	font-size: 13px;
+	font-weight: 500;
+}
+
+.cart-page .cart-summary-row small {
+	display: block;
+	font-size: 11px;
+}
+
+.cart-page #itemTable .cart-total-row th,
+.cart-page #itemTable .cart-total-row td {
+	padding-block: 18px;
+	border-top: 1px solid var(--border);
+	color: var(--text);
+	font-size: 19px;
+	font-weight: 800;
+}
+
+.cart-page #itemTable .cart-total-row td {
+	color: var(--primary-dark);
+}
+
+/* Dojo checkout button */
+
+.cart-page .cart-checkout {
+	margin-top: 20px;
+}
+
+.cart-page .cart-checkout .dijitButton {
+	/* display: block;
+	width: 100%; */
+	margin: 0;
+}
+
+.cart-page .cart-checkout .dijitButtonNode {
+	display: block;
+	width: 100%;
+	padding: 15px 20px;
+	border: 1px solid var(--primary-dark);
+	border-radius: 12px;
+	background: var(--primary-dark);
+	box-shadow: 0 6px 16px rgba(174, 53, 24, 0.18);
+	color: #fff;
+	cursor: pointer;
+	transition: background-color 160ms ease, box-shadow 160ms ease;
+}
+
+.cart-page .cart-checkout .dijitButtonText {
+	font: 700 16px/1.4 "Segoe UI", Arial, sans-serif;
+}
+
+.cart-page .cart-checkout .dijitButtonHover .dijitButtonNode {
+	background: #922b14;
+	box-shadow: 0 8px 20px rgba(174, 53, 24, 0.24);
+}
+
+.cart-page .cart-checkout .dijitButtonActive .dijitButtonNode {
+	background: #792411;
+	box-shadow: none;
+}
+
+.cart-page a:focus-visible,
+.cart-page .cart-checkout .dijitButtonFocused .dijitButtonNode {
+	outline: 3px solid var(--primary);
+	outline-offset: 3px;
+}
+
+/* Compact cart / iframe layout */
+
+@media (max-width: 600px) {
+	body.cart-page {
+		padding: 16px;
+	}
+
+	.cart-page #orderForm {
+		padding: 6px 14px;
+	}
+
+	.cart-page #itemTable,
+	.cart-page #itemTable tbody {
+		display: block;
+	}
+
+	/* Visually hide headings while retaining them for accessibility. */
+	.cart-page #itemTable .cart-column-headings {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+
+	.cart-page #itemTable .cart-product-row {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 14px 8px;
+		padding: 18px 0;
+		border-bottom: 1px solid var(--border);
+	}
+
+	.cart-page #itemTable .cart-product-row td {
+		min-width: 0;
+		padding: 0;
+		border: 0;
+		text-align: left;
+	}
+
+	.cart-page #itemTable .cart-product-row td:first-child {
+		grid-column: 1 / -1;
+	}
+
+	.cart-page .cart-product-row td:not(:first-child)::before {
+		display: block;
+		margin-bottom: 6px;
+		color: var(--muted);
+		font-size: 11px;
+		font-weight: 600;
+	}
+
+	.cart-page .cart-product-row td:nth-child(2)::before {
+		content: "Each";
+	}
+
+	.cart-page .cart-product-row td:nth-child(3)::before {
+		content: "Quantity";
+	}
+
+	.cart-page .cart-product-row td:nth-child(4)::before {
+		content: "Price";
+	}
+
+	.cart-page #itemTable .cart-product-row td:last-child {
+		text-align: right;
+	}
+
+	.cart-page #itemTable .cart-summary-row {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		align-items: baseline;
+	}
+
+	.cart-page #itemTable .cart-summary-row th:nth-child(-n+2) {
+		display: none;
+	}
+
+	.cart-page #itemTable .cart-summary-row th,
+	.cart-page #itemTable .cart-summary-row td {
+		padding-inline: 0;
+	}
+
+	.cart-page #itemTable .cart-summary-row th {
+		text-align: left;
+	}
+
+	.cart-page .cart-summary-row small {
+		display: inline;
+		margin-left: 4px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cart-page .menuItemButtons a,
+	.cart-page .cart-checkout .dijitButtonNode {
+		transition: none;
+	}
+}
+
 </xsl:template>
 
 </xsl:stylesheet>

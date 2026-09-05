@@ -90,9 +90,9 @@ dojo.addOnLoad( function()
 </script>
 </head>
 
-	<body class="tundra" onload="selectDeliveryOption('pickup')">
+	<body class="tundra cart-page" onload="selectDeliveryOption('pickup')">
 		<table id="itemTable" cellpadding="2" class="orderTable">
-			<tr>
+			<tr class="cart-product-row">
 				<th valign="top">Order</th>
 				<th valign="top">Each</th>
 				<th valign="top">Quantity</th>
@@ -104,7 +104,7 @@ dojo.addOnLoad( function()
 		OrderItem item = menuOrderBean.getItemByIndex(i);
 		if( item == null ) break;
 %>
-			<tr>
+			<tr class="cart-product-row">
 				<td valign="top">
 
 						<div class='menuItemTitle'>
@@ -112,9 +112,6 @@ dojo.addOnLoad( function()
 						<% if( item.getSize().length() > 0 ){ %>
 							(<%=item.getSize()%>)
 						<% } %>
-						</div>
-						<div class='menuItemDesc'>
-						<%=item.getDesc()%>
 						</div>
 						<div class='menuOptions'>
 <%
@@ -165,19 +162,19 @@ dojo.addOnLoad( function()
 <%
 	}
 %>
-			<tr>
+			<tr class="cart-summary-row">
 				<th valign="top"></th>
 				<th valign="top"></th>
 				<th valign="top">Subtotal</th>
 				<td valign="top"><%=menuOrderBean.getSubTotalStr()%></td>
 			</tr>
-			<tr>
+			<tr class="cart-summary-row">
 				<th valign="top"></th>
 				<th valign="top"></th>
 				<th valign="top">Tax<small>(%<%=menuOrderBean.getTaxRate()%>)</small></th>
 				<td valign="top"><%=menuOrderBean.getTaxTotalStr()%></td>
 			</tr>
-			<tr>
+			<tr class="cart-summary-row cart-total-row">
 				<th valign="top"></th>
 				<th valign="top"></th>
 				<th valign="top">Total</th>
@@ -246,43 +243,9 @@ dojo.addOnLoad( function()
 			<input dojoType="dijit.form.RadioButton" type="radio" id="option_pickup" name="delivery_option" checked value="pickup"  onclick="selectDeliveryOption(this.value)"/>Pickup Order
 		</div>
 
-		<table class="pageSeperator pageSeperator2"><tr>
-			<td width="100%"><hr width="100%"/></td>
-		</tr></table>
-
 		<div class="menuItemTitle">
 		<input dojoType="dijit.form.RadioButton" type="radio" id="option_delivery" name="delivery_option" value="delivery" onclick="selectDeliveryOption(this.value)"/>Deliver Order to...
-		
-	<%
-		Vector<String> addrs = menuOrderBean.getPartonDeliveryAddresses();
-		Iterator itr = addrs.iterator();
-		int ii = 1;
-	    while(itr.hasNext()){
-	%>
-	    	<textarea id="addr_<%=Integer.toString(ii)%>" style="display:none"><%=itr.next()%></textarea>
-	<%
-			ii++;
-	    }
-	%>
-		<select id="previous_deliveries" style="width:250px;" onchange="selectDeliverAddr(this)">
-		<option value="0">[New Address]</option>
-	<%
-		itr = addrs.iterator();
-		ii = 1;
-	    while(itr.hasNext()){
-	    	String body = (String)itr.next();
-	%>
-			<option value="<%=Integer.toString(ii)%>" title="<%=body%>">
-	    	<%=body%>
-	    	</option>
-	<%
-			ii++;
-		}
-	%>
-		</select>
-		<br/><br/>
 		</div>
-			<!--textarea id="delivery_info" name="delivery_info" style="display:none;"></textarea-->
 			<table>
 				<tr>
 					<td><div class='patronLoginLabel'>Address</div></td><td>
@@ -348,10 +311,10 @@ dojo.addOnLoad( function()
 
 
 
-
+		<div class="cart-checkout">
 <% if( menuOrderBean.itemCount() > 0 ){ %>
 
-<%@ include file="payment_methods/paypal_client.jsp"%>
+<%@ include file="payment_methods/pos_client.jsp"%>
 
 <% if( menuOrderBean.isPayOnPickup() ){ %>
 		<button dojoType="dijit.form.Button">
@@ -362,12 +325,14 @@ dojo.addOnLoad( function()
 				}
 			</script>
 		</button>
-<% } } %>
+<% } %>
+<% } %>
 		<button dojoType="dijit.form.Button">
 			Go Back to Menus
 			<script type="dojo/method" event="onClick">
 				parent.closeOrderDialog();
 			</script>
 		</button>
+		</div>
 	</body>
 </html>

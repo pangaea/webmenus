@@ -42,8 +42,8 @@ function selectDeliveryOption(sel)
     }
     disableControls(bDisabled);
 
-    var prevAddrIN = dojo.byId("previous_deliveries");
-    prevAddrIN.disabled = bDisabled;
+    // var prevAddrIN = dojo.byId("previous_deliveries");
+    // prevAddrIN.disabled = bDisabled;
 }
 function disableControls(disabled)
 {

@@ -262,7 +262,7 @@ $(function(){
 		</form>
 
 <% if( menuOrderBean.itemCount() > 0 ){ %>
-		<%@ include file="../payment_methods/paypal_client.jsp"%>
+		<%@ include file="../payment_methods/pos_client.jsp"%>
 		<% if( menuOrderBean.isPayOnPickup() ){ %>
 		<a data-role="button" id="submit_order" rel="external" data-ajax="false" onclick="submitForm()">Pay at Pickup</a>
 <% }} %>

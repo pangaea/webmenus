@@ -54,45 +54,38 @@ All Rights Reserved
 </script>
 
 <script type="text/javascript">
-//document.onload = function()
 dojo.addOnLoad( function()
 {
 	window.scrollBy(0,1000);
 });
 function updateOrder(qid)
 {
-	//var qt = (String)dijit.byId(id).value;
 	var qt = document.getElementById(qid).value;
 	if(qt.length > 0)
 		window.setTimeout('orderForm.submit();', 500);
 }
 function checkoutOrder()
 {
-	//document.location.href = "../checkout.jsp";
 	window.parent.viewCheckout();
 	window.parent.closeCart();
 }
 function editMenuItem(id, index)
 {
-	//document.location.href = "../checkout.jsp";
 	window.parent.editMenuItem(id, index);
 	window.parent.closeCart();
 }
 function removeMenuItem(index)
 {
-	//var qtEl = document.getElementById("quantity"+index);
-	//qtEl.value = 0;	// Force to 0
 	dijit.byId("quantity"+index).attr("value", 0);
-	//window.setTimeout('orderForm.submit();', 500);
 }
 </script>
 </head>
 
-	<body class="tundra">
-		<form method="POST" id="orderForm"><!--action="../orderview.jsp"-->
+	<body class="tundra cart-page">
+		<form method="POST" id="orderForm">
 		<table id="itemTable" cellpadding="2" class="orderTable">
-			<tr>
-				<th valign="top" style="width:100%;">Order</th>
+			<tr class="cart-column-headings">
+				<th valign="top">Order</th>
 				<th valign="top">Each</th>
 				<th valign="top">Quantity</th>
 				<th valign="top">Price</th>
@@ -115,8 +108,6 @@ function removeMenuItem(index)
 					{
 						menuOrderBean.removeItemByIndex(i);
 						continue;
-						//item = menuOrderBean.getItemByIndex(i);
-						//if( item == null ) break;
 					}
 					else
 					{
@@ -129,7 +120,7 @@ function removeMenuItem(index)
 		}
 		if( item == null ) break;
 %>
-			<tr>
+			<tr class="cart-product-row">
 				<td valign="top">
 
 						<div class='menuItemTitle'>
@@ -183,7 +174,7 @@ function removeMenuItem(index)
 				</td>
 				<td valign="top"><%=item.getPriceStr()%></td>
 				<td valign="top">
-					<input dojoType="dijit.form.NumberSpinner" intermediateChanges="true" style="height:0px;width:60px;" constraints="{min:0,max:200}" type="text" id="quantity<%=i%>" name="<%=item.getId()%>" value="<%=item.getQuantity()%>" onChange="updateOrder('quantity<%=i%>');"/>
+					<input dojoType="dijit.form.NumberSpinner" intermediateChanges="true" style="width:76px;" constraints="{min:0,max:200}" type="text" id="quantity<%=i%>" name="<%=item.getId()%>" value="<%=item.getQuantity()%>" onChange="updateOrder('quantity<%=i%>');"/>
 				</td>
 				<td valign="top"><%=item.getTotalStr()%></td>
 			</tr>
@@ -198,19 +189,19 @@ function removeMenuItem(index)
 <%
 	}
 %>
-			<tr>
+			<tr class="cart-summary-row">
 				<th valign="top"></th>
 				<th valign="top"></th>
 				<th valign="top">Subtotal</th>
 				<td valign="top"><%=menuOrderBean.getSubTotalStr()%></td>
 			</tr>
-			<tr>
+			<tr class="cart-summary-row">
 				<th valign="top"></th>
 				<th valign="top"></th>
 				<th valign="top">Tax<small>(%<%=menuOrderBean.getTaxRate()%>)</small></th>
 				<td valign="top"><%=menuOrderBean.getTaxTotalStr()%></td>
 			</tr>
-			<tr>
+			<tr class="cart-summary-row cart-total-row">
 				<th valign="top"></th>
 				<th valign="top"></th>
 				<th valign="top">Total</th>
@@ -220,22 +211,15 @@ function removeMenuItem(index)
 		</form>
 
 <% if( menuOrderBean.itemCount() > 0 ){ %>
+	<div class="cart-checkout">
 		<button dojoType="dijit.form.Button">
 			Checkout
 			<script type="dojo/method" event="onClick">
 				checkoutOrder();
 			</script>
 		</button>
+	</div>
 <% } %>
-		<!--button dojoType="dijit.form.Button">
-			Go Back to Menus
-			<script type="dojo/method" event="onClick">
-				parent.closeOrderDialog();
-				//parent.dijit.byId('myorder').destroy();
-				//dijit.parent.byId('myorder').destroy();
-				//dijit.byId('myorder').destroy();
-			</script>
-		</button-->
 		<script type="text/javascript">
 			window.parent.updateCartCount(<%=cartCount%>);
 		</script>
